@@ -1,0 +1,1844 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>메덩골정원</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Pretendard (피그마와 같은 글꼴). 내 사이트에 올리거나 파일로 열면 이 주소에서 불러옵니다.
+   claude.ai 링크 미리보기에서는 보안 정책상 막혀서 Noto Sans KR로 대신 보입니다. */
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/woff2/Pretendard-Bold.woff2') format('woff2')}
+
+/* 레이아웃: 피그마 1920×1000 프레임 좌표 그대로 (intro_1000 → intro_scroll1 → intro_scroll2)
+   화면이 1920×1000이 아니면 프레임 전체를 같은 비율로 키우거나 줄임 */
+:root{
+  --bg:#eeede9;        /* 미색 배경 (사용자 결정: 피그마 흰색 대신 사용) */
+  --ink:#000000;       /* 메뉴(액자 단계), 선, 라벨 */
+  --on-photo:#ffffff;  /* 사진 위 로고·메뉴 */
+  --font:'Pretendard','Noto Sans KR',system-ui,sans-serif;
+  --logo:url(data:image/png;base64,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);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.intro{position:relative;height:800vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
+
+/* 피그마 좌표 캔버스 (1920×1000). JS가 화면에 맞춰 scale */
+.cv{position:absolute;left:0;top:0;width:1920px;height:1000px;transform-origin:0 0}
+.cv-back{z-index:1;pointer-events:none}
+.cv-front{z-index:5;pointer-events:none}
+.cv-front a{pointer-events:auto}
+
+/* 사진 액자 */
+.frame{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;z-index:2}
+.layer{position:absolute;inset:0;opacity:0}
+.layer:first-child{opacity:1}
+.layer img{width:100%;height:100%;max-width:none;object-fit:cover;display:block;transform-origin:50% 50%;will-change:transform}
+.shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.38) 0%,rgba(0,0,0,.12) 22%,rgba(0,0,0,.18) 50%,rgba(0,0,0,.12) 78%,rgba(0,0,0,.3) 100%)}
+
+/* intro_scroll2: 선 0.7px 검정 (v25: 0.8 → 0.7), 라벨 Pretendard 16 검정 자간 -0.64px */
+.hline,.vline{position:absolute;background:var(--ink)}
+.hline{left:461px;top:499.25px;width:1022px;height:.7px;transform:scaleX(0)}
+.vline{left:959.65px;top:101px;width:.7px;height:801px;transform:scaleY(0)}
+.label{position:absolute;margin:0;font-size:16px;line-height:normal;letter-spacing:-0.64px;
+  color:var(--ink);font-weight:500;white-space:nowrap;opacity:0}
+.label-l{left:223px;top:481px}
+.label-r{left:1576px;top:481px;font-weight:400;text-align:right}
+.label-t{left:932px;top:65px}
+.label-b{left:942px;top:916px}
+
+/* 로고: intro x816 → scroll1 x818, y46, 284.75×30. 투명 PNG를 마스크로 써서 글자색으로 칠함 */
+.d-logo{position:absolute;left:816px;top:46px;width:284.75px;height:30px;display:block;
+  background-color:currentColor;color:var(--on-photo);
+  -webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+
+/* 메뉴: intro Bold 18 흰색(y490) → scroll1 Regular 18 검정(y50), 자간 -0.72px.
+   굵기가 다른 두 글자를 겹쳐 놓고 서로 바꿔 보여줌 */
+.mi{position:absolute;top:490px;display:grid;text-decoration:none;font-size:18px;line-height:normal;letter-spacing:-0.72px;white-space:nowrap}
+.mi span{grid-area:1/1}
+.mi .b{font-weight:600;color:var(--on-photo)}
+.mi .r{font-weight:400;color:var(--ink);opacity:0}
+.mi:hover span{text-decoration:underline;text-underline-offset:5px}
+.mi:focus-visible,.d-logo:focus-visible,.m-logo a:focus-visible,.m-nav a:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.after{height:30vh;background:var(--bg)}
+
+/* 휴대폰 전용 머리글 (피그마에 모바일 시안 없음 → 임시) */
+.m-logo,.m-nav{display:none}
+@media (max-width:767px){
+  .cv-front{display:none}
+  .m-logo{display:block;position:absolute;z-index:5;left:50%;top:calc(24px + env(safe-area-inset-top,0px));transform:translateX(-50%);margin:0;line-height:0;color:var(--on-photo)}
+  .m-logo a{display:block;width:180px;height:19px;background-color:currentColor;
+    -webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+  .m-nav{display:flex;position:absolute;z-index:5;bottom:calc(22px + env(safe-area-inset-bottom,0px));gap:14px;margin:0;padding:0;list-style:none}
+  .m-nav-l{left:max(16px,env(safe-area-inset-left,0px))}
+  .m-nav-r{right:max(16px,env(safe-area-inset-right,0px))}
+  .m-nav a{color:var(--on-photo);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:-0.52px}
+  .cv-back{width:100%;height:100%;transform:none !important}
+  .hline{left:16px;top:50%;width:calc(100% - 32px)}
+  .vline{left:50%;top:12%;height:76%}
+  .label{font-size:11px;letter-spacing:-0.44px;white-space:normal}
+  .label-l{left:16px;top:calc(50% - 36px)}
+  .label-r{left:auto;right:16px;top:calc(50% - 36px)}
+  .label-t,.label-b{left:50%;transform:translateX(-50%)}
+  .label-t{top:8%}
+  .label-b{top:89.5%}
+  .layer:first-child img{object-position:22% 50%}
+}
+@media (prefers-reduced-motion:reduce){.layer img{transform:none !important}}
+</style>
+
+<section class="intro" id="intro" aria-label="메덩골정원 인트로">
+  <div class="stage">
+    <div class="cv cv-back" id="cvBack">
+      <div class="hline" id="hline"></div>
+      <div class="vline" id="vline"></div>
+      <p class="label label-l" id="labL">KOREAN TRADITIONAL<br>GARDEN</p>
+      <p class="label label-r" id="labR">CONTEMPORARY<br>GARDEN</p>
+      <p class="label label-t" id="labT">FUTURE</p>
+      <p class="label label-b" id="labB">PAST</p>
+    </div>
+
+    <div class="frame" id="frame">
+      <div class="layer"><img src="img/01_dionysos.jpg" alt="노을 하늘 아래 바위처럼 휘어 오른 디오니소스 건축물의 지붕"></div>
+      <div class="layer"><img src="img/02_korean_autumn.jpg" alt="단풍으로 물든 숲에 둘러싸인 한국정원의 기와 담장과 정자" loading="lazy"></div>
+      <div class="layer"><img src="img/03_maze_aerial.jpg" alt="저녁 햇살을 받은 원형 벽돌 미로를 위에서 내려다본 모습" loading="lazy"></div>
+      <div class="layer"><img src="img/04_maze_corridor.jpg" alt="하늘이 열린 벽돌 미로 안쪽의 곡선 통로" loading="lazy"></div>
+      <div class="layer"><img src="img/05_mirror_pavilion.jpg" alt="꽃밭을 비추는 거울 기둥의 콘크리트 파빌리온" loading="lazy"></div>
+      <div class="layer"><img src="img/06_amphitheater.jpg" alt="가운데 흰 원을 중심으로 동심원처럼 내려가는 붉은 돌 원형 계단" style="object-position:50% 48%" loading="lazy"></div>
+      <div class="shade" id="shade"></div>
+    </div>
+
+    <!-- 데스크톱 로고·메뉴 (피그마 좌표) -->
+    <nav class="cv cv-front" id="cvFront" aria-label="주 메뉴">
+      <a class="d-logo" id="dLogo" href="#intro"><span class="sr">MÉDONGAULE 메덩골정원</span></a>
+      <a class="mi" href="#con-garden" data-x="118,120"><span class="b">현대정원</span><span class="r" aria-hidden="true">현대정원</span></a>
+      <a class="mi" href="#korean-garden" data-x="207,221"><span class="b">한국정원</span><span class="r" aria-hidden="true">한국정원</span></a>
+      <a class="mi" href="#structure" data-x="296,322"><span class="b">건축물</span><span class="r" aria-hidden="true">건축물</span></a>
+      <a class="mi" href="#reservation" data-x="1582,1553"><span class="b">관람안내</span><span class="r" aria-hidden="true">관람안내</span></a>
+      <a class="mi" href="#location" data-x="1671,1654"><span class="b">오시는길</span><span class="r" aria-hidden="true">오시는길</span></a>
+      <a class="mi" href="#reservation" data-x="1760,1755"><span class="b">예약하기</span><span class="r" aria-hidden="true">예약하기</span></a>
+    </nav>
+
+    <!-- 휴대폰 로고·메뉴 -->
+    <h1 class="m-logo" id="mLogo"><a href="#intro"><span class="sr">MÉDONGAULE 메덩골정원</span></a></h1>
+    <ul class="m-nav m-nav-l" id="mNavL">
+      <li><a href="#con-garden">현대정원</a></li><li><a href="#korean-garden">한국정원</a></li><li><a href="#structure">건축물</a></li>
+    </ul>
+    <ul class="m-nav m-nav-r" id="mNavR">
+      <li><a href="#reservation">관람안내</a></li><li><a href="#location">오시는길</a></li><li><a href="#reservation">예약하기</a></li>
+    </ul>
+  </div>
+</section>
+
+<script>
+(() => {
+  /* ── 스크롤 타임라인 (0 = 인트로 시작, 1 = 끝) ──────────────────
+     0.00–0.06  디오니소스 전체 화면
+     0.06–0.14  → 한국정원 가을
+     0.17–0.25  → 벽돌 미로 항공
+     0.28–0.42  전체 화면 → 가로 액자로 축소. 줄어드는 동안 사진이 미로 통로로 바뀜
+                메뉴 y490 → y50, Bold 흰색 → Regular 검정
+     0.48–0.55  가로 액자 안: → 거울 파빌리온
+     0.58–0.66  가로 액자 → 세로 액자, 사진은 원형 계단으로. 로고·메뉴 사라짐
+     0.70–0.81  가로줄 + 좌우 라벨
+     0.80–0.91  세로줄 + FUTURE / PAST                                    */
+  const T = {
+    x1:[.06,.14], x2:[.17,.25], shrink:[.28,.42], x3:[.31,.40], color:[.30,.40],
+    x4:[.48,.55], morph:[.58,.66], x5:[.58,.65], hideHead:[.59,.66],
+    hl:[.70,.78], lr:[.74,.81], vl:[.80,.88], tb:[.84,.91],
+    exit:[.925,.975]  // 끝: 계단 사진·선·라벨이 제자리에서 서서히 사라짐 → 빈 화면에서 현대정원 사진이 이어서 나타남
+  };
+  const KEN = [[0,.17],[.06,.28],[.17,.42],[.31,.52],[.48,.64],[.58,.97]];
+
+  const $ = id => document.getElementById(id);
+  const intro=$('intro'), frame=$('frame'), shade=$('shade'), cvBack=$('cvBack'), cvFront=$('cvFront'), dLogo=$('dLogo');
+  const layers=[...frame.querySelectorAll('.layer')], imgs=layers.map(l=>l.querySelector('img'));
+  const items=[...cvFront.querySelectorAll('.mi')].map(a=>{const [x0,x1]=a.dataset.x.split(',').map(Number);return {a,x0,x1,b:a.querySelector('.b'),r:a.querySelector('.r')};});
+  const mob=[$('mLogo'),$('mNavL'),$('mNavR')], mobLinks=[...document.querySelectorAll('.m-nav a')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const ramp=(p,[a,b])=>clamp((p-a)/(b-a));
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const mix=(c1,c2,t)=>`rgb(${c1.map((v,i)=>Math.round(lerp(v,c2[i],t))).join(',')})`;
+
+  let vw,vh,mobile,R;
+  function measure(){
+    vw=innerWidth; vh=innerHeight; mobile=vw<768;
+    const full={x:0,y:0,w:vw,h:vh};
+    if(!mobile){
+      const s=Math.min(vw/1920,vh/1000), ox=(vw-1920*s)/2, oy=(vh-1000*s)/2;
+      const F=(x,y,w,h)=>({x:ox+x*s,y:oy+y*s,w:w*s,h:h*s});
+      R={full, h:F(408,120,1105,790), v:F(730,188,460,625)};
+      const tf=`translate(${ox}px,${oy}px) scale(${s})`;
+      cvBack.style.transform=tf; cvFront.style.transform=tf;
+      hairlines(s,ox,oy);
+      return;
+    }
+    hairlines(1,0,0);
+    const hw=vw-32, hh=hw/1.399, vH=Math.min(vh*.5,(vw*.42)/.736), vW=vH*.736;
+    R={full, h:{x:(vw-hw)/2,y:vh*.5-hh/2,w:hw,h:hh}, v:{x:(vw-vW)/2,y:vh*.5-vH/2,w:vW,h:vH}};
+  }
+  /* 십자선 0.7px (v25b): 브라우저는 1px보다 얇은 선을 꽉 찬 1px 검정으로 올려 그려서 굵어 보임.
+     → 피그마처럼 보이게: 화면의 실제 픽셀 한 줄(배율이 크면 두 줄)에 딱 맞춰 그리고,
+       진하기를 0.7 비율로 낮춤 (실제 픽셀 0.7칸 분량의 먹 = 피그마가 그리는 0.7px 선과 같은 양) */
+  const LINE=0.7;
+  function hairlines(s,ox,oy){
+    const dpr=window.devicePixelRatio||1, t=LINE*s*dpr, n=Math.ceil(t), a=(t/n).toFixed(3);
+    const hl=$('hline'), vl=$('vline'), bg=`rgba(0,0,0,${a})`;
+    hl.style.background=vl.style.background=bg;
+    if(mobile){ hl.style.height=vl.style.width=(n/dpr)+'px'; hl.style.top=vl.style.left=''; return; }
+    const th=n/(s*dpr);                                           // 선 두께 (피그마 좌표 단위)
+    const snap=(c,o)=>((Math.round((o+c*s)*dpr-n/2))/dpr-o)/s;    // 선 중심 → 실제 픽셀 경계에 맞춘 시작 위치
+    hl.style.height=th+'px'; hl.style.top=snap(500,oy)+'px';     // 가로줄 중심 y500
+    vl.style.width=th+'px';  vl.style.left=snap(960,ox)+'px';    // 세로줄 중심 x960
+  }
+  const rect=(a,b,t)=>({x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),w:lerp(a.w,b.w,t),h:lerp(a.h,b.h,t)});
+
+  function render(p){
+    const t1=ease(ramp(p,T.shrink)), t2=ease(ramp(p,T.morph));
+    const r=t2>0?rect(R.h,R.v,t2):rect(R.full,R.h,t1);
+    frame.style.left=r.x+'px'; frame.style.top=r.y+'px'; frame.style.width=r.w+'px'; frame.style.height=r.h+'px';
+    shade.style.opacity=1-t1;
+
+    layers[1].style.opacity=ease(ramp(p,T.x1));
+    layers[2].style.opacity=ease(ramp(p,T.x2));
+    layers[3].style.opacity=ease(ramp(p,T.x3));
+    layers[4].style.opacity=ease(ramp(p,T.x4));
+    layers[5].style.opacity=ease(ramp(p,T.x5));
+    if(!reduce) imgs.forEach((im,i)=>{im.style.transform=`scale(${1.1-.1*ramp(p,KEN[i])})`;});
+
+    const tc=ease(ramp(p,T.color));
+    const hide=1-ramp(p,T.hideHead), vis=hide<.02?'hidden':'';
+    if(!mobile){
+      dLogo.style.color=mix([255,255,255],[0,0,0],tc);
+      dLogo.style.left=lerp(816,818,t1)+'px';
+      items.forEach(it=>{
+        it.a.style.left=lerp(it.x0,it.x1,t1)+'px';
+        it.a.style.top=lerp(490,50,t1)+'px';
+        it.b.style.opacity=1-tc; it.r.style.opacity=tc;
+      });
+      cvFront.style.opacity=hide; cvFront.style.visibility=vis;
+    }else{
+      const c=mix([255,255,255],[0,0,0],tc);
+      mob[0].style.color=c; mobLinks.forEach(a=>a.style.color=c);
+      mob.forEach(m=>{m.style.opacity=hide; m.style.visibility=vis;});
+    }
+
+    $('hline').style.transform=`scaleX(${ease(ramp(p,T.hl))})`;
+    $('vline').style.transform=`scaleY(${ease(ramp(p,T.vl))})`;
+    const lr=ramp(p,T.lr), tb=ramp(p,T.tb);
+    $('labL').style.opacity=lr; $('labR').style.opacity=lr;
+    $('labT').style.opacity=tb; $('labB').style.opacity=tb;
+
+    // 끝부분: 덩어리째 위로 밀려 올라가지 않도록 먼저 사라지게
+    const ex=ease(ramp(p,T.exit));
+    frame.style.opacity=1-ex; cvBack.style.opacity=1-ex;
+    frame.style.scale=String(1-.04*ex);
+  }
+
+  let target=0,cur=0;
+  function readScroll(){ target=clamp((scrollY-intro.offsetTop)/(intro.offsetHeight-innerHeight)); }
+  let lastT=0, drawn=-1;
+  function tick(t){
+    const dt=lastT?Math.min((t-lastT)/1000,.1):1/60; lastT=t;
+    const k=1-Math.pow(1-.12,dt*60);          // 60Hz·120Hz 모니터에서 같은 속도
+    cur=reduce?target:cur+(target-cur)*k;
+    if(Math.abs(target-cur)<1e-4) cur=target;
+    if(cur!==drawn){ render(cur); drawn=cur; }  // 멈춰 있을 땐 다시 그리지 않음
+    requestAnimationFrame(tick);
+  }
+  measure(); readScroll(); cur=target; render(cur);
+  addEventListener('scroll',readScroll,{passive:true});
+  addEventListener('resize',()=>{measure();readScroll();});
+  requestAnimationFrame(tick);
+  // con_garden의 SKIP에서 순간 이동할 때 인트로가 거꾸로 되감기지 않도록 바로 맞춤
+  window.__introSync=()=>{readScroll();cur=target;render(cur);};
+})();
+</script>
+
+<!-- ═══════════════ con_Garden (현대정원) ═══════════════
+     흐름 (참고 영상 기준)
+       ① 빈 화면 가운데 작은 사진 → 전체 화면으로 커짐
+       ② 오른쪽 절반 콘텐츠 판이 아래에서 올라와 사진을 덮음 (피그마 con_Garden_1000 좌표 그대로)
+       ③ 마지막 문장이 다 채워지면 판이 위로 빠지고 사진이 다시 전체 화면으로
+     글자 연출: 제목·라벨·사진 설명 제목 = 한 글자씩 아래에서 솟아오름
+               본문·설명 문장 = 줄 단위로 솟아오름
+               마지막 문장 = 스크롤 따라 한 글자씩 회색 → 검정 -->
+<style>
+.cg{position:relative;background:transparent;margin-top:-100vh;margin-top:-100svh}  /* 인트로 마지막 화면과 겹쳐 시작 → 선이 나온 뒤 빈 화면 없이 바로 현대정원 사진 */
+.cg-pin{position:sticky;top:0;height:100vh;height:100svh;margin-bottom:-100vh;margin-bottom:-100svh;overflow:hidden;z-index:2}
+.cg-photo{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden}
+.cg-photo img{width:100%;height:100%;max-width:none;object-fit:cover;display:block;will-change:transform}
+.cg-headpin{position:sticky;top:0;height:0;z-index:5;transition:opacity .3s}
+.cg-headpin.pre{opacity:0;visibility:hidden}
+.cg-hcv{position:absolute;left:0;top:0;width:1920px;height:1000px;transform-origin:0 0;pointer-events:none}
+.cg-bar{position:absolute;left:960px;top:0;width:960px;height:44px;background:var(--bg);opacity:0;transition:opacity .3s}
+.cg-word{position:absolute;left:980px;top:10px;width:104.4px;height:11.15px;object-fit:contain;object-position:left center;transition:filter .3s}
+.cg-skip{position:absolute;left:1759px;top:13px;pointer-events:auto;color:var(--ink);font-size:14px;line-height:normal;letter-spacing:-0.56px;
+  font-weight:400;cursor:pointer;background:none;border:0;padding:0;font-family:inherit;transition:color .3s}
+.cg-skip img{position:absolute;left:31px;top:6px;width:9.9px;height:5.95px;object-fit:contain;transition:filter .3s}
+.cg-skip:hover span{text-decoration:underline;text-underline-offset:4px}
+.cg-skip:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+.cg-headpin.on-photo .cg-word,.cg-headpin.on-photo .cg-skip img{filter:invert(1)}
+.cg-headpin.on-photo .cg-skip{color:#fff}
+.cg-headpin.skip-white .cg-skip{color:#fff}
+.cg-headpin.skip-white .cg-skip img{filter:invert(1)}
+
+.cg-panel{position:absolute;left:50%;width:50%;top:200vh;background:var(--bg);z-index:3}
+.cg-cv{position:absolute;left:-960px;top:0;width:1920px;height:5344px;transform-origin:0 0}
+.cg-cv>*{position:absolute;margin:0}
+.cg-dot{width:12px;height:12.32px;margin:-1px 0 0 -1px;opacity:0;transition:opacity .8s}  /* 꽃 로고: 피그마 Group 3/6/7/8, 불투명도 1, 선 굵기 그대로 보이게 벡터로 */
+.cg-dot.in{opacity:.7}
+.cg-lab{font-size:14px;line-height:normal;font-weight:400;letter-spacing:-0.56px;white-space:nowrap}
+.cg-h{font-size:35px;line-height:42px;font-weight:500;letter-spacing:-1.4px;white-space:nowrap}
+.cg-h.big{font-size:40px;line-height:48px;letter-spacing:-1.6px}
+.cg-p{font-size:18px;line-height:25px;font-weight:400;letter-spacing:-0.72px;white-space:nowrap}
+.cg-fig{width:calc(var(--w)*1px)}
+.cg-img{position:relative;width:100%;height:calc(var(--h)*1px);overflow:hidden}
+.cg-img img{width:100%;height:100%;max-width:none;object-fit:cover;display:block;transform-origin:50% 60%}
+.cg-fig figcaption{position:absolute;top:calc(var(--h)*1px + 20px);left:var(--cx,0px);white-space:nowrap}
+.cg-t{display:block;font-size:18px;line-height:21px;font-weight:500}
+.cg-s{display:block;margin-top:2px;font-size:18px;line-height:21px;font-weight:400;letter-spacing:-0.72px}
+.cg-s.sm{font-size:16px;line-height:19px;letter-spacing:-0.64px}
+.cg-q{white-space:nowrap;font-size:40px;line-height:1.333;font-weight:500;letter-spacing:-1.6px}
+.cg-endlogo{width:145px;height:17px;object-fit:contain;object-position:right center}
+
+/* 타이포 연출: 단어마다 창(overflow:hidden)을 두고 글자가 그 아래에서 솟아오름 */
+.ty .w{display:inline-block;vertical-align:top;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em;white-space:nowrap}
+.ty .c{display:inline-block;transform:translateY(110%);
+  transition:transform .3s cubic-bezier(.4,0,1,1)}
+.ty.in .c{transform:none;transition:transform 1s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.cg-q .c{opacity:.12}
+
+.cg-veil{position:fixed;inset:0;z-index:50;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .35s ease}
+.cg-veil.on{opacity:1;pointer-events:auto}
+
+/* 휴대폰 (피그마 시안 없음 → 임시: 판이 화면 전체 폭, 내용은 한 줄로 쌓기) */
+@media (max-width:767px){
+  .cg-hcv{width:100%;height:44px;transform:none !important}
+  .cg-bar{left:0;width:100%}
+  .cg-word{left:16px;top:16px}
+  .cg-skip{left:auto;right:30px;top:13px}
+  .cg-panel{left:0;width:100%;padding:8px 16px 96px}
+  .cg-cv{position:static;width:auto;height:auto;transform:none !important}
+  .cg-cv>*{position:static}
+  .cg-dot{display:none}
+  .cg-lab{display:block;margin-top:72px}
+  .cg-h{margin-top:14px;font-size:28px;line-height:36px;white-space:normal}
+  .cg-h.big{font-size:30px;line-height:38px}
+  .cg-p{margin-top:16px;font-size:15px;line-height:23px;white-space:normal}
+  .cg-p br{display:none}
+  .cg-fig{width:100%;margin-top:36px}
+  .cg-fig.half{width:72%}
+  .cg-fig.right{margin-left:auto}
+  .cg-img{height:auto;aspect-ratio:var(--w)/var(--h)}
+  .cg-fig figcaption{position:static;margin-top:14px}
+  .cg-t{font-size:16px}
+  .cg-s,.cg-s.sm{font-size:14px;letter-spacing:-0.56px;white-space:normal}
+  .cg-q{width:auto;margin-top:96px;font-size:26px;white-space:normal}
+  .cg-endlogo{display:block;margin:20px 0 0 auto;width:120px;height:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ty .c,.ty.in .c{transform:none;transition:none}
+  .cg-dot{opacity:.7;transition:none}
+}
+</style>
+
+<section class="cg" id="con-garden" aria-label="현대정원">
+  <div class="cg-pin">
+    <div class="cg-photo" id="cgPhoto"><img src="img/cg_pillars_wide.jpg" alt="숲을 배경으로 콘크리트 기둥들이 원형 난간을 둘러싼 옥상 정원 흑백 사진"></div>
+  </div>
+  <div class="cg-headpin" id="cgHeadPin">
+    <div class="cg-hcv" id="cgHead">
+      <div class="cg-bar"></div>
+      <img class="cg-word" src="img/cg_wordmark.png" alt="MÉDONGAULE">
+      <button class="cg-skip" id="cgSkip" type="button" aria-label="건너뛰기: 다음 정원으로"><span>SKIP</span><img src="img/cg_chevron.png" alt=""></button>
+    </div>
+  </div>
+
+  <div class="cg-panel" id="cgPanel">
+   <div class="cg-cv" id="cgCv">
+    <!-- 01 현대정원 -->
+    <img class="cg-dot" src="img/cg_flower.svg" alt="" style="left:1124px;top:137px" data-dot>
+    <p class="cg-lab ty" style="left:1226px;top:134px;letter-spacing:0.7px" data-ty="chars">현대정원</p>
+    <h2 class="cg-h ty" style="left:1226px;top:214px" data-ty="chars">천 년을 지속하는<br>정원을 만들 수 있을까</h2>
+    <p class="cg-p ty" style="left:1226px;top:376px" data-ty="lines">철학적 사유와 대한민국 이야기를 담은 프랑스 감성의 정원.<br>14년이 넘는 시간 동안 세계 각지의 정원을 공부하고<br>수없이 도면을 지우고 다시 그리며 이 땅에 없던 것을 빚어냈습니다.</p>
+    <figure class="cg-fig half right" style="left:1456px;top:511px;--w:200;--h:200" data-fig>
+      <div class="cg-img"><img src="img/cg_cube.jpg" alt="풀숲 위에 비스듬한 결이 새겨진 콘크리트 큐브" loading="lazy"></div>
+    </figure>
+    <figure class="cg-fig" style="left:1266px;top:781px;--w:533;--h:254" data-fig>
+      <div class="cg-img"><img src="img/cg_wisteria.jpg" alt="등나무 기둥 사이로 보이는 돌담과 가운데 열린 문" loading="lazy"></div>
+    </figure>
+
+    <!-- 02 생각의 섬 -->
+    <img class="cg-dot" src="img/cg_flower.svg" alt="" style="left:1124px;top:1138px" data-dot>
+    <p class="cg-lab ty" style="left:1226px;top:1135px" data-ty="chars">ISLAND OF THOUGHT</p>
+    <h2 class="cg-h ty" style="left:1226px;top:1215px" data-ty="chars">생각의 섬</h2>
+    <p class="cg-p ty" style="left:1226px;top:1335px" data-ty="lines">동서양의 철학과 문학을 정원의 언어로 풀어낸 공간입니다.<br>플라톤의 이데아, 어린 왕자의 여정, 붓다의 깨달음, 카잔차키스의<br>자유, 니체의 미로가 하나의 사유로 이어집니다.</p>
+    <figure class="cg-fig" style="left:1266px;top:1470px;--w:388;--h:458;--cx:1px" data-fig>
+      <div class="cg-img"><img src="img/cg_bollards.jpg" alt="계단 위로 줄지어 선 은빛 원기둥과 긴 그림자" loading="lazy"></div>
+      <figcaption><span class="cg-t ty" data-ty="chars">자유</span><span class="cg-s ty" data-ty="lines">삶을 껴안고 춤출 수 있는 공간</span></figcaption>
+    </figure>
+    <figure class="cg-fig right" style="left:1411px;top:2062px;--w:388;--h:458;--cx:-2px" data-fig>
+      <div class="cg-img"><img src="img/cg_mirror.jpg" alt="거울 기둥과 콘크리트 지붕 아래 원형 꽃밭" loading="lazy"></div>
+      <figcaption><span class="cg-t ty" data-ty="chars">메도우가든</span><span class="cg-s ty" data-ty="lines">손을 놓을 때 비로소 피어나는 공간</span></figcaption>
+    </figure>
+
+    <!-- 03 대한민국 이야기 -->
+    <img class="cg-dot" src="img/cg_flower.svg" alt="" style="left:1124px;top:2687px" data-dot>
+    <p class="cg-lab ty" style="left:1226px;top:2684px" data-ty="chars">STORY OF KOREA</p>
+    <h2 class="cg-h big ty" style="left:1226px;top:2764px" data-ty="chars">대한민국 이야기</h2>
+    <p class="cg-p ty" style="left:1226px;top:2890px;letter-spacing:-0.18px" data-ty="lines">대한민국이 지나온 시간을 프랑스식 정원의 언어로 풀어낸 공간입니다.<br>농경시대부터 6·25 전쟁의 상처와 극복을 지나,<br>앞으로 우리가 나아가야 할 방향을 함께 담았습니다.</p>
+    <figure class="cg-fig" style="left:1123px;top:3035px;--w:676;--h:411;--cx:-1px" data-fig>
+      <div class="cg-img"><img src="img/cg_canopy.jpg" alt="숲과 한옥 지붕을 배경으로 선 둥근 금속 지붕의 정자" loading="lazy"></div>
+      <figcaption><span class="cg-t ty" data-ty="chars">선비의 나라</span><span class="cg-s sm ty" data-ty="lines">스스로를 다스려 세상을 바로 세우고자 했던 정신의 공간</span></figcaption>
+    </figure>
+    <figure class="cg-fig half" style="left:1123px;top:3578px;--w:388;--h:487;--cx:-1px" data-fig>
+      <div class="cg-img"><img src="img/cg_stair.jpg" alt="부채꼴 화단 가운데 계단이 들어 있는 삼각형 콘크리트 구조물" loading="lazy"></div>
+      <figcaption><span class="cg-t ty" data-ty="chars">불굴의 정신</span><span class="cg-s sm ty" data-ty="lines">거친 운명 속에서도 자신만의 길을 만들어낸 의지의 공간</span></figcaption>
+    </figure>
+    <figure class="cg-fig half right" style="left:1412px;top:4197px;--w:388;--h:482;--cx:-1px" data-fig>
+      <div class="cg-img"><img src="img/cg_mounds.jpg" alt="잔디 둔덕과 원형 화단이 놓인 곡선 길" loading="lazy"></div>
+      <figcaption><span class="cg-t ty" data-ty="chars">번영의 시대</span><span class="cg-s sm ty" data-ty="lines">풍요 속에서 존재의 방향을 되묻는 공간</span></figcaption>
+    </figure>
+
+    <!-- 마지막 -->
+    <img class="cg-dot" src="img/cg_flower.svg" alt="" style="left:1124px;top:4962.5px" data-dot><!-- '눈을' 첫 줄(4941~4994)의 세로 가운데 -->
+    <p class="cg-q ty" style="right:120px;top:4941px" id="cgQuote" data-ty="lines">눈을 사로잡는 장면은<br>오래가지 않지만 마음을 흔드는<br>경험은 시간이 흘러도 기억됩니다.</p>
+    <img class="cg-endlogo" src="img/cg_wordmark.png" alt="MÉDONGAULE" style="right:120px;top:5127px">
+   </div>
+  </div>
+</section>
+<div class="cg-veil" id="cgVeil" aria-hidden="true"></div>
+
+<script>
+(() => {
+  /* ── 조절값 (단위: 화면 높이 vh) ───────────────────────────── */
+  const OPEN   = 1.0;  // 작은 사진 → 전체 화면까지 스크롤 거리
+  const HOLD   = .35;  // 전체 화면 사진을 보여주는 여유
+  const ENDH   = 1.6;  // 판이 빠진 뒤 사진을 다시 보여주는 여유. 한국정원이 화면 1개 길이만큼 겹쳐 올라오므로 1 + 쉬는 구간(0.6)
+  const START_W= .2;   // 처음 작은 사진 너비 (화면 너비 대비)
+  const CHAR_GAP=.035, LINE_GAP=.09;   // 글자 / 줄 사이 등장 간격(초)
+  const GHOST=.12, FADE=5;             // 마지막 문장: 안 나온 글자 진하기, 동시에 진해지는 글자 수
+  const RANGE={fig:[0,.45]};
+  /* 마지막 문장 '눈을 사로잡는 장면은…' (v26: 판 아래 끝이 화면 바닥에 닿았을 때만 움직임)
+     판 아래 끝이 화면 바닥에 닿으면 판이 그 자리에 멈추고(아래 배경이 안 보임),
+     그때부터 문장이 줄마다 솟아오르고, QHOLD(화면 높이 단위)만큼 스크롤하는 동안 글자가 회색 → 검정으로 채워짐.
+     다 채워지면 판이 다시 올라감. 채우는 속도는 v25와 같음 (채움 길이 1.75 × 0.88 ≈ 1.54화면) */
+  /* 오른쪽 판 시작 멈춤 (v27): 판 윗변이 화면 맨 위에 닿으면 SHOLD(화면 높이 단위)만큼 그 자리에 멈췄다가 스크롤됨. SHOLD↑ = 더 오래 멈춤 */
+  const SHOLD=.5;
+  const QHOLD=1.75, QFILL=[.05,.93];   // QFILL: 멈춘 시점 기준 [시작, 끝] (QHOLD 대비 비율)
+
+  const $=id=>document.getElementById(id);
+  const cg=$('con-garden'), photo=$('cgPhoto'), pimg=photo.querySelector('img'), panel=$('cgPanel'),
+        cv=$('cgCv'), head=$('cgHead'), headPin=$('cgHeadPin'), quote=$('cgQuote'), skip=$('cgSkip');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const ramp=(p,[a,b])=>clamp((p-a)/(b-a));
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const out=t=>1-Math.pow(1-t,3);
+  const lerp=(a,b,t)=>a+(b-a)*t;
+
+  /* 글자 쪼개기: 줄(<br>) → 단어(창) → 글자 */
+  const tys=[...cv.querySelectorAll('[data-ty]')].map(el=>{
+    const mode=el.dataset.ty; let n=0;
+    el.setAttribute('aria-label',el.textContent);
+    el.innerHTML=el.innerHTML.split(/<br\s*\/?>/i).map((line,li)=>
+      line.trim().split(/\s+/).map(word=>`<span class="w" aria-hidden="true">${[...word].map(ch=>{
+        const d=mode==='chars'?Math.min(n++,24)*CHAR_GAP:li*LINE_GAP;
+        return `<span class="c" style="--d:${d.toFixed(3)}s">${ch}</span>`;
+      }).join('')}</span>`).join(' ')
+    ).join(' <br>');
+    return {el, fig:el.closest('[data-fig]')};
+  });
+  const qchars=[...quote.querySelectorAll('.c')];
+  const dots=[...cv.querySelectorAll('[data-dot]')].map(d=>({d,lab:d.nextElementSibling}));
+  const figs=[...cv.querySelectorAll('[data-fig]')].map(el=>({el,cur:0,box:el.querySelector('.cg-img'),img:el.querySelector('.cg-img img')}));
+
+  let vw,vh,mobile,s=1,P=0,PH=0,HS=0,HL=0,H0=0;
+  function measure(){
+    vw=document.documentElement.clientWidth; vh=innerHeight; mobile=vw<768;
+    P=(OPEN+HOLD+1)*vh;
+    if(!mobile){
+      s=vw/1920;
+      cv.style.transform=head.style.transform=`scale(${s})`;
+      cv.style.left=(-vw/2)+'px';
+      panel.style.height=(5344*s)+'px';
+    }else{ s=1; cv.style.transform=head.style.transform=cv.style.left=panel.style.height=''; }
+    panel.style.position=''; panel.style.top=P+'px';
+    PH=panel.offsetHeight;
+    // 마지막 문장 멈춤 구간 (휴대폰은 판이 일반 흐름이라 멈춤 없음)
+    HL=mobile?0:QHOLD*vh;
+    H0=mobile?0:SHOLD*vh;   // 판 시작 멈춤 길이
+    HS=P+H0+PH-vh;   // 판 아래 끝 = 화면 바닥이 되는 스크롤 위치
+    cg.style.height=(P+H0+PH+HL+vh*(1+ENDH))+'px';
+    pinState='';   // 크기가 바뀌면 멈춤 위치 다시 적용
+    pin();
+  }
+
+  // 판 멈추기: 멈춤 구간에서는 화면에 고정(fixed), 지나면 그만큼 아래로 내려 붙여서 이어서 올라감
+  // 멈춤 두 번: ① 판 윗변이 화면 맨 위에 닿을 때(H0) ② 판 아래 끝이 화면 바닥에 닿을 때(HL, 마지막 문장)
+  let pinState='';
+  function pin(){
+    if(!HL&&!H0){ if(pinState){ panel.style.position=''; panel.style.top=P+'px'; pinState=''; } return; }
+    const ty=scrollY-cg.offsetTop;
+    const st=ty<P?'b0':ty<P+H0?'h0':ty<HS?'b1':ty<HS+HL?'h1':'after';
+    if(st===pinState) return;
+    pinState=st;
+    if(st==='h0'){ panel.style.position='fixed'; panel.style.top='0px'; }
+    else if(st==='h1'){ panel.style.position='fixed'; panel.style.top=(P+H0-HS)+'px'; }
+    else{ panel.style.position=''; panel.style.top=(st==='b0'?P:st==='b1'?P+H0:P+H0+HL)+'px'; }
+  }
+  window.__cgPin=pin;
+  addEventListener('scroll',pin,{passive:true});
+
+  let cy=null;
+  function frame(snap){
+    pin();
+    const ty=scrollY-cg.offsetTop;
+    cy=(snap||cy===null||reduce)?ty:cy+(ty-cy)*.14;
+
+    // ① 작은 사진 → 전체 화면
+    // 인트로가 화면 위로 빠진 뒤, 화면 가운데에서 작은 사진이 부드럽게 나타나 커짐
+    const appear=reduce?1:out(ramp(cy/vh,[0,.2]));
+    photo.style.opacity=appear;
+    const ot=reduce?1:ease(ramp(cy/vh,[.12,OPEN+.12]));
+    const w0=vw*(mobile?.5:START_W)*lerp(.85,1,appear), h0=w0*.62;
+    photo.style.left=lerp((vw-w0)/2,0,ot)+'px'; photo.style.top=lerp((vh-h0)/2,0,ot)+'px';
+    photo.style.width=lerp(w0,vw,ot)+'px';      photo.style.height=lerp(h0,vh,ot)+'px';
+    pimg.style.transform=`scale(${lerp(1.25,1,ot)})`;
+    // 끝부분: 다시 전체 화면이 된 사진이 위로 밀려 올라가지 않고 제자리에서 서서히 사라짐 → 한국정원으로 이어짐
+    const endMax=P+PH+vh*ENDH;
+    const fadeOut=0;   // 사라지지 않음: 한국정원 화면이 아래에서 올라와 덮음
+    photo.style.opacity=appear*(1-fadeOut);
+
+    // 머리글: 판 위 = 검정+띠 / 사진 위 = 흰색 / 빈 배경 위 = 검정
+    const pTop=panel.getBoundingClientRect().top, hb=44*s;
+    const covered=pTop<=hb && pTop+PH>hb;
+    headPin.classList.toggle('covered',covered);
+    headPin.classList.toggle('pre',!covered);   // 판이 화면 맨 위까지 올라온 뒤부터만 로고·SKIP 보임
+
+    // 사진: 스크롤에 맞춰 아래→위로 열림 + 살짝 줌아웃
+    for(const f of figs){
+      const t=(vh-f.el.getBoundingClientRect().top)/vh;
+      f.cur=(snap||reduce)?t:f.cur+(t-f.cur)*.14;
+      const e=reduce?1:out(ramp(f.cur,RANGE.fig));
+      f.box.style.clipPath=`inset(${(1-e)*100}% 0 0 0)`;
+      f.img.style.transform=`scale(${1.15-.15*e})`;
+      f.p=e;
+    }
+    // SKIP 밑에 (열린) 사진이 닿으면 흰색으로
+    const sr=skip.getBoundingClientRect(), sy=sr.top+sr.height/2;
+    const onImg=figs.some(f=>{ const r=f.box.getBoundingClientRect(), vt=r.top+r.height*(1-f.p);
+      return f.p>0 && sr.right>r.left && sr.left<r.right && sy>vt && sy<r.bottom; });
+    headPin.classList.toggle('skip-white',onImg);
+
+    // 타이포: 화면에 들어오면 솟아오름, 화면 아래로 다시 나가면 초기화(다시 보면 또 재생)
+    for(const t of tys){
+      let on;
+      if(t.fig){ const f=figs.find(x=>x.el===t.fig); on=f.p>.55?true:(f.p<.05?false:null); }
+      else if(t.el===quote&&HL){ const ty=scrollY-cg.offsetTop; on=ty>=HS?true:(ty<HS-.3*vh?false:null); }   // 판이 바닥에 닿기 전엔 솟아오르지 않음
+      else{ const top=t.el.getBoundingClientRect().top; on=top<vh*.88?true:(top>vh?false:null); }
+      if(on!==null) t.el.classList.toggle('in',on);
+    }
+    dots.forEach(({d,lab})=>d.classList.toggle('in',lab.classList.contains('in')));
+
+    // 마지막 문장: 한 글자씩 회색 → 검정
+    const qp=reduce?1:(HL
+      ? ramp(scrollY-cg.offsetTop,[HS+QFILL[0]*HL,HS+QFILL[1]*HL])     // 멈춘 동안 천천히 채움
+      : ramp((vh-quote.getBoundingClientRect().top)/vh,[.12,.6]));     // 휴대폰: 예전 그대로
+    const k=qp*(qchars.length+FADE);
+    qchars.forEach((c,i)=>{ c.style.opacity=GHOST+(1-GHOST)*clamp((k-i)/FADE); });
+  }
+  function loop(){ frame(false); requestAnimationFrame(loop); }
+
+  // SKIP → 인트로 맨 처음으로
+  const veil=$('cgVeil');
+  $('cgSkip').addEventListener('click',()=>{
+    const next=document.getElementById('korean-garden');   // 한국정원 섹션을 붙이면 id="korean-garden"
+    const jump=()=>{ if(window.__goTo&&next) window.__goTo('korean-garden'); else scrollTo(0,next?next.offsetTop:cg.offsetTop+cg.offsetHeight); frame(true); };
+    if(reduce){ jump(); return; }
+    veil.classList.add('on');
+    setTimeout(()=>{ jump(); requestAnimationFrame(()=>veil.classList.remove('on')); },360);
+  });
+
+  measure(); frame(true); requestAnimationFrame(loop);
+  window.__cgSync=()=>frame(true);
+  window.__cgFull=()=>cg.offsetTop+(OPEN+.2)*vh;   // 메뉴로 왔을 때: 사진이 전체 화면이 된 지점
+  addEventListener('resize',()=>{ measure(); frame(true); });
+  addEventListener('load',()=>{ measure(); frame(true); });
+})();
+</script>
+
+
+<!-- ═══════════════ tre_Garden_1000 (한국정원) ═══════════════
+     글자 한 줄씩 아래→위 + 투명도 / 첫 줄과 함께 가을 사진 → 스크롤하면 겨울 사진
+     새는 섹션에 들어올 때마다 한 번, 파란 선 경로로 지나감 -->
+<style>
+  
+  /* 레이아웃: 피그마 tre_Garden_1000 (1920×1000) 좌표 그대로.
+     가로 위치·글자 크기 = 화면너비/1920, 세로 위치 = 화면높이/1000 비율 */
+  :root { --bird: #111111; }   /* 새는 검정 (흰색이면 눈·하늘에 묻혀 안 보임) */
+
+  /* ===== 한국정원 섹션 =====
+     섹션 높이만큼 스크롤하는 동안 화면(stage)은 고정, 스크롤 양에 따라 연출 진행 */
+  .kg-section { position: relative; z-index: 3; height: 400vh; margin-top: -100vh; margin-top: -100svh; }   /* 현대정원 마지막 화면과 겹쳐 시작 → 기둥 사진은 제자리, 한국정원 화면이 아래에서 올라와 덮음 */
+  .kg-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background: var(--bg);   /* 현대정원 사진 위로 아래에서 올라오며 덮음 (현대정원 판처럼) */
+  }
+
+  /* 로고 (Group 4): x120 y19, 171×18 */
+  .kg-logo {
+    position: absolute;
+    left: calc(120 / 1920 * 100vw);
+    top: calc(19 / 1000 * 100%);
+    width: calc(171 / 1920 * 100vw);
+    height: auto;
+    z-index: 5;
+  }
+
+  /* 사진 (Rectangle 48): x960 y0, 960×1000. 가을·겨울 두 장을 겹쳐 놓고 스크롤로 전환 */
+  .kg-photo {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  /* 글자 (54:752): x181 y410, 너비 627, 크기 50, 자간 0
+     1줄 한국정원 SemiBold / 2·3줄 Regular, 세 줄 모두 행간 normal
+     → Pretendard 50px의 normal = 약 60px (피그마 글상자 높이 180 ÷ 3줄)로 고정 */
+  .kg-copy {
+    position: absolute;
+    left: calc(181 / 1920 * 100vw);
+    top: calc(410 / 1000 * 100%);
+    width: calc(627 / 1920 * 100vw);
+    margin: 0;
+    font-size: calc(50 / 1920 * 100vw);
+    letter-spacing: 0;
+    color: var(--ink);
+    z-index: 4;
+    word-break: keep-all;
+  }
+  .kg-line {
+    display: block;
+    font-weight: 400;
+    line-height: calc(60 / 1920 * 100vw);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .kg-line--title { font-weight: 600; }
+  /* v25: 2·3줄(한국인의 미학과 / 정신철학이 담겨 있는 공간)만 5px 작게 → 45px, 행간 54 (45 × 1.2). 1줄 '한국정원'은 50 그대로 */
+  .kg-line:not(.kg-line--title) { font-size: calc(45 / 1920 * 100vw); line-height: calc(54 / 1920 * 100vw); }
+
+  /* 새: 사진 위, 글자 아래 */
+  .kg-birds { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+  .bird { position: absolute; left: 0; top: 0; height: auto; fill: var(--bird); overflow: visible; will-change: transform; }
+  .bird .pose-glide { animation: poseGlide var(--flap, .4s) infinite; animation-delay: var(--delay, 0s); }
+  .bird .pose-up    { animation: poseUp    var(--flap, .4s) infinite; animation-delay: var(--delay, 0s); }
+  @keyframes poseGlide { 0%, 64.9% { opacity: 1; } 65%, 100% { opacity: 0; } }
+  @keyframes poseUp    { 0%, 64.9% { opacity: 0; } 65%, 100% { opacity: 1; } }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시 배치: 사진 위 절반, 글자 아래) */
+  @media (max-width: 767px) {
+    .kg-logo { left: max(16px, env(safe-area-inset-left, 0px)); top: 16px; width: 120px; }
+    .kg-photo { left: 0; width: 100%; height: 52%; }
+    .kg-copy { left: max(24px, env(safe-area-inset-left, 0px)); width: auto; right: 24px; top: 60%; font-size: 30px; }
+    .kg-line { line-height: 40px; }
+    .kg-line:not(.kg-line--title) { font-size: 27px; line-height: 36px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-birds { display: none; }
+  }
+</style>
+
+<!-- id="korean-garden" : con_garden의 SKIP 버튼이 이 섹션으로 이동 -->
+<section class="kg-section" id="korean-garden" aria-label="한국정원">
+  <div class="kg-stage">
+    <img class="kg-logo" src="img/kg_logo.png" alt="MÉDONGAULE">
+
+    <img class="kg-photo" id="kgFall"   src="img/kg_autumn.jpg" alt="단풍 아래 한옥과 연못">
+    <img class="kg-photo" id="kgWinter" src="img/kg_winter.jpg" alt="눈 덮인 한국정원 전경">
+
+    <div class="kg-birds" id="kgBirds" aria-hidden="true"></div>
+
+    <h2 class="kg-copy">
+      <span class="kg-line kg-line--title">한국정원</span>
+      <span class="kg-line">한국인의 미학과</span>
+      <span class="kg-line">정신철학이 담겨 있는 공간</span>
+    </h2>
+  </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('korean-garden');
+  const fall    = document.getElementById('kgFall');
+  const logo    = section.querySelector('.kg-logo');
+  const winter  = document.getElementById('kgWinter');
+  const lines   = section.querySelectorAll('.kg-line');
+  const birdLayer = document.getElementById('kgBirds');
+
+  /* ===== 스크롤 타이밍표 (0 = 섹션 시작, 1 = 섹션 끝) — 숫자만 바꾸면 조정됨 ===== */
+  const T = {
+    // 글자·가을 사진은 처음부터 완성된 상태로 화면과 함께 아래에서 올라옴
+    lines: [0.00, 0.09],    // 화면이 다 올라와 고정되면: 글자 한 줄씩 아래→위로 + 투명도 (첫 줄 구간)
+    lineGap: 0.04,          // 줄 사이 시차
+    toWinter: [0.30, 0.55]  // 다 올라온 뒤: 가을 → 겨울 사진으로 바뀌는 구간
+  };
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => t * t * (3 - 2 * t);
+  const range = (p, a, b) => ease(clamp((p - a) / (b - a)));
+
+  function state() {
+    const r = section.getBoundingClientRect();
+    const p = clamp(-r.top / (section.offsetHeight - window.innerHeight));
+    const pinned = r.top <= 1 && r.bottom >= window.innerHeight - 1;   // 화면이 고정된 동안
+    return { p, pinned };
+  }
+
+  function render() {
+    const { p, pinned } = state();
+
+    // 1) 가을 사진·로고: 처음부터 보임 (화면째 아래에서 올라옴)
+    //    글자: 화면이 고정된 뒤 한 줄씩 아래에서 위로 올라오며 선명해짐 (역스크롤 시 역재생)
+    lines.forEach((line, i) => {
+      const t = range(p, T.lines[0] + i * T.lineGap, T.lines[1] + i * T.lineGap);
+      line.style.opacity = t;
+      line.style.transform = `translateY(${(1 - t) * 40}px)`;
+    });
+    fall.style.opacity = 1;
+    logo.style.opacity = 1;
+
+    // 2) 다 올라온 뒤 스크롤하면 겨울로 바뀜
+    winter.style.opacity = range(p, T.toWinter[0], T.toWinter[1]);
+
+    // 3) 새: 화면이 고정되는 순간 한 번 출발 (다시 들어오면 또 한 번)
+    setBirds(pinned);
+  }
+
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { render(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  /* ===== 새 ===== */
+  const BIRD_SVG =
+    '<svg class="bird" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg">' +
+      '<path class="pose-glide" d="M3 11.2 C4.4 8.4 7.6 6.6 11.2 5.8 C12.8 4.8 14.6 4 16.8 3.6 C16 5.4 14.6 6.6 13.4 7.2 C11.4 10 7.8 11.8 5 11.6 C4 12.2 3.2 12 3 11.2 Z"/>' +
+      '<g class="pose-up">' +
+        '<path d="M2.4 12 C5.4 9.8 10.4 9.4 13.6 9.8 L16.8 8.6 L14.8 10.8 C12 12.8 6.4 13.2 2.4 12 Z"/>' +
+        '<path d="M7.2 10.6 C5.2 8.4 4.8 5.4 6.2 2.2 C7.2 5.2 9.2 7.8 11 10 Z"/>' +
+      '</g>' +
+    '</svg>';
+
+  /* 이동 경로 (보내준 파란 선, 두 번째 수정본): [가로 위치, 세로 위치] — 화면 너비·높이에 대한 비율
+     왼쪽 62% 높이에서 출발 → 글자 아래쪽을 살짝 처지며 지나 → 가운데부터 크게 올라가 → 오른쪽 위 18~20%로 빠짐 */
+  const PATH = [
+    [-0.04, 0.612], [0.14, 0.632], [0.26, 0.61], [0.37, 0.54], [0.50, 0.425],
+    [0.60, 0.31], [0.69, 0.225], [0.81, 0.184], [0.91, 0.18], [1.04, 0.205]
+  ];
+
+  // 꺾이지 않게 부드러운 곡선(캣멀롬)으로 점을 촘촘히 만듦
+  function smoothPath(pts, steps) {
+    const out = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+      for (let s = 0; s < steps; s++) {
+        const t = s / steps, t2 = t * t, t3 = t2 * t;
+        const f = (a, b, c, d) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3);
+        out.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1])]);
+      }
+    }
+    out.push(pts[pts.length - 1]);
+    return out;
+  }
+  const CURVE = smoothPath(PATH, 8);
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  function launchFlock() {
+    const w = birdLayer.clientWidth;
+    const h = birdLayer.clientHeight;
+    const count = Math.round(rand(2, 4));
+    const crossTime = rand(7000, 8500);      // 화면을 가로지르는 시간(ms) — 숫자↑ = 더 천천히
+
+    for (let i = 0; i < count; i++) {
+      const holder = document.createElement('div');
+      holder.innerHTML = BIRD_SVG;
+      const bird = holder.firstChild;
+      bird.style.setProperty('--flap', rand(0.34, 0.48).toFixed(2) + 's');
+      bird.style.setProperty('--delay', (-rand(0, 0.4)).toFixed(2) + 's');
+      bird.style.width = rand(15, 20) + 'px';
+      birdLayer.appendChild(bird);
+
+      // 새마다 조금씩 뒤에서, 위아래로 살짝 어긋나게 (지금 간격 유지)
+      const offX = i * rand(40, 140);
+      const offY = rand(-30, 30);
+      const frames = CURVE.map(([x, y]) => ({
+        transform: `translate(${x * w - offX}px, ${y * h + offY}px)`
+      }));
+      const anim = bird.animate(frames, {
+        duration: crossTime + offX * 3,
+        easing: 'linear',
+        delay: i * rand(60, 180)
+      });
+      anim.onfinish = () => bird.remove();
+    }
+  }
+
+  // 새는 들어올 때마다 한 번: 화면이 고정되는 순간 한 무리가 날아가고,
+  // 섹션을 벗어났다가 다시 들어오면 또 한 번 날아감
+  let birdsDone = false;
+  function setBirds(on) {
+    if (on && !birdsDone) { birdsDone = true; launchFlock(); }
+    if (!on) birdsDone = false;
+  }
+
+  render();   // 처음 한 번 그리기
+})();
+</script>
+
+<!-- ═══════════════ tre_Garden_2000 → 2001 → 2002 (한국정원 세 정원) ═══════════════
+     피그마 1920×1000 좌표 그대로. 화면 너비/1920 비율로 키우거나 줄임
+     흐름: 선비들의 풍류(2000) → 민초들의 삶(2001) → 한국인의 정신(2002)
+           스크롤한 만큼 사진 줄이 오른쪽에서 왼쪽으로 밀려옴.
+           사진은 왼쪽 사진 자리(x797)에서 잘려서 그보다 왼쪽(글자 쪽)으로는 나가지 않음
+           글자는 장면이 바뀌는 중간에 사라졌다가 새 글자로 나타남
+           아래 진행 막대: 왼쪽(171) → 가운데(366) → 오른쪽(538)로 스크롤 따라 이동 -->
+<style>
+  .tg-section { position: relative; z-index: 3; height: 600vh; background: var(--bg); }  /* 끝나면 화면째 위로 밀려 올라가며 뒤에 고정된 건축물이 드러남 */
+  .tg-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--bg); }
+  .tg-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 1000px; transform-origin: 0 0; }
+
+  /* 한국정원 라벨: Regular 16, 자간 0.96 */
+  .tg-label { position: absolute; margin: 0; font-size: 16px; line-height: normal; font-weight: 400; letter-spacing: 0.96px; white-space: nowrap; color: var(--ink); }
+  /* FULL VIEW: Regular 16, 자간 1.12, x1713 y134 */
+  .tg-view { position: absolute; left: 1713px; top: 134px; margin: 0; font-size: 16px; line-height: normal; font-weight: 400; letter-spacing: 1.12px; white-space: nowrap; color: var(--ink); }
+  /* 제목: Medium 34, 행간 1.2, 자간 -2.04 */
+  .tg-title { position: absolute; margin: 0; font-size: 34px; line-height: 1.2; font-weight: 500; letter-spacing: -2.04px; white-space: nowrap; color: var(--ink); }
+  /* 본문: Regular 18, 행간 1.64, 자간 -0.18 */
+  .tg-body { position: absolute; margin: 0; font-size: 18px; line-height: 1.64; font-weight: 400; letter-spacing: -0.18px; white-space: nowrap; color: var(--ink); }
+  .tg-copy { will-change: opacity, transform; }
+  .tg-copy:not(:first-of-type) { opacity: 0; }
+
+  /* SKIP: Regular 14, 자간 -0.56, x169 y520 + 화살표 */
+  .tg-skip { position: absolute; left: 169px; top: 520px; padding: 0; border: 0; background: none; cursor: pointer;
+    font-family: inherit; font-size: 14px; line-height: normal; font-weight: 400; letter-spacing: -0.56px; color: var(--ink); }
+  .tg-skip img { position: absolute; left: 31px; top: 5px; width: 9.8px; height: 5.9px; object-fit: contain; }
+  .tg-skip:hover span { text-decoration: underline; text-underline-offset: 4px; }
+  .tg-skip:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+  /* 진행 막대: 선 x171~653 y836 (1px) + 막대 92px (3px) */
+  .tg-track { position: absolute; left: 171px; top: 836px; width: 482px; height: 1px; background: #989898; }
+  .tg-thumb { position: absolute; left: 171px; top: 836px; width: 92px; height: 3px; background: #989898; will-change: transform; }
+
+  /* 사진 창: x797부터 화면 오른쪽 끝까지, y176 높이 660. 이 창 밖(왼쪽)은 잘림 */
+  .tg-window { position: absolute; left: 797px; top: 176px; height: 660px; overflow: hidden; }
+  .tg-strip { position: absolute; left: 0; top: 0; height: 660px; will-change: transform; }
+  .tg-photo { position: absolute; top: 0; width: 660px; height: 660px; margin: 0; overflow: hidden; }
+  .tg-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
+  /* 처음 들어올 때: 사진이 왼쪽에서 오른쪽으로 열림 (사진은 제자리, 가림막만 걷힘) */
+  .tg-photo { clip-path: inset(0 100% 0 0); transition: clip-path .5s cubic-bezier(.4,0,.2,1); }
+  .tg-section.tg-in .tg-photo { clip-path: inset(0 0 0 0); transition: clip-path 1.3s cubic-bezier(.65,0,.35,1) var(--rd, 0s); }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 글자 위, 사진 줄 아래) */
+  @media (max-width: 767px) {
+    .tg-cv { width: 100%; height: 100%; transform: none !important; }
+    .tg-label { left: 20px !important; top: 64px !important; font-size: 13px; }
+    .tg-view { left: auto; right: 20px; top: 64px; font-size: 12px; }
+    .tg-title { left: 20px !important; top: 92px !important; font-size: 26px; letter-spacing: -1.2px; }
+    .tg-body { left: 20px !important; top: 140px !important; right: 20px; font-size: 14px; line-height: 1.6; white-space: normal; }
+    .tg-body br { display: none; }
+    .tg-skip { display: none; }
+    .tg-window { left: 20px; top: auto; bottom: 64px; right: 0; width: auto !important; height: 62vw; }
+    .tg-strip { height: 62vw; }
+    .tg-photo { width: 62vw; height: 62vw; }
+    .tg-track { left: 20px; top: auto; bottom: 40px; width: calc(100% - 40px); }
+    .tg-thumb { left: 20px; top: auto; bottom: 38px; width: 18%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tg-copy { transition: none; }
+    .tg-photo, .tg-section.tg-in .tg-photo { clip-path: none; transition: none; }
+  }
+</style>
+
+<section class="tg-section" id="korean-gardens" aria-label="한국정원 세 정원">
+  <div class="tg-stage">
+    <div class="tg-cv" id="tgCv">
+      <p class="tg-view">FULL VIEW</p>
+
+      <!-- 2000 선비들의 풍류 -->
+      <div class="tg-copy" data-slide="0">
+        <p class="tg-label" style="left:169px;top:132px">한국정원</p>
+        <h3 class="tg-title" style="left:167px;top:213px">선비들의 풍류</h3>
+        <p class="tg-body" style="left:167px;top:328px">자연을 벗삼아 풍류를 즐기던 선비들의 정원으로, 주변 풍경과<br>자연스럽게 어우러지는 한식 건물과 연못에 옛 선비들의 풍취가<br>담겨 있습니다.<br>메덩골 한국정원의 하이라이트인 재예당 마당에는 인상적인<br>물고기 바위가 놓여 있습니다.</p>
+      </div>
+      <!-- 2001 민초들의 삶 -->
+      <div class="tg-copy" data-slide="1">
+        <p class="tg-label" style="left:169px;top:132px">한국정원</p>
+        <h3 class="tg-title" style="left:167px;top:213px">민초들의 삶</h3>
+        <p class="tg-body" style="left:167px;top:328px">한국의 기층문화를 형성하는 평범한 사람들에게 헌정하는<br>정원들로 이원수의 ‘고향의 봄’ 동요에서 착안한 과수원 길에서<br>시작해 영화 서편제의 한 장면인 청산도 마을의 돌담길, 벼락 맞은<br>오래된 서낭당 나무, 마을 아낙들이 어울리던 빨래터 등<br>고향의 정취를 담은 정원들이 자리잡고 있습니다.</p>
+      </div>
+      <!-- 2002 한국인의 정신 -->
+      <div class="tg-copy" data-slide="2">
+        <p class="tg-label" style="left:169px;top:132px">한국정원</p>
+        <h3 class="tg-title" style="left:167px;top:213px">한국인의 정신</h3>
+        <p class="tg-body" style="left:167px;top:328px">한국인의 정신 기저에 영향을 준 성리학, 불교, 샤머니즘을<br>모티프로 한 정원입니다. 성리학의 선비정신을 서원과 돌정원에<br>담았고, 경주 최부잣집의 노블레스 오블리주 정신을 솔밭과 샘길로<br>표현하였습니다. 샤머니즘의 영적인 기운을 느끼며 산길을 올라가면<br>불교를 품은 작은 암자도 만날 수 있습니다.</p>
+      </div>
+
+      <button class="tg-skip" id="tgSkip" type="button" aria-label="건너뛰기: 다음 섹션으로"><span>SKIP</span><img src="img/cg_chevron.png" alt=""></button>
+
+      <div class="tg-track" aria-hidden="true"></div>
+      <div class="tg-thumb" id="tgThumb" aria-hidden="true"></div>
+
+      <div class="tg-window" id="tgWindow">
+        <div class="tg-strip" id="tgStrip">
+          <figure class="tg-photo"><img src="img/tg_seonbi_1.jpg" alt="분홍 꽃가지 너머 돌장승과 기와 담장, 낙엽송 숲"></figure>
+          <figure class="tg-photo"><img src="img/tg_seonbi_2.jpg" alt="연못가에 선 한옥 정자와 소나무 숲"></figure>
+          <figure class="tg-photo"><img src="img/tg_minc_1.jpg" alt="단풍 사이로 흐르는 계류와 맑은 웅덩이" loading="lazy"></figure>
+          <figure class="tg-photo"><img src="img/tg_minc_2.jpg" alt="굽이진 흙길을 따라 이어지는 돌담길" loading="lazy"></figure>
+          <figure class="tg-photo"><img src="img/tg_spirit_1.jpg" alt="통유리 너머로 보이는 콘크리트 벽의 빈 마당" loading="lazy"></figure>
+          <figure class="tg-photo"><img src="img/tg_spirit_2.jpg" alt="구불구불한 소나무 줄기가 늘어선 솔밭과 한옥 지붕" loading="lazy"></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('korean-gardens');
+  const cv = document.getElementById('tgCv');
+  const win = document.getElementById('tgWindow');
+  const strip = document.getElementById('tgStrip');
+  const thumb = document.getElementById('tgThumb');
+  const photos = [...strip.querySelectorAll('.tg-photo')];
+  const copies = [...section.querySelectorAll('.tg-copy')];
+
+  /* ===== 스크롤 타이밍표 (0 = 섹션 시작, 1 = 끝) — 숫자만 바꾸면 조정됨 =====
+     [시작, 끝] 구간 동안 다음 장면으로 사진이 밀려옴. 그 사이 구간은 멈춰서 보여줌 */
+  // 사진 한 장씩 밀림. 각 구간 사이에서는 사진이 왼쪽 칸(x797)에 잠깐 멈춰 있음
+  const STEPS = [[0.22, 0.31], [0.38, 0.47], [0.54, 0.63], [0.70, 0.79], [0.86, 0.95]];   // 마지막 구간 = 솔밭 사진이 끝까지 들어오게 조금 더 밂
+  const SMOOTH = 0.1;               // 부드러움: 숫자↓ = 더 미끄러지듯 천천히 따라옴 (0.05~0.15)
+  const THUMB_X = [171, 366, 561];   // 진행 막대 위치 (피그마 1920 기준). 마지막 = 막대 오른쪽 끝이 선 끝(653)에 딱 맞음
+  const GAP = 13;                    // 사진 사이 간격 (v26: 10 → 13, 797+660+13 = 1470)
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => -(Math.cos(Math.PI * t) - 1) / 2;   // 사인 곡선: 시작·끝이 부드러운 가속
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  let mobile, s, pw, gap;
+  function measure() {
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    mobile = vw < 768;
+    if (!mobile) {
+      s = vw / 1920;
+      const top = (vh - 1000 * s) / 2;          // 세로 가운데 맞춤
+      cv.style.transform = `translate(0px, ${top}px) scale(${s})`;
+      win.style.width = (vw / s - 797) + 'px';  // 화면 오른쪽 끝까지
+      pw = 660; gap = GAP;
+    } else {
+      s = 1; cv.style.transform = ''; win.style.width = '';
+      pw = photos[0].getBoundingClientRect().width; gap = 12;
+    }
+    photos.forEach((p, i) => { p.style.left = (i * (pw + gap)) + 'px'; });
+  }
+
+  // 스크롤 목표값(target)을 바로 쓰지 않고 조금씩 따라가게(cur) 해서 미끄러지듯 움직임
+  let target = 0, cur = 0;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function readScroll() {
+    const r = section.getBoundingClientRect();
+    target = clamp(-r.top / (section.offsetHeight - window.innerHeight));
+    // 처음 들어올 때 사진 열림: 섹션이 화면 맨 위 근처에 오면 열리고, 위로 다시 올라가면 닫힘
+    if (r.top <= window.innerHeight * 0.12) section.classList.add('tg-in');
+    else if (r.top > window.innerHeight * 0.5) section.classList.remove('tg-in');
+  }
+
+  function render() {
+    const p = cur;
+
+    // 지금 몇 번째 장면인지 (0 → 1 → 2, 소수점은 넘어가는 중)
+    const st = STEPS.map(([a, b]) => ease(clamp((p - a) / (b - a))));
+    const pos = (st[0] + st[1] + st[2] + st[3]) / 2;   // 진행 막대용 (0 → 1 → 2)
+    const tpos = st[1] + st[3];                         // 글자 바뀜: 장면의 두 번째 사진이 왼쪽 칸에 온 뒤 넘어갈 때
+
+    // 사진 줄: 장면 하나 = 사진 두 장만큼 왼쪽으로.
+    // 마지막 장면은 마지막 사진이 잘리지 않고 오른쪽 여백(x1800)까지 들어오도록 더 밀어줌
+    const stepW = 2 * (pw + gap);
+    const lastRight = 5 * (pw + gap) + pw - 2 * stepW;               // 마지막 장면에서 마지막 사진 오른쪽 끝 (사진 창 기준)
+    const limit = mobile ? win.clientWidth - 20 : 1800 - 797;        // 들어와야 할 오른쪽 끝
+    const extra = Math.max(0, lastRight - limit);
+    const one = pw + gap;
+    const shift = (st[0] + st[1] + st[2] + st[3]) * one + st[4] * extra;
+    strip.style.transform = `translateX(${-shift}px)`;
+
+    // 진행 막대
+    const tx = pos <= 1 ? lerp(THUMB_X[0], THUMB_X[1], pos) : lerp(THUMB_X[1], THUMB_X[2], pos - 1);
+    thumb.style.transform = mobile
+      ? `translateX(${pos / 2 * (thumb.parentElement.clientWidth - 40 - thumb.offsetWidth)}px)`
+      : `translateX(${tx - THUMB_X[0]}px)`;
+
+    // 글자: 넘어가는 구간 앞쪽 45%에서 사라지고, 뒤쪽 45%에서 새 글자 등장
+    copies.forEach((c, i) => {
+      const d = tpos - i;                      // 0이면 이 장면이 정중앙
+      let o;
+      if (d <= -1 || d >= 1) o = 0;
+      else if (d < 0) o = clamp((d + 0.45) / 0.45);      // 다가오는 장면: 마지막 45%에서 나타남
+      else o = clamp(1 - d / 0.45);                       // 떠나는 장면: 처음 45%에서 사라짐
+      c.style.opacity = o;
+      c.style.transform = `translateY(${(1 - o) * (d < 0 ? 16 : -16)}px)`;
+      c.style.visibility = o < 0.01 ? 'hidden' : '';
+    });
+  }
+
+  let lastT = 0;
+  function tick(t) {
+    const dt = lastT ? Math.min((t - lastT) / 1000, .1) : 1 / 60; lastT = t;
+    const k = 1 - Math.pow(1 - SMOOTH, dt * 60);   // 60Hz·120Hz 모니터에서 같은 속도
+    const d = target - cur;
+    if (Math.abs(d) > 0.0001) { cur = reduce ? target : cur + d * k; render(); }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('scroll', readScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); readScroll(); render(); });
+  window.addEventListener('load', () => { measure(); readScroll(); cur = target; render(); });
+
+  // SKIP → 이 섹션 끝 = 세 정원이 다 올라가고 건축물이 드러난 지점
+  document.getElementById('tgSkip').addEventListener('click', () => {
+    window.scrollTo(0, section.offsetTop + section.offsetHeight);
+  });
+
+  // 두 번째 사진은 조금 늦게 열림
+  photos.forEach((ph, i) => ph.style.setProperty('--rd', (i % 2 ? 0.12 : 0) + 's'));
+  window.__tgSync = () => { readScroll(); cur = target; render(); };
+  measure(); readScroll(); cur = target; render(); requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- ═══════════════ structure (건축물) ═══════════════
+     피그마 structure (1920×1010) 좌표 그대로. 화면 너비/1920 비율, 세로 가운데 맞춤
+     사진 1920×781 (y109) 위에 흰 글자: 제목 x1267 y626 / 본문 x1267 y736
+     흐름: 선곡서원 → 선곡서원 본관 → DIONYSOS
+       · 들어올 때: 세 정원 화면이 위로 밀려 올라가며 뒤에 고정된 첫 사진이 드러남(참고 영상 방식), 글자는 한 줄씩 위에서 떨어짐
+       · 스크롤하면: 다음 사진이 위에서 아래로 덮으며 내려옴. 이전 사진은 살짝 아래로 밀림
+                    이전 글자는 아래로 떨어져 사라지고, 새 글자가 위에서 한 줄씩 떨어짐 -->
+<style>
+  /* 참고 영상 방식: 세 정원 마지막 화면 뒤(z-index 아래)에 겹쳐 시작해서 화면 맨 위에 고정된 채 기다림.
+     세 정원이 화면째 위로 밀려 올라가면 뒤에 있던 건축물 사진이 그대로 드러남 (건축물은 움직이지 않음) */
+  .st-section { position: relative; z-index: 2; height: 700vh; margin-top: -100vh; background: transparent; }
+  .st-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--bg); }
+  .st-drop { position: absolute; inset: 0; will-change: transform; }
+  .st-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 1010px; transform-origin: 0 0; }
+
+  .st-slide { position: absolute; inset: 0; pointer-events: none; }
+  /* 사진: 1920×781. 위에서 아래로 열림(가림막이 아래로 걷힘) */
+  .st-photo { position: absolute; left: 0; top: 109px; width: 1920px; height: 781px; margin: 0; overflow: hidden;
+    clip-path: inset(0 0 100% 0); will-change: clip-path; }
+  .st-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; transform-origin: 50% 0; will-change: transform; }
+
+  /* 제목: Pretendard SemiBold 34, 행간 1.2, 자간 -0.68, 흰색 */
+  .st-title { position: absolute; margin: 0; font-size: 34px; line-height: 1.2; font-weight: 600; letter-spacing: -0.68px; color: #fff; white-space: nowrap; }
+  /* 본문: 피그마 글꼴 Noto Sans KR Regular 18, 행간 1.75, 자간 -0.18, 흰색 */
+  .st-body { position: absolute; margin: 0; font-family: 'Noto Sans KR', var(--font); font-size: 18px; line-height: 1.75; font-weight: 400; letter-spacing: -0.18px; color: #fff; white-space: nowrap; }
+
+  /* 한 줄마다 창(마스크). 글자는 창 위쪽에서 떨어져 들어옴. 그림자가 잘리지 않게 위아래 여유 */
+  .st-ln { display: block; overflow: hidden; padding: 2px 0 8px; margin: -2px 0 -8px; }
+  .st-e, .st-s { display: block; will-change: transform; }
+
+  /* 첫 사진은 가림막 없음 — 화면 전체(배경+사진+글자)가 위에서 내려오며 열림 */
+  .st-slide.first .st-photo { clip-path: none; }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 사진을 화면 가운데 크게, 글자는 사진 아래쪽 안에) */
+  @media (max-width: 767px) {
+    .st-cv { width: 100%; height: 100%; transform: none !important; }
+    .st-photo { top: 16vh !important; width: 100%; height: 68vh; }
+    .st-title { left: 20px !important; top: calc(84vh - 150px) !important; font-size: 24px; }
+    .st-body { left: 20px !important; right: 20px; top: calc(84vh - 108px) !important; font-size: 14px; line-height: 1.65; white-space: normal; }
+    .st-body .st-ln { display: inline; }
+    .st-body .st-e, .st-body .st-s { display: inline; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .st-photo { clip-path: none !important; }
+    .st-drop, .st-photo img, .st-s { transform: none !important; }
+  }
+</style>
+
+<section class="st-section" id="structure" aria-label="건축물">
+  <div class="st-stage" id="stStage">
+   <div class="st-drop" id="stDrop">
+    <div class="st-cv" id="stCv">
+
+      <!-- 1 선곡서원 (33:173~175) -->
+      <div class="st-slide first" data-slide="0">
+        <figure class="st-photo" style="top:109px"><img src="img/st_seongok.jpg" alt="숲 앞에 기둥 위로 떠 있는 긴 노출 콘크리트 건물, 선곡서원"></figure>
+        <h3 class="st-title" style="left:1267px;top:626px"><span class="st-ln"><span class="st-e"><span class="st-s">선곡서원</span></span></span></h3>
+        <p class="st-body" style="left:1267px;top:736px;text-shadow:0 4px 4px rgba(0,0,0,.6)"><span class="st-ln"><span class="st-e"><span class="st-s">유네스코 세계유산으로 등재된 안동의 병산서원을 ‘빈자의 미학’으로 유명한 승효상</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">건축가가 현대적으로 재해석하여 디자인한 건축물입니다</span></span></span></p>
+      </div>
+
+      <!-- 2 선곡서원 본관 (33:270~272) -->
+      <div class="st-slide" data-slide="1">
+        <figure class="st-photo" style="top:110px"><img src="img/st_seongok_main.jpg" alt="돌계단 마당을 사이에 두고 마주 선 선곡서원 본관의 콘크리트 회랑과 유리창" loading="lazy"></figure>
+        <h3 class="st-title" style="left:1268px;top:627px;text-shadow:1px 1px 2px rgba(0,0,0,.45)"><span class="st-ln"><span class="st-e"><span class="st-s">선곡서원 본관</span></span></span></h3>
+        <p class="st-body" style="left:1268px;top:736px;text-shadow:1px 1px 2px rgba(0,0,0,.57)"><span class="st-ln"><span class="st-e"><span class="st-s">유네스코 세계유산으로 등재된 안동의 병산서원을 ‘빈자의 미학’으로 유명한</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">승효상 건축가가 현대적으로 재해석하여 디자인한 건축물입니다</span></span></span></p>
+      </div>
+
+      <!-- 3 DIONYSOS (33:273~275) -->
+      <div class="st-slide" data-slide="2">
+        <figure class="st-photo" style="top:110px"><img src="img/st_dionysos.jpg" alt="노을 하늘 아래 바위 덩어리처럼 휘어 오른 디오니소스 건축물" loading="lazy"></figure>
+        <h3 class="st-title" style="left:1268px;top:627px"><span class="st-ln"><span class="st-e"><span class="st-s">DIONYSOS</span></span></span></h3>
+        <p class="st-body" style="left:1268px;top:736px;text-shadow:1px 1px 1px rgba(0,0,0,.64)"><span class="st-ln"><span class="st-e"><span class="st-s">거대한 바위 덩어리가 춤추는 듯한 원초적 모습의 비정형</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">건물로 전세계에서 처음 시도되는 공법을 적용했습니다</span></span></span></p>
+      </div>
+
+    </div>
+   </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('structure');
+  const cv = document.getElementById('stCv');
+  const stage = document.getElementById('stStage');
+  const drop = document.getElementById('stDrop');
+  const slides = [...section.querySelectorAll('.st-slide')].map((el) => ({
+    el,
+    photo: el.querySelector('.st-photo'),
+    img: el.querySelector('.st-photo img'),
+    lines: [...el.querySelectorAll('.st-s')]
+  }));
+
+  /* ===== 스크롤 타이밍표 — 숫자만 바꾸면 조정됨 =====
+     단위: 화면 높이(1 = 화면 하나만큼 스크롤). 0 = 섹션 맨 위
+     리듬: 제목 → (한 박자) → 본문 → (멈춤) → 사진 → (한 박자) → 제목 → (한 박자) → 본문 → … */
+  const ENTER = 1.0;          // 세 정원이 위로 밀려 올라가며 건축물이 드러나는 거리
+  // 첫 장면(선곡서원) 글자: 제목 → 한 박자 → 본문
+  const FIRST = { title: [0.5, 0.75], body: [0.95, 1.2], gap: 0.1 };
+  // 다음 장면으로 넘어가는 시작점 (본관, DIONYSOS)
+  const TRANS = [1.7, 3.75];
+  // 넘어갈 때 순서 (시작점에서 얼마 뒤인지)
+  const SEQ = {
+    out:   [0.0, 0.25],    // 이전 글자가 아래로 떨어져 사라짐
+    photo: [0.1, 0.65],    // 새 사진이 위에서 아래로 덮으며 내려옴
+    title: [0.85, 1.1],    // 한 박자 쉬고 제목
+    body:  [1.3, 1.55],    // 한 박자 쉬고 본문 (첫 줄)
+    gap:   0.1             // 본문 둘째 줄 시차
+  };
+  // 섹션 높이 700vh = 마지막 본문(5.4)까지 + 끝 여유 → 화면 하나 남기고 6.0
+  const SMOOTH = 0.1;        // 부드러움: 숫자↓ = 더 미끄러지듯 (0.05~0.15)
+  const DROP = 10;           // 내려오는 사진 안쪽 이미지가 위에서 따라 내려오는 거리(%)
+  const PUSH = 5;            // 덮이는 사진이 아래로 밀리는 거리(%)
+
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => -(Math.cos(Math.PI * t) - 1) / 2;          // 사인 곡선
+  const out = (t) => 1 - Math.pow(1 - t, 3);
+  const inn = (t) => t * t * t;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  function measure() {
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (vw < 768) { cv.style.transform = ''; return; }
+    const s = vw / 1920;
+    cv.style.transform = `translate(0px, ${(vh - 1010 * s) / 2}px) scale(${s})`;
+  }
+
+  // 진행값은 화면 높이 단위(vh)로: 0 ~ ENTER = 위에서 내려옴, 그 뒤 = 사진 넘김
+  let target = 0, cur = 0;
+  function readScroll() {
+    const r = section.getBoundingClientRect();
+    target = Math.max(0, -r.top / window.innerHeight);
+  }
+
+  function render() {
+    const fall = clamp(cur / ENTER);                                 // 0 → 1 (세 정원이 올라가며 드러남)
+    const at = (t0, [a, b], off = 0) => clamp((cur - t0 - a - off) / (b - a));   // 구간 진행 0 → 1
+    const ph = TRANS.map((t0) => at(t0, SEQ.photo));                 // 사진 넘김 진행
+
+    // 건축물 화면은 제자리에 고정 — 위의 세 정원이 걷히면서 드러남. 첫 장면 글자만 드러나는 뒤쪽 절반에서 한 줄씩 떨어짐
+
+    slides.forEach((s, i) => {
+      // 사진: 들어오는 사진은 위에서 아래로 열림 + 안쪽 이미지가 위에서 따라 내려옴
+      if (i > 0) {
+        const e = reduce ? (ph[i - 1] > 0.5 ? 1 : 0) : ease(ph[i - 1]);
+        s.photo.style.clipPath = `inset(0 0 ${(1 - e) * 100}% 0)`;
+        s.photo.style.visibility = e < 0.001 ? 'hidden' : '';
+        s.img.style.transform = `translateY(${-(1 - e) * DROP}%)`;
+      }
+      // 덮이는 사진: 안쪽 이미지가 살짝 아래로 밀림 (사진 틀은 제자리)
+      const push = i < slides.length - 1 && !reduce ? ease(ph[i]) * PUSH : 0;
+      if (i === 0) s.img.style.transform = push > 0.001 ? `translateY(${push}%)` : '';
+      else if (push) s.img.style.transform += ` translateY(${push}%)`;
+
+      // 글자: 들어올 때 = 제목 → 한 박자 → 본문 순으로 위에서 떨어짐 / 떠날 때 = 아래로 떨어져 사라짐
+      let first = 0, outP = 0;
+      s.lines.forEach((ln, k) => {
+        // 들어오기 (k = 0 제목, 1·2 본문 줄)
+        let inP;
+        if (i === 0) {
+          inP = k === 0 ? at(0, FIRST.title) : at(0, FIRST.body, (k - 1) * FIRST.gap);
+        } else {
+          const t0 = TRANS[i - 1];
+          inP = k === 0 ? at(t0, SEQ.title) : at(t0, SEQ.body, (k - 1) * SEQ.gap);
+        }
+        let y = -(1 - out(inP)) * 110;
+        // 떠나기: 다음 장면이 시작되면 위 줄부터 아래로 떨어짐
+        if (i < slides.length - 1) {
+          const o = at(TRANS[i], SEQ.out, k * 0.05);
+          y += inn(o) * 140;   // 창 아래 여유(그림자용)까지 완전히 빠지게
+          if (k === 0) outP = o;
+        }
+        if (k === 0) first = inP;
+        ln.style.transform = reduce ? '' : `translateY(${y}%)`;
+      });
+      // 화면에 안 보이는 장면은 글자 읽기 순서에서 빼기
+      const shown = first >= 0.5 && outP < 0.5;
+      s.el.setAttribute('aria-hidden', shown ? 'false' : 'true');
+    });
+  }
+
+  let lastT = 0;
+  function tick(t) {
+    const dt = lastT ? Math.min((t - lastT) / 1000, .1) : 1 / 60; lastT = t;
+    const k = 1 - Math.pow(1 - SMOOTH, dt * 60);   // 60Hz·120Hz 모니터에서 같은 속도
+    const d = target - cur;
+    if (Math.abs(d) > 0.0001) { cur = reduce ? target : cur + d * k; render(); }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('scroll', readScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); readScroll(); render(); });
+  window.addEventListener('load', () => { measure(); readScroll(); cur = target; render(); });
+
+  window.__stSync = () => { readScroll(); cur = target; render(); };
+  measure(); readScroll(); cur = target; render(); requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- ═══════════════ architects_slideroof (함께한 사람들) ═══════════════
+     피그마 33:278 (1940×782) 좌표 그대로. 화면 너비/1940 비율
+     움직임 (참고 영상): 사진 줄만 오른쪽 → 왼쪽으로 일정한 속도로 계속 흐름(끊김 없이 반복).
+                        제목·아래 이름 줄은 제자리 고정. 사진은 화면 양 끝까지 흘러 나감 -->
+<style>
+  .ar-section { position: relative; z-index: 3; background: var(--bg); overflow: hidden; }
+  .ar-cv { position: absolute; left: 0; top: 0; width: 1940px; height: 782px; transform-origin: 0 0; }
+  /* 제목: Pretendard Medium, 행간 1.2, 자간 -2.1, x119 y211. 크기는 건축물 제목과 같게 34 (사용자 요청, 피그마 35) */
+  .ar-title { position: absolute; left: 119px; top: 211px; margin: 0; font-size: 34px; line-height: 1.2; font-weight: 500; letter-spacing: -2.1px; white-space: nowrap; color: var(--ink); }
+  /* 사진 줄: y285, 사진 145×202 */
+  .ar-rail { position: absolute; left: 0; top: 285px; width: 1940px; height: 202px; }
+  .ar-strip { position: absolute; left: 0; top: 0; height: 202px; will-change: transform;
+    animation: arFlow var(--dur, 30s) linear infinite; }
+  .ar-section.ar-off .ar-strip { animation-play-state: paused; }   /* 화면 밖에서는 잠깐 멈춤 (성능) */
+  @keyframes arFlow { from { transform: translateX(0); } to { transform: translateX(calc(var(--period, 1772) * -1px)); } }
+  .ar-photo { position: absolute; top: 0; width: 145px; height: 202px; margin: 0; overflow: hidden; }
+  .ar-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
+  /* 이름 줄: Pretendard 14, 자간 -0.56, y515 (고정) */
+  .ar-names { position: absolute; left: 0; top: 515px; margin: 0; padding: 0; list-style: none; }
+  .ar-names li { position: absolute; top: 0; font-size: 14px; line-height: normal; letter-spacing: -0.56px; white-space: nowrap; color: var(--ink); }
+  .ar-names b { position: absolute; top: 0; font-weight: 500; }
+  .ar-names b.sb { font-weight: 600; }
+  .ar-names span { position: absolute; top: 0; font-weight: 400; }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 사진은 크게 흐르고, 이름은 사진 아래에 줄로 쌓기) */
+  @media (max-width: 767px) {
+    .ar-section { height: auto !important; padding: 72px 0 80px; }
+    .ar-cv { position: static; width: auto; height: auto; transform: none !important; }
+    .ar-title { position: static; margin: 0 20px; font-size: 26px; letter-spacing: -1.4px; }
+    .ar-rail { position: relative; top: 0; width: 100%; height: 202px; margin-top: 28px; zoom: .75; }
+    .ar-names { position: static; margin: 24px 20px 0; }
+    .ar-names li { position: static; display: flex; gap: 10px; white-space: normal; font-size: 13px; line-height: 1.5; margin-top: 8px; }
+    .ar-names b, .ar-names span { position: static; }
+    .ar-names b { flex: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ar-strip { animation: none; } }
+</style>
+
+<section class="ar-section" id="architects" aria-label="함께한 사람들">
+  <div class="ar-cv" id="arCv">
+    <h2 class="ar-title">함께한 사람들</h2>
+    <div class="ar-rail"><div class="ar-strip" id="arStrip"></div></div>
+    <ul class="ar-names">
+      <li><b class="sb" style="left:120px">조경 디자이너</b><span style="left:198px">이재연, 이시희, Yves &amp; Guillaume Gosse de Gorre</span></li>
+      <li><b style="left:833px">서예가</b><span style="left:873px">사종 전기중</span></li>
+      <li><b style="left:1301px">건축가</b><span style="left:1342px">승효상, Mauricio Pezo &amp; Sofía von Ellrichshausen, Antón García-Abril &amp; Débora Mesa</span></li>
+    </ul>
+  </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('architects');
+  const cv = document.getElementById('arCv');
+  const strip = document.getElementById('arStrip');
+
+  /* ===== 조절값 ===== */
+  const SPEED = 59;     // 흐르는 속도 (피그마 1940 기준 초당 px). 참고 영상에서 잰 값 — 숫자↑ = 더 빠름
+  // 사진 9장 (피그마 x 좌표 그대로, 2~3장씩 붙은 묶음과 넓은 간격)
+  const PHOTOS = [
+    [120,  'img/ar_1.jpg', '숲을 배경으로 선 회색 재킷의 남성'],
+    [275,  'img/ar_2.jpg', '흙 언덕 앞에 선 파란 티셔츠와 안경의 남성'],
+    [492,  'img/ar_3.jpg', '한옥 처마 아래 갓과 한복 차림의 노인'],
+    [712,  'img/ar_4.jpg', '책장 앞에 앉은 둥근 안경의 남성'],
+    [866,  'img/ar_5.jpg', '콘크리트 벽 앞에 선 패딩 조끼의 남성'],
+    [1084, 'img/ar_6.jpg', '수국 정원 앞에서 팔짱 낀 남성'],
+    [1303, 'img/ar_7.jpg', '검은 나무 벽 앞에 선 남녀'],
+    [1458, 'img/ar_8.jpg', '흰 실내에 선 남녀'],
+    [1672, 'img/ar_9.jpg', '안전모를 쓰고 정원을 가리키는 남성']
+  ];
+  // 반복 주기: 마지막 사진(1672+145) 뒤에 묶음 사이 간격(75)을 두고 다시 첫 사진
+  const PERIOD = 1672 + 145 + 75 - 120;   // = 1772
+
+  // 화면을 빈틈없이 채우도록 같은 9장 묶음을 앞뒤로 이어 붙임 (-1, 0, 1, 2번째 묶음)
+  // 첫 묶음 자리(0)는 피그마 위치 그대로
+  const html = [];
+  for (let k = -1; k <= 2; k++) {
+    PHOTOS.forEach(([x, src, alt]) => {
+      const hidden = k !== 0;   // 복제본은 화면 읽기에서 제외
+      html.push(`<figure class="ar-photo" style="left:${x + k * PERIOD}px"${hidden ? ' aria-hidden="true"' : ''}>` +
+        `<img src="${src}" alt="${hidden ? '' : alt}" loading="lazy"></figure>`);
+    });
+  }
+  strip.innerHTML = html.join('');
+  strip.style.setProperty('--period', PERIOD);
+  strip.style.setProperty('--dur', (PERIOD / SPEED).toFixed(2) + 's');
+
+  /* 위아래 여백 같게 (사용자 요청):
+     건축물 사진 아래 끝 → '함께한 사람들' 제목 위  =  이름 줄 아래 → 섹션 끝 (피그마 782 - 532 = 250)
+     건축물 화면은 세로 가운데 맞춤이라 사진 아래 빈 공간이 화면 높이마다 달라서, 그만큼 섹션을 위로 당겨 맞춤 */
+  const BOTTOM = 782 - 535;   // 이름 줄 아래 여백 (화면에 그려지는 글자 높이 20 기준으로 맞춤: y515 + 20)
+  const stStage = document.getElementById('stStage');
+  const stPhoto = document.querySelector('#structure .st-slide.first .st-photo');
+  function measure() {
+    const vw = document.documentElement.clientWidth;
+    if (vw < 768) { cv.style.transform = ''; section.style.height = ''; section.style.marginTop = ''; return; }
+    const s = vw / 1940;
+    cv.style.transform = `scale(${s})`;
+    section.style.height = (782 * s) + 'px';
+    // 건축물 화면에서 사진 아래 빈 공간 (고정 화면 기준이라 스크롤 위치와 무관)
+    const below = stStage.getBoundingClientRect().bottom - stPhoto.getBoundingClientRect().bottom;
+    const topGap = (BOTTOM - 211) * s;   // 섹션 맨 위 → 제목까지 남길 거리
+    section.style.marginTop = (topGap - below) + 'px';
+  }
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+
+  // 화면에 보일 때만 흐름 (안 보이면 멈춤)
+  new IntersectionObserver(([e]) => section.classList.toggle('ar-off', !e.isIntersecting)).observe(section);
+})();
+</script>
+
+<!-- ═══════════════ location_920 (오시는길) ═══════════════
+     피그마 33:185 (v37 피그마 갱신: 1920×900) 좌표 그대로. 화면 너비/1920 비율
+     사진 x294 y0 762×900 / 지도 x1283 y221 410×398 (v39: 1267 → 1283, 글자 1267/1340 → 1283/1356) (모서리 10, 그림자: 왼쪽 위 흰빛 -2 -3 4 .77 + 오른쪽 아래 3 5 3 -1 .21)
+     지도 안 오른쪽 아래 워드마크 x1582 y597 94.8×10 / 글자 y650·697
+     움직임: 사진 틀은 제자리, 안쪽 사진만 스크롤 따라 조금씩 커짐 (1 → ZOOM). 사진 1524×1800 = 2배 -->
+<style>
+  .lo-section { position: relative; z-index: 3; background: var(--bg); }
+  .lo-pin { position: sticky; top: 0; overflow: hidden; }   /* 멈춤 (v36): 섹션 안에서 화면에 붙어 있는 부분 */
+  .lo-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 900px; transform-origin: 0 0; }
+  .lo-photo { position: absolute; left: 294px; top: 0; width: 762px; height: 900px; margin: 0; overflow: hidden; }
+  .lo-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; transform-origin: 50% 50%; will-change: transform; }
+  .lo-map { position: absolute; left: 1283px; top: 221px; width: 410px; height: 398px; margin: 0; border-radius: 10px; overflow: hidden;
+    box-shadow: -2px -3px 4px 0 rgba(255,255,255,.77), 3px 5px 3px -1px rgba(0,0,0,.21); }
+  .lo-map img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
+  /* 지도 위 워드마크 (피그마 Group 12) 94.8×10, x1582 y597 (v39) */
+  .lo-word { position: absolute; left: 1582px; top: 597px; width: 94.8px; height: 10px; object-fit: contain; }
+  /* 글자: Pretendard 18 검정 */
+  .lo-label { position: absolute; left: 1283px; top: 650px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 500; white-space: nowrap; color: var(--ink); }
+  /* 줄 높이 21 = 피그마 글상자 42 ÷ 2줄 (글꼴이 바뀌어도 아래 안내문과 겹치지 않게 고정) */
+  .lo-addr  { position: absolute; left: 1356px; top: 650px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 400; letter-spacing: -0.72px; white-space: nowrap; color: var(--ink); font-style: normal; }
+  .lo-route { position: absolute; left: 1356px; top: 697px; margin: 0; font-size: 18px; line-height: 1.3; font-weight: 400; letter-spacing: -0.72px; white-space: nowrap; color: var(--ink); }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 사진 → 지도 → 글자 순으로 쌓기) */
+  @media (max-width: 767px) {
+    .lo-section { height: auto !important; padding: 0 0 80px; }
+    .lo-pin { position: static; height: auto !important; }
+    .lo-cv { position: static; width: auto; height: auto; transform: none !important; }
+    .lo-photo { position: relative; left: 0; width: 100%; height: auto; aspect-ratio: 762 / 900; }
+    .lo-word { display: none; }
+    .lo-map { position: relative; left: 0; top: 0; width: calc(100% - 40px); max-width: 410px; height: auto; aspect-ratio: 410 / 398; margin: 48px 20px 0; }
+    .lo-label, .lo-addr, .lo-route { position: static; margin: 0 20px; font-size: 15px; white-space: normal; }
+    .lo-label { margin-top: 20px; }
+    .lo-addr { margin-top: 6px; }
+    .lo-route { margin-top: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .lo-photo img { transform: none !important; } }
+</style>
+
+<section class="lo-section" id="location" aria-label="오시는길">
+ <div class="lo-pin" id="loPin">
+  <div class="lo-cv" id="loCv">
+    <figure class="lo-photo"><img id="loImg" src="img/lo_garden_v2.jpg" alt="단풍 든 숲과 연못을 배경으로 기와 담장과 정자가 이어진 한국정원을 위에서 내려다본 모습" loading="lazy"></figure>
+    <figure class="lo-map"><img src="img/lo_map_v2.jpg" alt="메덩골길과 금왕길 사이에 표시된 메덩골정원 위치 지도" loading="lazy"></figure>
+    <img class="lo-word" src="img/cg_wordmark.png" alt="" aria-hidden="true">
+    <p class="lo-label">오시는길</p>
+    <address class="lo-addr">경기도 양평군 양동면 메덩골길 1<br>메덩골정원 주차장</address>
+    <p class="lo-route">자가용을 이용할 경우 동양평 IC에서 (15분)<br>버스를 이용할 경우 용문 버스터미널 택시(25분)<br>기차를 이용할 경우 용문역 택시(25분)</p>
+  </div>
+ </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('location');
+  const cv = document.getElementById('loCv');
+  const img = document.getElementById('loImg');
+
+  /* ===== 조절값 ===== */
+  const ZOOM = 1.1;      // 다 커졌을 때 크기 (1 = 피그마 그대로). 숫자↑ = 더 많이 커짐
+  const SMOOTH = 0.1;    // 부드러움: 숫자↓ = 더 미끄러지듯 따라옴
+  const HOLD = 0.5;      // 멈춤 길이 (v36, 화면 높이 단위). 숫자↑ = 더 오래 멈춤. 0이면 멈춤 없음
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pin = document.getElementById('loPin');
+
+  function measure() {
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (vw < 768) { cv.style.transform = ''; section.style.height = pin.style.height = pin.style.top = ''; return; }   // 휴대폰: 멈춤 없음
+    const s = vw / 1920, h = 900 * s;
+    cv.style.transform = `scale(${s})`;
+    pin.style.height = h + 'px';
+    // 섹션 전체가 화면에 보이는 순간 멈춤: 화면보다 낮으면 위끝이 화면 맨 위에 닿을 때, 화면보다 크면 아래끝이 화면 바닥에 닿을 때
+    pin.style.top = Math.min(0, vh - h) + 'px';
+    section.style.height = (h + HOLD * vh) + 'px';
+  }
+
+  // 진행값: 섹션 위끝이 화면 아래에 들어올 때 0 → 섹션 아래끝이 화면 위로 나갈 때 1 (멈춘 동안에도 사진은 계속 천천히 커짐)
+  // 처음 보일 때는 피그마 구도 그대로(1배)이고, 내려갈수록 조금씩 커짐
+  let target = 0, cur = 0;
+  function readScroll() {
+    const r = section.getBoundingClientRect(), vh = window.innerHeight;
+    target = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+  }
+  function render() {
+    const e = -(Math.cos(Math.PI * cur) - 1) / 2;   // 사인 곡선: 시작·끝이 부드러움
+    img.style.transform = reduce ? '' : `scale(${1 + (ZOOM - 1) * e})`;
+  }
+  let lastT = 0;
+  function tick(t) {
+    const dt = lastT ? Math.min((t - lastT) / 1000, .1) : 1 / 60; lastT = t;
+    const k = 1 - Math.pow(1 - SMOOTH, dt * 60);   // 60Hz·120Hz 모니터에서 같은 속도
+    const d = target - cur;
+    if (Math.abs(d) > 0.0001) { cur = reduce ? target : cur + d * k; render(); }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('scroll', readScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); readScroll(); render(); });
+  window.addEventListener('load', () => { measure(); readScroll(); cur = target; render(); });
+  window.__loSync = () => { readScroll(); cur = target; render(); };
+  measure(); readScroll(); cur = target; render(); requestAnimationFrame(tick);
+})();
+</script>
+
+<!-- ═══════════════ reservation (관람안내) ═══════════════
+     피그마 33:199 (1920×900, v36 피그마 갱신: 높이 870→900, 안의 요소 전부 15px 내림) 좌표 그대로. 화면 너비/1920 비율
+     배경 사진 1920×900 / 흰 카드 x1026 y109 631×682 / 카드 사진 x1051 y134 581×328
+     도슨트 투어·시간표 표 x1154 y595 470×147 / 예약 바로가기 버튼 x223 y741 199×50
+     멈춤 (v36, 사용자 요청): 섹션이 화면에 다 들어오면 HOLD(화면 높이 단위)만큼 그 자리에 멈췄다가 스크롤됨
+     예약 버튼은 실제 예약처럼 작동하지 않도록 공식 사이트(새 창)로 연결 (푸터_할일.md 결정) -->
+<style>
+  .rs-section { position: relative; z-index: 3; background: var(--bg); }
+  .rs-pin { position: sticky; top: auto; bottom: 0; overflow: hidden; }   /* 멈춤 (v44): 관람안내 + 푸터를 한 묶음으로, 아래 기준으로 붙임 */
+  .rs-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 900px; transform-origin: 0 0; }
+  .rs-bg { position: absolute; left: 0; top: 0; width: 1920px; height: 900px; margin: 0; overflow: hidden; }
+  .rs-bg img, .rs-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
+
+  /* 사진 위 흰 글자: Pretendard Bold, 행간 1.2, 그림자 피그마 값 (v45 피그마 갱신: 3 3 3 → 2 3 3) */
+  .rs-title { position: absolute; left: 221px; top: 133px; margin: 0; font-size: 60px; line-height: 1.2; font-weight: 700; color: #fff; white-space: nowrap; text-shadow: 2px 3px 3px rgba(0,0,0,.5); }
+  .rs-cta   { position: absolute; left: 221px; top: 691px; margin: 0; font-size: 37px; line-height: 1.2; font-weight: 700; color: #fff; white-space: nowrap; text-shadow: 2px 3px 3px rgba(0,0,0,.73); }
+  /* 버튼: 199×50, 흰 테두리 1px(안쪽) / 글자 Medium 24, 행간 1.75, 자간 -1%
+     v45 피그마 갱신: 색 rgba(31,31,31,.85) 검정 → rgba(57,49,35,.8) 따뜻한 짙은 갈색, 그림자 2 3 4 rgba(0,0,0,.5) 추가 */
+  .rs-btn { position: absolute; left: 223px; top: 741px; width: 199px; height: 50px; box-sizing: border-box;
+    background: rgba(57,49,35,.8); border: 1px solid #fff; color: #fff; text-decoration: none; transition: background-color .25s;
+    box-shadow: 2px 3px 4px rgba(0,0,0,.5); }
+  .rs-btn span { position: absolute; left: 21px; top: 3px; font-size: 24px; line-height: 1.75; font-weight: 500; letter-spacing: -0.24px; white-space: nowrap; }   /* v46 피그마: 글자 그림자 없앰 */
+  .rs-btn:hover { background: rgba(57,49,35,.95); }   /* 피그마에 상태 없음 → 같은 색 진하게만 */
+  .rs-btn:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+  /* 흰 카드 */
+  .rs-card { position: absolute; left: 1026px; top: 109px; width: 631px; height: 682px; background: #fff; }
+  .rs-photo { position: absolute; left: 1051px; top: 134px; width: 581px; height: 328px; margin: 0; overflow: hidden; }
+
+  /* 카드 글자: Pretendard 18 검정 */
+  .rs-h { position: absolute; left: 1051px; margin: 0; font-size: 18px; line-height: 21px; color: #000; white-space: nowrap; }
+  .rs-h--tour { top: 486px; font-weight: 500; }
+  .rs-h--time { top: 590px; font-weight: 400; }
+  /* 본문: Regular 18, 행간 23, 자간 1%, 양쪽 정렬, 너비 478 */
+  .rs-body { position: absolute; left: 1154px; top: 486px; width: 478px; margin: 0; font-size: 18px; line-height: 23px; font-weight: 400; letter-spacing: 0.18px; text-align: justify; color: #000; }
+
+  /* 시간표: x1154 y595 470×147. 위·아래 선 검정, 안쪽 선 #B5B5B5, 머리줄 #D9D9D9, 글자 Regular 16 */
+  .rs-table { position: absolute; left: 1154px; top: 595px; width: 470px; border-collapse: separate; border-spacing: 0; table-layout: fixed;
+    font-size: 16px; line-height: 19px; font-weight: 400; color: #000; }
+  .rs-table th, .rs-table td { box-sizing: border-box; height: 30px; padding: 8px 0 0 14px; text-align: left; vertical-align: top; font-weight: 400; white-space: nowrap;
+    border-bottom: 1px solid #b5b5b5; border-left: 1px solid #b5b5b5; }
+  .rs-table th:first-child, .rs-table td:first-child { padding-left: 2px; border-left: 0; }
+  .rs-table thead th { height: 27px; padding-top: 4px; background: #f5f5f5; border-top: 1px solid #000; }   /* v46 피그마: 머리줄 #D9D9D9 → #F5F5F5 */
+  .rs-table tbody tr:last-child th, .rs-table tbody tr:last-child td { padding-top: 7px; border-bottom-color: #000; }
+  .rs-table col.c1 { width: 80px; } .rs-table col.c2 { width: 202px; } .rs-table col.c3 { width: 188px; }
+
+  /* 카드 아래 워드마크 90×10, x1296 y761 */
+  .rs-word { position: absolute; left: 1296px; top: 761px; width: 90px; height: 10px; object-fit: contain; }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 사진 위 제목·버튼, 그 아래 카드 내용 쌓기) */
+  @media (max-width: 767px) {
+    .rs-section { height: auto !important; }
+    .rs-pin { position: static; height: auto !important; }
+    .rs-cv { position: relative; width: auto; height: auto; transform: none !important; padding: 0 0 64px; }
+    .rs-bg { position: relative; width: 100%; height: 72vw; }
+    .rs-title { left: 20px; top: 24px; font-size: 36px; }
+    .rs-cta { left: 20px; top: calc(72vw - 112px); font-size: 22px; }
+    .rs-btn { left: 20px; top: calc(72vw - 76px); width: 150px; height: 40px; }
+    .rs-btn span { left: 15px; top: 2px; font-size: 18px; }
+    .rs-card { display: none; }
+    .rs-photo { position: relative; left: 0; top: 0; width: calc(100% - 40px); height: auto; aspect-ratio: 581 / 328; margin: 32px 20px 0; }
+    .rs-h, .rs-body, .rs-table, .rs-word { position: static; }
+    .rs-h { margin: 24px 20px 0; font-size: 16px; }
+    .rs-body { width: auto; margin: 10px 20px 0; font-size: 15px; line-height: 22px; text-align: left; word-break: keep-all; }
+    .rs-table { width: calc(100% - 40px); margin: 10px 20px 0; font-size: 14px; }
+    .rs-table col.c1 { width: 22%; } .rs-table col.c2, .rs-table col.c3 { width: 39%; }
+    .rs-table th, .rs-table td { padding-left: 8px; white-space: normal; word-break: keep-all; height: auto; padding-bottom: 6px; }
+    .rs-word { display: block; margin: 28px auto 0; }
+  }
+</style>
+
+<section class="rs-section" id="reservation" aria-label="관람안내">
+ <div class="rs-gap" id="rsGap" aria-hidden="true"></div>
+ <div class="rs-pin" id="rsPin">
+  <div class="rs-cv" id="rsCv">
+    <figure class="rs-bg"><img src="img/rs_bg_v2.jpg" alt="눈 덮인 한국정원의 기와 담장과 정자, 물결처럼 이어지는 돌담 계단식 정원을 위에서 내려다본 모습" loading="lazy"></figure>
+
+    <h2 class="rs-title">관람안내</h2>
+    <p class="rs-cta">예약 바로가기</p>
+    <a class="rs-btn" href="https://medongaule.com/" target="_blank" rel="noopener noreferrer" aria-label="RESERVATION 예약 바로가기 (메덩골정원 공식 사이트, 새 창)"><span>RESERVATION</span></a>
+
+    <div class="rs-card" aria-hidden="true"></div>
+    <figure class="rs-photo"><img src="img/rs_card_v2.jpg" alt="눈 덮인 한국정원 전경과 곡선 돌담" loading="lazy"></figure>
+
+    <h3 class="rs-h rs-h--tour">도슨트 투어</h3>
+    <p class="rs-body">메덩골정원에서는 각 정원에 대한 더욱 깊은 이해를 위해 도슨트 프로그램을 운영하고 있습니다.<br>사전 신청 없이 각 구역 도슨트 시작 장소에서 선착순으로 참여하실 수 있습니다.</p>
+
+    <h3 class="rs-h rs-h--time" id="rsTimeLabel">시간표</h3>
+    <table class="rs-table" aria-labelledby="rsTimeLabel">
+      <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+      <thead><tr><th scope="col"><span class="sr">구분</span></th><th scope="col">한국정원</th><th scope="col">현대정원</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">시작장소</th><td>‘민초들의 삶’ 사이니지 앞</td><td>‘생각의 섬’ 사이니지 앞</td></tr>
+        <tr><th scope="row">1차</th><td>10:30~12:00</td><td>10:30~12:00</td></tr>
+        <tr><th scope="row">2차</th><td>13:00~14:30</td><td>13:00~14:30</td></tr>
+        <tr><th scope="row">3차</th><td>15:00~16:30</td><td>15:00~16:30</td></tr>
+      </tbody>
+    </table>
+
+    <img class="rs-word" src="img/cg_wordmark.png" alt="MÉDONGAULE">
+  </div>
+  <footer class="ft-section" id="footer">
+  <div class="ft-cv" id="ftCv">
+    <a class="ft-logo" href="#intro" aria-label="MÉDONGAULE 메덩골정원 — 맨 처음으로"><img src="img/ft_logo.png" alt=""></a>
+    <div class="ft-line" aria-hidden="true"></div>
+    <address class="ft-txt ft-biz">사업자명 : 유한회사 엠데일  대표자명 : 류재용  사업자주소 : 경기도 양평군 양동면 메덩골길 47  사업자등록번호 : 687-88-02161  통신판매번호 : 제2025-경기양평-0709호  유선번호 : 031-771-1700</address>
+    <p class="ft-txt ft-copy">© 2026 Médongaule. This is a non-commercial redesign concept created for a web design course and is not the official MÉDONGAULE website. All images and logos belong to their respective owners.</p>
+    <div class="ft-links">
+      <a class="ft-link ft-terms" href="https://medongaule.com/" target="_blank" rel="noopener noreferrer">서비스 이용약관</a>
+      <a class="ft-link ft-privacy" href="https://medongaule.com/" target="_blank" rel="noopener noreferrer">개인정보처리방침</a>
+    </div>
+    <span class="ft-insta" aria-hidden="true"><img src="img/ft_instagram.png" alt=""></span>
+  </div>
+</footer>
+ </div>
+</section>
+
+<script>
+(function () {
+  const section = document.getElementById('reservation');
+  const pin = document.getElementById('rsPin');
+  const cv = document.getElementById('rsCv');
+  /* 멈춤 길이 (화면 높이 단위). 숫자↑ = 더 오래 멈춤. 0이면 멈춤 없음 */
+  const HOLD = 0.5;
+  const gap = document.getElementById('rsGap');
+  /* v44 (사용자 요청 '푸터가 관람안내에 계속 붙어 있게'):
+     예전에는 멈춤 길이만큼 빈 공간이 관람안내 '아래'에 있어서, 세로가 넉넉한 화면에서는 관람안내와 푸터 사이가 벌어져 보였음.
+     → 푸터를 관람안내 멈춤 묶음 안에 넣고, 묶음의 아래 기준으로 붙여서 빈 공간이 '위'에 오게 함. 둘 사이는 항상 0.
+     멈추는 순간은 예전과 같음: 관람안내가 화면에 다 들어왔을 때 (낮으면 위끝이 화면 맨 위, 크면 아래끝이 화면 바닥)
+     관람안내 + 푸터가 한 화면에 다 들어가면 페이지가 바로 끝나므로 멈춤 없음 */
+  function measure() {
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    if (vw < 768) { cv.style.transform = ''; section.style.height = pin.style.height = pin.style.bottom = pin.style.paddingTop = gap.style.height = ''; return; }   // 휴대폰: 멈춤 없음
+    const s = vw / 1920, h = 900 * s;
+    cv.style.transform = `scale(${s})`;
+    const f = 475 * vw / 1940, all = h + f;                         // 푸터 높이 (피그마 1940×475, 화면 너비 비율 — 푸터 스크립트와 같은 계산)
+    pin.style.height = ''; pin.style.paddingTop = h + 'px';           // 관람안내 캔버스(겹쳐 놓임) 아래에 푸터
+    const top = Math.min(0, vh - h);                                   // 멈출 때 관람안내 위끝 위치
+    pin.style.bottom = (vh - top - all) + 'px';
+    const hold = all > vh ? HOLD * vh : 0;
+    gap.style.height = hold + 'px';                                    // 묶음은 섹션 맨 아래에 두고, 멈춤 길이만큼의 여유(빈 칸)는 위쪽에
+    section.style.height = (all + hold) + 'px';
+  }
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+})();
+</script>
+
+<!-- ═══════════════ footer ═══════════════
+     피그마 33:248 (1940×475) 좌표 그대로. 화면 너비/1940 비율
+     배경 #E6E2D8 (피그마 값 — 흰색이 아니라 따로 정한 색이라 미색 규칙 대신 그대로 씀)
+     로고(꽃+워드마크) x868.73 y73.71 (v42: 가운데 970에 맞춤) 202.08×242.66 → 누르면 맨 처음(인트로)으로
+     선 x120 y369 1700 / 사업자 정보 Medium 13 y389 / 저작권·리디자인 고지 Regular 13 y420
+     서비스 이용약관 x1635 · 개인정보처리방침 x1730 (y389) / 인스타그램 32×32 실제 위치 x1792 y413 (링크 없음)
+     저작권 줄: 'All Rights Reserved.' 뺀 (v40, 사용자 요청 — 피그마 글자는 아직 그대로) -->
+<style>
+  .ft-section { position: relative; z-index: 3; background: #e6e2d8; overflow: hidden; }
+  .ft-cv { position: absolute; left: 0; top: 0; width: 1940px; height: 475px; transform-origin: 0 0; }
+  .ft-logo { position: absolute; left: 868.73px; top: 73.71px; width: 202.08px; height: 242.66px; display: block; }
+  .ft-logo img { width: 100%; height: 100%; display: block; }
+  .ft-logo:focus-visible, .ft-link:focus-visible { outline: 1px solid #000; outline-offset: 4px; }
+  .ft-line { position: absolute; left: 120px; top: 368.5px; width: 1700px; height: 1px; background: #000; }
+  .ft-txt { position: absolute; margin: 0; font-size: 13px; line-height: 16px; letter-spacing: 0; color: #000; white-space: pre; font-style: normal; }
+  .ft-biz  { left: 120px; top: 389px; font-weight: 500; }
+  .ft-copy { left: 120px; top: 420px; font-weight: 400; }
+  .ft-link { position: absolute; top: 389px; font-size: 13px; line-height: 16px; font-weight: 500; color: #000; text-decoration: none; white-space: nowrap; }
+  .ft-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .ft-terms { left: 1635px; }     /* v40 피그마: 1633 → 1635 */
+  .ft-privacy { left: 1730px; }   /* v40 피그마: 1728 → 1730 (글상자 끝 1820 = 선 끝) */
+  /* 인스타그램: 링크 없음(v40, 사용자 요청). 피그마 실제 위치 x1792 y413 32×32 (v41)
+     ※ 피그마에서 90° 회전+뒤집기가 걸려 있어 패널의 X1824·Y445는 회전 기준점일 뿐, 화면에 보이는 자리는 1792~1824 / 413~445.
+       그림 오른쪽 끝 약 1819 = 선 끝 1820과 맞음 */
+  .ft-insta { position: absolute; left: 1792px; top: 413px; width: 32px; height: 32px; display: block; }
+  .ft-insta img { width: 100%; height: 100%; display: block; }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시: 로고 → 선 → 글자 쌓기) */
+  @media (max-width: 767px) {
+    .ft-section { height: auto !important; padding: 56px 20px 40px; }
+    .ft-cv { position: static; width: auto; height: auto; transform: none !important; display: flex; flex-direction: column; }
+    .ft-logo, .ft-line, .ft-txt, .ft-link, .ft-insta { position: static; }
+    .ft-logo { width: 120px; height: auto; margin: 0 auto 40px; }
+    .ft-logo img { height: auto; }
+    .ft-line { width: 100%; }
+    .ft-txt { white-space: normal; margin-top: 14px; font-size: 12px; line-height: 18px; word-break: keep-all; }
+    .ft-links { display: flex; gap: 16px; margin-top: 16px; }
+    .ft-link { font-size: 12px; }
+    .ft-insta { width: 28px; height: 28px; margin-top: 16px; }
+  }
+</style>
+
+<!-- 푸터 마크업은 관람안내 멈춤(rs-pin) 안으로 옮김 (v44: 관람안내와 항상 붙어 있게) -->
+
+<script>
+(function () {
+  const section = document.getElementById('footer');
+  const cv = document.getElementById('ftCv');
+  function measure() {
+    const vw = document.documentElement.clientWidth;
+    if (vw < 768) { cv.style.transform = ''; section.style.height = ''; return; }
+    const s = vw / 1940;
+    cv.style.transform = `scale(${s})`;
+    section.style.height = (475 * s) + 'px';
+  }
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+})();
+</script>
+
+<!-- ═══════════════ 맨 위로 버튼 (피그마 Group 13, 77:38) ═══════════════
+     피그마에서는 프레임 밖에 따로 놓여 있어 위치가 없음 → 사용자 결정(2026-11-10):
+       · 오른쪽 아래 고정, 1920 화면 기준 48px (화면 너비 비율로 줄어듦, 최소 44px) (12:45 사용자 요청 56 → 48)
+       · 인트로가 끝난 뒤부터 서서히 나타남
+     그림: arrow80.svg (12:51 사용자 교체, 흰색 80% + 그림자). 크기·위치는 그대로 -->
+<style>
+  .to-top { position: fixed; z-index: 40;
+    right: calc(40 / 1920 * 100vw); bottom: calc(40 / 1920 * 100vw);
+    width: max(44px, calc(48 / 1920 * 100vw)); height: max(44px, calc(48 / 1920 * 100vw));
+    padding: 0; border: 0; background: none; cursor: pointer;
+    opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility 0s linear .4s, transform .25s ease; }
+  .to-top.on { opacity: 1; visibility: visible; transition: opacity .4s ease, visibility 0s, transform .25s ease; }
+  .to-top svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .to-top:hover { transform: translateY(-3px); }
+  .to-top:focus-visible { outline: 1px solid #000; outline-offset: 4px; border-radius: 50%; }
+  @media (max-width: 767px) {
+    .to-top { right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .to-top, .to-top.on { transition: none; } .to-top:hover { transform: none; } }
+</style>
+
+<button class="to-top" id="toTop" type="button" aria-label="맨 위로">
+  <!-- arrow80.svg (12:51 교체): 흰색 80% 원 + 화살표 구멍 + 그림자. 피그마 내보내기의 shape-rendering="crispEdges"는 원 가장자리가 계단처럼 깨져 보여서 뺌 -->
+  <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <g filter="url(#ttShadow)">
+      <path d="M257 512C398.4 512 513 397.4 513 256C513 114.6 398.4 0 257 0C115.6 0 1 114.6 1 256C1 397.4 115.6 512 257 512ZM378 271C387.4 280.4 387.4 295.6 378 304.9C368.6 314.2 353.4 314.3 344.1 304.9L257.1 217.9L170.1 304.9C160.7 314.3 145.5 314.3 136.2 304.9C126.9 295.5 126.8 280.3 136.2 271L240 167C249.4 157.6 264.6 157.6 273.9 167L378 271Z" fill="white" fill-opacity="0.8"/>
+    </g>
+    <defs>
+      <filter id="ttShadow" x="0" y="0" width="520" height="520" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+        <feOffset dx="3" dy="4"/><feGaussianBlur stdDeviation="2"/>
+        <feComposite in2="hardAlpha" operator="out"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1"/>
+        <feBlend mode="normal" in="SourceGraphic" in2="effect1" result="shape"/>
+      </filter>
+    </defs>
+  </svg>
+</button>
+
+<script>
+(function () {
+  const btn = document.getElementById('toTop');
+  const intro = document.getElementById('intro');
+  const veil = document.getElementById('cgVeil');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 인트로가 끝난 뒤(인트로 마지막 화면이 다 지나간 지점)부터 보임
+  // v44 (사용자 요청): 푸터가 화면에 들어오면 숨김 → 푸터 위에는 버튼이 겹치지 않음 (푸터 로고가 같은 역할)
+  const footer = document.getElementById('footer');
+  function update() {
+    const end = intro.offsetTop + intro.offsetHeight - window.innerHeight;
+    const inFooter = footer && footer.getBoundingClientRect().top < window.innerHeight;
+    btn.classList.toggle('on', window.scrollY >= end && !inFooter);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  // 누르면: SKIP과 같은 방식으로 화면이 잠깐 미색으로 덮였다가 맨 처음(인트로 첫 장면)에서 다시 열림
+  // (긴 페이지를 거꾸로 감으면 모든 연출이 되감겨 보여서 순간 이동으로 처리)
+  btn.addEventListener('click', () => {
+    const jump = () => { if (window.__goTo) window.__goTo('intro'); else window.scrollTo(0, 0); update(); btn.blur(); };   // blur: 숨겨진 버튼에 초점이 남으면 키보드 스크롤이 안 먹으므로
+    if (reduce || !veil) { jump(); return; }
+    veil.classList.add('on');
+    setTimeout(() => { jump(); requestAnimationFrame(() => veil.classList.remove('on')); }, 360);
+  });
+})();
+</script>
+
+<!-- ═══════════════ 페이지 전체: 부드러운 스크롤 + 메뉴 이동 ═══════════════ -->
+<style>
+  html.smooth-scroll { scroll-behavior: auto; }
+</style>
+<script>
+(function () {
+  /* ── 1) 부드러운 스크롤 (마우스 휠 + 키보드) ──────────────────
+     v43: '스프링' 방식. 예전(v17~42)은 휠 한 칸마다 바로 최고 속도로 튀어 나갔다가 줄어드는 방식이라
+     칸마다 미세하게 '툭' 끊기는 느낌이 있었음 → 이제는 천천히 출발해서 가속하고 부드럽게 멈춤
+     (내외 사이트 SmoothScroll.js의 출발·멈춤 곡선과 같은 성격).
+     시간 기준으로 계산해서 60Hz·120Hz 모니터 어디서나 같은 속도.
+     휴대폰 터치·스크롤바 끌기는 원래대로 */
+  const SPEED = 9;            // 따라가는 빠르기: 숫자↓ = 더 길게 미끄러짐 (6~14)
+  const WHEEL = 1.0;          // 휠 한 칸 이동량 배율
+  const KEY_STEP = 120;       // 화살표 키 한 번 이동량(px)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  let target = window.scrollY, cur = window.scrollY, vel = 0, running = false, lastT = 0;
+  const maxY = () => document.documentElement.scrollHeight - window.innerHeight;
+  const clampY = (y) => Math.max(0, Math.min(maxY(), y));
+
+  function step(t) {
+    const dt = lastT ? Math.min((t - lastT) / 1000, 1 / 30) : 1 / 60; lastT = t;
+    // 임계 감쇠 스프링: 출렁임 없이 목표에 정확히 멈춤
+    const acc = SPEED * SPEED * (target - cur) - 2 * SPEED * vel;
+    vel += acc * dt; cur += vel * dt;
+    if (Math.abs(target - cur) < 0.4 && Math.abs(vel) < 6) { cur = target; vel = 0; running = false; }
+    window.scrollTo(0, cur);
+    window.__cgPin && window.__cgPin();   // 현대정원 문장 멈춤: 같은 프레임에 맞춰서 덜컥임 없음
+    if (running) requestAnimationFrame(step); else lastT = 0;
+  }
+  function push(dy) {
+    if (!running) { cur = window.scrollY; target = cur; vel = 0; }
+    target = clampY(target + dy);
+    if (!running) { running = true; lastT = 0; requestAnimationFrame(step); }
+  }
+  if (fine && !reduce) {
+    document.documentElement.classList.add('smooth-scroll');
+    window.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) return;                        // 확대/축소는 그대로
+      e.preventDefault();
+      const unit = e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1;
+      push(e.deltaY * unit * WHEEL);
+    }, { passive: false });
+    // 키보드도 같은 곡선으로 (입력칸·버튼에 초점이 있으면 원래대로)
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const el = document.activeElement;
+      if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(el.tagName))) return;
+      const vh = window.innerHeight;
+      let dy = null;
+      switch (e.key) {
+        case 'ArrowDown': dy = KEY_STEP; break;
+        case 'ArrowUp': dy = -KEY_STEP; break;
+        case 'PageDown': dy = vh * 0.9; break;
+        case 'PageUp': dy = -vh * 0.9; break;
+        case ' ': dy = (e.shiftKey ? -1 : 1) * vh * 0.9; break;
+        case 'Home': dy = -1e9; break;
+        case 'End': dy = 1e9; break;
+      }
+      if (dy === null) return;
+      e.preventDefault(); push(dy);
+    });
+    // 스크롤바 끌기 등 다른 방법으로 움직이면 관성을 멈추고 그 위치를 따름
+    window.addEventListener('scroll', () => {
+      if (!running || Math.abs(window.scrollY - cur) > 3) { running = false; vel = 0; cur = target = window.scrollY; }
+    }, { passive: true });
+  }
+
+  /* ── 2) 메뉴 이동: 누르면 그 섹션 내용이 다 보이는 지점으로 바로 이동 ── */
+  function spotOf(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const vh = window.innerHeight;
+    if (id === 'intro') return 0;
+    if (id === 'con-garden') return window.__cgFull ? window.__cgFull() : el.offsetTop + vh * 1.2;
+    if (id === 'korean-garden') return el.offsetTop + (el.offsetHeight - vh) * 0.2;   // 글자 3줄이 다 올라온 지점
+    if (id === 'korean-gardens') return el.offsetTop + (el.offsetHeight - vh) * 0.12; // 사진이 열린 첫 장면
+    if (id === 'structure') return el.offsetTop + vh * 1.35;                           // 세 정원이 다 올라가고 첫 장면 글자(본문까지) 다 나온 지점
+    return el.offsetTop;
+  }
+  function goTo(id) {
+    const y = spotOf(id);
+    if (y === null) return false;
+    running = false; vel = 0; cur = target = y;
+    window.scrollTo(0, y);
+    // 각 섹션의 '따라가기' 값을 바로 맞춰서 되감기·빈 화면 없이 딱 보이게
+    window.__introSync && window.__introSync();
+    window.__cgSync && window.__cgSync();
+    window.__tgSync && window.__tgSync();
+    window.__stSync && window.__stSync();
+    window.__loSync && window.__loSync();
+    window.dispatchEvent(new Event('scroll'));
+    return true;
+  }
+  window.__goTo = goTo;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href').slice(1);
+    if (id && goTo(id)) e.preventDefault();
+  });
+})();
+</script>
+
+</body></html>
