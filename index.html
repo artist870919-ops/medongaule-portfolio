@@ -1,5 +1,45 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>메덩골정원</title>
+<title>메덩골정원 느린 연출</title>
+<!-- ===== 로고 인트로 : 로딩 화면 → 꽃잎 창으로 첫 사진 열기 ===== -->
+<style>
+.ld{position:fixed;inset:0;z-index:9999;pointer-events:auto;cursor:default}
+.ld svg.ld-mask{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ld-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:var(--ld-size);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.ld-mark svg{width:100%;height:auto;display:block;overflow:visible}
+.ld-word{width:calc(var(--ld-size) * 1.08);margin-top:calc(var(--ld-size) * .2);opacity:0;display:block}
+/* 진행 숫자: 인트로 'PAST' 라벨과 같은 줄(y916)에 같은 글자 크기.
+   v8: 글자 10px, 선 위 5px 간격 (피그마 y464). v7 (사용자 피그마 07·08): 세로 가운데 가로선(y481) 바로 위에서 수치가 오르며 왼쪽(x40) → 오른쪽 끝(x1880)으로 이동 (위치는 JS가 계산) */
+/* v7: 화면 끝까지 이어진 가로선 0.7px 검정, y481 (로고 중심과 같은 높이). 1px 선 + 진하기 70% = 피그마 0.7px과 같은 먹 양 */
+.ld-rule{position:absolute;left:0;right:0;top:calc(481 / 1000 * 100%);height:1px;margin-top:-.5px;background:var(--ld-ink);opacity:.7;pointer-events:none}
+/* v8: 굵기는 JS(ruleLine)가 화면 배율에 맞춰 0.7px로 계산 — 일반 화면 1px×70%, 레티나 0.7px(실제 1.4픽셀) → 2픽셀×70% */
+.ld-pct{position:absolute;left:0;top:calc(481 / 1000 * 100%);transform:translateY(calc(-100% - 5px));white-space:nowrap;will-change:left,transform;
+  margin:0;font:400 10px/1 var(--font);letter-spacing:-.64px;color:var(--ld-ink);font-variant-numeric:tabular-nums}   /* v8: 사용자 피그마 16 → 10px */
+.ld-line{position:absolute;left:50%;top:50%;pointer-events:none;overflow:visible}
+html.ld-on, html.ld-on body{overflow:hidden}
+/* 페이지가 그려지기 전부터 미색으로 덮어 사진이 먼저 번쩍 보이지 않게 */
+/* v14 (사용자 결정 '밤색으로'): 로딩 화면 배경 = 진한 밤색, 선·숫자·워드마크 = 미색 (사이트 바탕색과 같은 색) */
+:root{--ld-bg:#2B201A;--ld-ink:#EEEDE9}
+html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-index:10000}
+/* v21: 워드마크를 글자 모양 마스크로 칠해 사이트 배경색과 정확히 같은 미색(--ld-ink #EEEDE9) — v14~20은 필터로 비슷한 색 */
+.ld .ld-word{background:var(--ld-ink);-webkit-mask:url(img/logo_wordmark.png) center/contain no-repeat;mask:url(img/logo_wordmark.png) center/contain no-repeat;aspect-ratio:1200/126;height:auto}
+/* v8: 휴대폰도 10px (피그마 값) */
+</style>
+<script>
+/* 로딩 중에는 스크롤·휠·키보드로 페이지가 움직이지 않게 막음 (사이트의 부드러운 스크롤보다 먼저 받음) */
+(function(){
+  document.documentElement.classList.add('ld-on','ld-pre');
+  try{ history.scrollRestoration = 'manual'; }catch(e){}
+  const block = (e) => { if (document.documentElement.classList.contains('ld-on')) { e.preventDefault(); e.stopImmediatePropagation(); } };
+  window.addEventListener('wheel', block, {capture:true, passive:false});
+  window.addEventListener('touchmove', block, {capture:true, passive:false});
+  window.addEventListener('keydown', (e) => {
+    if (!document.documentElement.classList.contains('ld-on')) return;
+    if ([' ','PageDown','PageUp','ArrowDown','ArrowUp','Home','End'].includes(e.key)) block(e);
+  }, {capture:true});
+})();
+</script>
+
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +66,7 @@
 html,body{background:var(--bg);color:var(--ink)}
 body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-.intro{position:relative;height:800vh}
+.intro{position:relative;height:814vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
 
 /* 피그마 좌표 캔버스 (1920×1000). JS가 화면에 맞춰 scale */
@@ -44,13 +84,16 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   background:linear-gradient(180deg,rgba(0,0,0,.38) 0%,rgba(0,0,0,.12) 22%,rgba(0,0,0,.18) 50%,rgba(0,0,0,.12) 78%,rgba(0,0,0,.3) 100%)}
 
 /* intro_scroll2: 선 0.7px 검정 (v25: 0.8 → 0.7), 라벨 Pretendard 16 검정 자간 -0.64px */
+/* 십자선 (v31): 확대·축소되는 캔버스 밖, 화면 픽셀 위에 직접 그림 → 가로·세로 두께가 항상 같음.
+   위치·두께는 JS(hairlines)가 화면 실제 픽셀에 맞춰 계산, 나타나는 연출은 clip-path로(변형 없음) */
+.hairs{position:absolute;inset:0;z-index:1;pointer-events:none}
 .hline,.vline{position:absolute;background:var(--ink)}
-.hline{left:461px;top:499.25px;width:1022px;height:.7px;transform:scaleX(0)}
-.vline{left:959.65px;top:101px;width:.7px;height:801px;transform:scaleY(0)}
+.hline{clip-path:inset(0 50% 0 50%)}
+.vline{clip-path:inset(50% 0 50% 0)}
 .label{position:absolute;margin:0;font-size:16px;line-height:normal;letter-spacing:-0.64px;
-  color:var(--ink);font-weight:500;white-space:nowrap;opacity:0}
+  color:var(--ink);font-weight:400;white-space:nowrap;opacity:0}
 .label-l{left:223px;top:481px}
-.label-r{left:1576px;top:481px;font-weight:400;text-align:right}
+.label-r{left:1576px;top:481px;text-align:right}
 .label-t{left:932px;top:65px}
 .label-b{left:942px;top:916px}
 
@@ -83,8 +126,6 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   .m-nav-r{right:max(16px,env(safe-area-inset-right,0px))}
   .m-nav a{color:var(--on-photo);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:-0.52px}
   .cv-back{width:100%;height:100%;transform:none !important}
-  .hline{left:16px;top:50%;width:calc(100% - 32px)}
-  .vline{left:50%;top:12%;height:76%}
   .label{font-size:11px;letter-spacing:-0.44px;white-space:normal}
   .label-l{left:16px;top:calc(50% - 36px)}
   .label-r{left:auto;right:16px;top:calc(50% - 36px)}
@@ -94,13 +135,27 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   .layer:first-child img{object-position:22% 50%}
 }
 @media (prefers-reduced-motion:reduce){.layer img{transform:none !important}}
+/* 스크롤 안내 (B 게시 버전 11): 시안 A. SCROLL Pretendard Regular 14 + 세로선 1px 64px (1920 기준)
+   1920×1000에서 글자 y873, 글자-선 14, 선 y901~965 (11-13: 5 내림). 캔버스 밖 화면 픽셀에 그림(선이 번지지 않게), 위치는 JS(scue) */
+.scue{position:absolute;z-index:5;left:0;top:0;display:flex;flex-direction:column;align-items:center;pointer-events:none;
+  color:var(--on-photo);opacity:0;visibility:hidden;transition:opacity 1.2s ease,visibility 0s linear 1.2s}
+.scue.on{opacity:1;visibility:visible;transition:opacity 1.2s ease,visibility 0s}
+.scue>*{opacity:var(--k,1)}   /* --k: 디오니소스 사진이 다음 사진으로 바뀌는 만큼 같이 사라짐 (JS) */
+.scue-t{display:block;font-family:'Pretendard',sans-serif;font-weight:400;line-height:1;letter-spacing:.12em;padding-left:.12em;white-space:nowrap}
+.scue-l{position:relative;display:block;width:1px;background:rgba(255,255,255,.28);overflow:hidden}
+.scue-l::after{content:"";position:absolute;left:0;top:0;width:100%;height:40%;background:rgba(255,255,255,.95);
+  transform:translateY(-100%);animation:scueFlow 2.4s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes scueFlow{0%{transform:translateY(-100%)}70%,100%{transform:translateY(260%)}}
+@media (prefers-reduced-motion:reduce){.scue-l::after{animation:none;transform:none;height:100%;background:rgba(255,255,255,.7)}}
 </style>
 
 <section class="intro" id="intro" aria-label="메덩골정원 인트로">
   <div class="stage">
-    <div class="cv cv-back" id="cvBack">
+    <div class="hairs" id="hairs">
       <div class="hline" id="hline"></div>
       <div class="vline" id="vline"></div>
+    </div>
+    <div class="cv cv-back" id="cvBack">
       <p class="label label-l" id="labL">KOREAN TRADITIONAL<br>GARDEN</p>
       <p class="label label-r" id="labR">CONTEMPORARY<br>GARDEN</p>
       <p class="label label-t" id="labT">FUTURE</p>
@@ -108,8 +163,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     </div>
 
     <div class="frame" id="frame">
-      <div class="layer"><img src="img/01_dionysos.jpg" alt="노을 하늘 아래 바위처럼 휘어 오른 디오니소스 건축물의 지붕"></div>
-      <div class="layer"><img src="img/02_korean_autumn.jpg" alt="단풍으로 물든 숲에 둘러싸인 한국정원의 기와 담장과 정자" loading="lazy"></div>
+      <!-- 2026-11-13 (사용자 '기와 그림에 맞춰서'): 1·2번 사진 순서만 바꿈 — 로딩 꽃잎 창이 열리는 한국정원(기와) 사진이 인트로 첫 화면 -->
+      <div class="layer"><img src="img/02_korean_autumn.jpg" alt="단풍으로 물든 숲에 둘러싸인 한국정원의 기와 담장과 정자"></div>
+      <div class="layer"><img src="img/01_dionysos.jpg" alt="노을 하늘 아래 바위처럼 휘어 오른 디오니소스 건축물의 지붕" loading="lazy"></div>
       <div class="layer"><img src="img/03_maze_aerial.jpg" alt="저녁 햇살을 받은 원형 벽돌 미로를 위에서 내려다본 모습" loading="lazy"></div>
       <div class="layer"><img src="img/04_maze_corridor.jpg" alt="하늘이 열린 벽돌 미로 안쪽의 곡선 통로" loading="lazy"></div>
       <div class="layer"><img src="img/05_mirror_pavilion.jpg" alt="꽃밭을 비추는 거울 기둥의 콘크리트 파빌리온" loading="lazy"></div>
@@ -127,6 +183,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
       <a class="mi" href="#location" data-x="1671,1654"><span class="b">오시는길</span><span class="r" aria-hidden="true">오시는길</span></a>
       <a class="mi" href="#reservation" data-x="1760,1755"><span class="b">예약하기</span><span class="r" aria-hidden="true">예약하기</span></a>
     </nav>
+
+    <!-- 스크롤 안내 (첫 화면에만, 조금이라도 스크롤하면 사라짐) -->
+    <div class="scue" id="scue" aria-hidden="true"><span class="scue-t" id="scueT">SCROLL</span><span class="scue-l" id="scueL"></span></div>
 
     <!-- 휴대폰 로고·메뉴 -->
     <h1 class="m-logo" id="mLogo"><a href="#intro"><span class="sr">MÉDONGAULE 메덩골정원</span></a></h1>
@@ -185,23 +244,29 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
       hairlines(s,ox,oy);
       return;
     }
-    hairlines(1,0,0);
+    hairlines(0,0,0);
     const hw=vw-32, hh=hw/1.399, vH=Math.min(vh*.5,(vw*.42)/.736), vW=vH*.736;
     R={full, h:{x:(vw-hw)/2,y:vh*.5-hh/2,w:hw,h:hh}, v:{x:(vw-vW)/2,y:vh*.5-vH/2,w:vW,h:vH}};
   }
   /* 십자선 0.7px (v25b): 브라우저는 1px보다 얇은 선을 꽉 찬 1px 검정으로 올려 그려서 굵어 보임.
      → 피그마처럼 보이게: 화면의 실제 픽셀 한 줄(배율이 크면 두 줄)에 딱 맞춰 그리고,
        진하기를 0.7 비율로 낮춤 (실제 픽셀 0.7칸 분량의 먹 = 피그마가 그리는 0.7px 선과 같은 양) */
+  /* v31: 세로줄이 가로줄보다 두꺼워 보이던 문제 수정. 선이 확대·축소되는 캔버스 안에서 변형(scale)으로
+     그려지면 브라우저가 두 칸에 번지게 그릴 수 있음 → 캔버스 밖 화면 픽셀에 직접, 같은 두께로 그림 */
   const LINE=0.7;
   function hairlines(s,ox,oy){
-    const dpr=window.devicePixelRatio||1, t=LINE*s*dpr, n=Math.ceil(t), a=(t/n).toFixed(3);
-    const hl=$('hline'), vl=$('vline'), bg=`rgba(0,0,0,${a})`;
-    hl.style.background=vl.style.background=bg;
-    if(mobile){ hl.style.height=vl.style.width=(n/dpr)+'px'; hl.style.top=vl.style.left=''; return; }
-    const th=n/(s*dpr);                                           // 선 두께 (피그마 좌표 단위)
-    const snap=(c,o)=>((Math.round((o+c*s)*dpr-n/2))/dpr-o)/s;    // 선 중심 → 실제 픽셀 경계에 맞춘 시작 위치
-    hl.style.height=th+'px'; hl.style.top=snap(500,oy)+'px';     // 가로줄 중심 y500
-    vl.style.width=th+'px';  vl.style.left=snap(960,ox)+'px';    // 세로줄 중심 x960
+    const dpr=window.devicePixelRatio||1;
+    const t=LINE*(s||1)*dpr, n=Math.max(1,Math.ceil(t));          // 실제 픽셀 n칸, 진하기 t/n (먹의 양 = 피그마 0.7px 선)
+    const hl=$('hline'), vl=$('vline');
+    hl.style.background=vl.style.background=`rgba(0,0,0,${(t/n).toFixed(3)})`;
+    const px=(c)=>Math.round(c*dpr-n/2)/dpr;                      // 선 중심 → 실제 픽셀 경계에 맞춘 시작 위치
+    const th=n/dpr;                                               // 두께 = 실제 픽셀 n칸 (가로·세로 같음)
+    const W=innerWidth, H=innerHeight;
+    let hx0,hx1,hy,vy0,vy1,vx;
+    if(!s){ hx0=16; hx1=W-16; hy=H*.5; vx=W*.5; vy0=H*.12; vy1=H*.88; }   // 휴대폰
+    else  { hx0=ox+461*s; hx1=ox+1483*s; hy=oy+500*s; vx=ox+960*s; vy0=oy+101*s; vy1=oy+902*s; }
+    Object.assign(hl.style,{left:Math.round(hx0)+'px',width:Math.round(hx1-hx0)+'px',top:px(hy)+'px',height:th+'px'});
+    Object.assign(vl.style,{top:Math.round(vy0)+'px',height:Math.round(vy1-vy0)+'px',left:px(vx)+'px',width:th+'px'});
   }
   const rect=(a,b,t)=>({x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),w:lerp(a.w,b.w,t),h:lerp(a.h,b.h,t)});
 
@@ -235,15 +300,16 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
       mob.forEach(m=>{m.style.opacity=hide; m.style.visibility=vis;});
     }
 
-    $('hline').style.transform=`scaleX(${ease(ramp(p,T.hl))})`;
-    $('vline').style.transform=`scaleY(${ease(ramp(p,T.vl))})`;
+    const gh=(1-ease(ramp(p,T.hl)))*50, gv=(1-ease(ramp(p,T.vl)))*50;   // 가운데에서 양쪽으로 자라남 (예전 scale과 같은 모양)
+    $('hline').style.clipPath=`inset(0 ${gh}% 0 ${gh}%)`;
+    $('vline').style.clipPath=`inset(${gv}% 0 ${gv}% 0)`;
     const lr=ramp(p,T.lr), tb=ramp(p,T.tb);
     $('labL').style.opacity=lr; $('labR').style.opacity=lr;
     $('labT').style.opacity=tb; $('labB').style.opacity=tb;
 
     // 끝부분: 덩어리째 위로 밀려 올라가지 않도록 먼저 사라지게
     const ex=ease(ramp(p,T.exit));
-    frame.style.opacity=1-ex; cvBack.style.opacity=1-ex;
+    frame.style.opacity=1-ex; cvBack.style.opacity=1-ex; $('hairs').style.opacity=1-ex;
     frame.style.scale=String(1-.04*ex);
   }
 
@@ -593,7 +659,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
   /* ===== 한국정원 섹션 =====
      섹션 높이만큼 스크롤하는 동안 화면(stage)은 고정, 스크롤 양에 따라 연출 진행 */
-  .kg-section { position: relative; z-index: 3; height: 400vh; margin-top: -100vh; margin-top: -100svh; }   /* 현대정원 마지막 화면과 겹쳐 시작 → 기둥 사진은 제자리, 한국정원 화면이 아래에서 올라와 덮음 */
+  .kg-section { position: relative; z-index: 3; height: 280vh; margin-top: -100vh; margin-top: -100svh; }   /* 현대정원 마지막 화면과 겹쳐 시작 → 기둥 사진은 제자리, 한국정원 화면이 아래에서 올라와 덮음 */
   .kg-stage {
     position: sticky;
     top: 0;
@@ -613,7 +679,6 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     z-index: 5;
   }
 
-  /* 사진 (Rectangle 48): x960 y0, 960×1000. 가을·겨울 두 장을 겹쳐 놓고 스크롤로 전환 */
   .kg-photo {
     position: absolute;
     left: 50%;
@@ -703,9 +768,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   /* ===== 스크롤 타이밍표 (0 = 섹션 시작, 1 = 섹션 끝) — 숫자만 바꾸면 조정됨 ===== */
   const T = {
     // 글자·가을 사진은 처음부터 완성된 상태로 화면과 함께 아래에서 올라옴
-    lines: [0.00, 0.09],    // 화면이 다 올라와 고정되면: 글자 한 줄씩 아래→위로 + 투명도 (첫 줄 구간)
-    lineGap: 0.04,          // 줄 사이 시차
-    toWinter: [0.30, 0.55]  // 다 올라온 뒤: 가을 → 겨울 사진으로 바뀌는 구간
+    lines: [0.00, 0.15],    // 화면이 다 올라와 고정되면: 글자 한 줄씩 아래→위로 + 투명도 (첫 줄 구간)
+    lineGap: 0.065,          // 줄 사이 시차
+    toWinter: [0.38, 0.74]  // 다 올라온 뒤: 가을 → 겨울 사진으로 바뀌는 구간
   };
 
   const clamp = (v) => Math.min(1, Math.max(0, v));
@@ -724,11 +789,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
     // 1) 가을 사진·로고: 처음부터 보임 (화면째 아래에서 올라옴)
     //    글자: 화면이 고정된 뒤 한 줄씩 아래에서 위로 올라오며 선명해짐 (역스크롤 시 역재생)
-    lines.forEach((line, i) => {
-      const t = range(p, T.lines[0] + i * T.lineGap, T.lines[1] + i * T.lineGap);
-      line.style.opacity = t;
-      line.style.transform = `translateY(${(1 - t) * 40}px)`;
-    });
+    setLines(p >= LINE_ON);   // 화면이 고정되면 글자가 제 속도로 한 줄씩 나타남 (아래 '글자 시간 연출')
     fall.style.opacity = 1;
     logo.style.opacity = 1;
 
@@ -737,6 +798,42 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
     // 3) 새: 화면이 고정되는 순간 한 번 출발 (다시 들어오면 또 한 번)
     setBirds(pinned);
+  }
+
+  /* ===== 글자 시간 연출 (느린 연출 버전) =====
+     스크롤을 빨리 굴려도 글자는 서두르지 않음: 지점(LINE_ON)을 지나면 한 줄씩 LINE_DUR초에 걸쳐 올라옴.
+     위로 되돌아가면 LINE_OUT초에 걸쳐 사라짐 */
+  const LINE_ON = 0.015;     // 화면이 고정된 직후
+  const LINE_DUR = 1.3;      // 한 줄이 나타나는 시간(초)
+  const LINE_STAGGER = 0.32; // 줄 사이 시차(초)
+  const LINE_OUT = 0.5;      // 사라지는 시간(초)
+  const lv = [...lines].map(() => 0);
+  let lineOn = null, lineT0 = 0, lineRaf = 0, lineLast = 0;
+  const slow = (t) => 1 - Math.pow(1 - t, 3);
+  function paintLines() {
+    lines.forEach((line, i) => {
+      const t = slow(lv[i]);
+      line.style.opacity = t;
+      line.style.transform = `translateY(${(1 - t) * 40}px)`;
+    });
+  }
+  function lineStep(now) {
+    const dt = lineLast ? Math.min((now - lineLast) / 1000, .1) : 1 / 60; lineLast = now;
+    let moving = false;
+    lv.forEach((v, i) => {
+      let n = v;
+      if (lineOn) { if ((now - lineT0) / 1000 >= i * LINE_STAGGER) n = Math.min(1, v + dt / LINE_DUR); if (n < 1) moving = true; }
+      else { n = Math.max(0, v - dt / LINE_OUT); if (n > 0) moving = true; }
+      lv[i] = n;
+    });
+    paintLines();
+    if (moving) lineRaf = requestAnimationFrame(lineStep); else { lineRaf = 0; lineLast = 0; }
+  }
+  function setLines(on) {
+    if (lineOn === null) { lineOn = on; lv.fill(on ? 1 : 0); paintLines(); return; }   // 처음: 움직임 없이 맞춤
+    if (on === lineOn) return;
+    lineOn = on; lineT0 = performance.now();
+    if (!lineRaf) { lineLast = 0; lineRaf = requestAnimationFrame(lineStep); }
   }
 
   let ticking = false;
@@ -1044,20 +1141,21 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
 <!-- ═══════════════ structure (건축물) ═══════════════
      피그마 structure (1920×1010) 좌표 그대로. 화면 너비/1920 비율, 세로 가운데 맞춤
-     사진 1920×781 (y109) 위에 흰 글자: 제목 x1267 y626 / 본문 x1267 y736
-     흐름: 선곡서원 → 선곡서원 본관 → DIONYSOS
+     사진 1920×781 (y109) 위에 흰 글자: 제목 x1268 y626 / 본문 x1268 y736 (세 장 모두 같음)
+     흐름: 니체의 미로 → 선곡서원 본관 → DIONYSOS
        · 들어올 때: 세 정원 화면이 위로 밀려 올라가며 뒤에 고정된 첫 사진이 드러남(참고 영상 방식), 글자는 한 줄씩 위에서 떨어짐
        · 스크롤하면: 다음 사진이 위에서 아래로 덮으며 내려옴. 이전 사진은 살짝 아래로 밀림
                     이전 글자는 아래로 떨어져 사라지고, 새 글자가 위에서 한 줄씩 떨어짐 -->
 <style>
   /* 참고 영상 방식: 세 정원 마지막 화면 뒤(z-index 아래)에 겹쳐 시작해서 화면 맨 위에 고정된 채 기다림.
      세 정원이 화면째 위로 밀려 올라가면 뒤에 있던 건축물 사진이 그대로 드러남 (건축물은 움직이지 않음) */
-  .st-section { position: relative; z-index: 2; height: 700vh; margin-top: -100vh; background: transparent; }
+  .st-section { position: relative; z-index: 2; height: 560vh; margin-top: -100vh; background: transparent; }
   .st-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--bg); }
   .st-drop { position: absolute; inset: 0; will-change: transform; }
   .st-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 1010px; transform-origin: 0 0; }
 
   .st-slide { position: absolute; inset: 0; pointer-events: none; }
+  .st-photo { pointer-events: auto; }   /* 메뉴바가 사진 위치를 알아보도록 (elementsFromPoint는 pointer-events:none 요소를 건너뜀). 사진 밑에는 클릭할 것이 없음 */
   /* 사진: 1920×781. 위에서 아래로 열림(가림막이 아래로 걷힘) */
   .st-photo { position: absolute; left: 0; top: 109px; width: 1920px; height: 781px; margin: 0; overflow: hidden;
     clip-path: inset(0 0 100% 0); will-change: clip-path; }
@@ -1095,11 +1193,11 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
    <div class="st-drop" id="stDrop">
     <div class="st-cv" id="stCv">
 
-      <!-- 1 선곡서원 (33:173~175) -->
+      <!-- 1 니체의 미로 (102:44~46) -->
       <div class="st-slide first" data-slide="0">
-        <figure class="st-photo" style="top:109px"><img src="img/st_seongok.jpg" alt="숲 앞에 기둥 위로 떠 있는 긴 노출 콘크리트 건물, 선곡서원"></figure>
-        <h3 class="st-title" style="left:1267px;top:626px"><span class="st-ln"><span class="st-e"><span class="st-s">선곡서원</span></span></span></h3>
-        <p class="st-body" style="left:1267px;top:736px;text-shadow:0 4px 4px rgba(0,0,0,.6)"><span class="st-ln"><span class="st-e"><span class="st-s">유네스코 세계유산으로 등재된 안동의 병산서원을 ‘빈자의 미학’으로 유명한 승효상</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">건축가가 현대적으로 재해석하여 디자인한 건축물입니다</span></span></span></p>
+        <figure class="st-photo" style="top:109px"><img src="img/st_maze.jpg" alt="가운데 나무를 둘러싼 붉은 테라코타 벽돌 원형 미로를 위에서 내려다본 모습, 니체의 미로"></figure>
+        <h3 class="st-title" style="left:1268px;top:626px"><span class="st-ln"><span class="st-e"><span class="st-s">니체의 미로</span></span></span></h3>
+        <p class="st-body" style="left:1268px;top:735px;text-shadow:0 4px 4px rgba(0,0,0,.6)"><span class="st-ln"><span class="st-e"><span class="st-s">독일의 철학자 니체의 ‘영원회귀’ 사상에서 영감을 받아 붉은 테라코타</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">벽돌로 쌓은 원형 미로로 길을 잃으며 내면을 마주하게 하는 사유 공간입니다</span></span></span></p>
       </div>
 
       <!-- 2 선곡서원 본관 (33:270~272) -->
@@ -1138,19 +1236,19 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
      단위: 화면 높이(1 = 화면 하나만큼 스크롤). 0 = 섹션 맨 위
      리듬: 제목 → (한 박자) → 본문 → (멈춤) → 사진 → (한 박자) → 제목 → (한 박자) → 본문 → … */
   const ENTER = 1.0;          // 세 정원이 위로 밀려 올라가며 건축물이 드러나는 거리
-  // 첫 장면(선곡서원) 글자: 제목 → 한 박자 → 본문
-  const FIRST = { title: [0.5, 0.75], body: [0.95, 1.2], gap: 0.1 };
+  // 첫 장면(니체의 미로) 글자: 제목 → 한 박자 → 본문
+  const FIRST = { title: [0.45, 0.65], body: [0.8, 1.0], gap: 0.08 };
   // 다음 장면으로 넘어가는 시작점 (본관, DIONYSOS)
-  const TRANS = [1.7, 3.75];
+  const TRANS = [1.4, 2.95];
   // 넘어갈 때 순서 (시작점에서 얼마 뒤인지)
   const SEQ = {
-    out:   [0.0, 0.25],    // 이전 글자가 아래로 떨어져 사라짐
-    photo: [0.1, 0.65],    // 새 사진이 위에서 아래로 덮으며 내려옴
-    title: [0.85, 1.1],    // 한 박자 쉬고 제목
-    body:  [1.3, 1.55],    // 한 박자 쉬고 본문 (첫 줄)
-    gap:   0.1             // 본문 둘째 줄 시차
+    out:   [0.0, 0.2],    // 이전 글자가 아래로 떨어져 사라짐
+    photo: [0.08, 0.55],    // 새 사진이 위에서 아래로 덮으며 내려옴
+    title: [0.65, 0.85],    // 한 박자 쉬고 제목
+    body:  [0.95, 1.15],    // 한 박자 쉬고 본문 (첫 줄)
+    gap:   0.08            // 본문 둘째 줄 시차
   };
-  // 섹션 높이 700vh = 마지막 본문(5.4)까지 + 끝 여유 → 화면 하나 남기고 6.0
+  // (짧은 버전) 섹션 높이 560vh = 마지막 본문(4.18)까지 + 끝 여유 → 화면 하나 남기고 4.6
   const SMOOTH = 0.1;        // 부드러움: 숫자↓ = 더 미끄러지듯 (0.05~0.15)
   const DROP = 10;           // 내려오는 사진 안쪽 이미지가 위에서 따라 내려오는 거리(%)
   const PUSH = 5;            // 덮이는 사진이 아래로 밀리는 거리(%)
@@ -1200,13 +1298,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
       let first = 0, outP = 0;
       s.lines.forEach((ln, k) => {
         // 들어오기 (k = 0 제목, 1·2 본문 줄)
-        let inP;
-        if (i === 0) {
-          inP = k === 0 ? at(0, FIRST.title) : at(0, FIRST.body, (k - 1) * FIRST.gap);
-        } else {
-          const t0 = TRANS[i - 1];
-          inP = k === 0 ? at(t0, SEQ.title) : at(t0, SEQ.body, (k - 1) * SEQ.gap);
-        }
+        const inP = s.tv[k];   // 시간 연출 값 (아래 stepText)
         let y = -(1 - out(inP)) * 110;
         // 떠나기: 다음 장면이 시작되면 위 줄부터 아래로 떨어짐
         if (i < slides.length - 1) {
@@ -1223,20 +1315,49 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     });
   }
 
+  /* ===== 글자 시간 연출 (느린 연출 버전) =====
+     제목이 나올 지점을 지나면: 제목 → 한 박자(TXT_BEAT초) → 본문 한 줄씩, 각각 TXT_DUR초에 걸쳐 떨어짐.
+     스크롤을 빨리 굴려도 이 속도는 그대로. 위로 되돌아가면 TXT_OUT초에 걸쳐 다시 올라감.
+     (다음 장면으로 넘어갈 때 아래로 떨어져 사라지는 것은 사진과 함께 스크롤을 따라감 — 원본과 같음) */
+  const TXT_DUR = 1.15;     // 한 줄이 떨어지는 시간(초)
+  const TXT_BEAT = 0.6;     // 제목 뒤 본문까지 쉬는 박자(초)
+  const TXT_GAP = 0.16;     // 본문 줄 사이 시차(초)
+  const TXT_OUT = 0.45;     // 되돌아갈 때 사라지는 시간(초)
+  const trigOf = (i) => i === 0 ? FIRST.title[0] : TRANS[i - 1] + SEQ.title[0];
+  function stepText(now, dt, snap) {
+    let changed = false;
+    slides.forEach((s, i) => {
+      const on = cur >= trigOf(i);
+      if (snap || s.on == null) { s.on = on; s.tv = s.lines.map(() => on ? 1 : 0); changed = true; return; }
+      if (on !== s.on) { s.on = on; s.t0 = now; }
+      s.tv = s.tv.map((v, k) => {
+        let n = v;
+        if (on) { const delay = k === 0 ? 0 : TXT_BEAT + (k - 1) * TXT_GAP; if ((now - s.t0) / 1000 >= delay) n = Math.min(1, v + dt / TXT_DUR); }
+        else n = Math.max(0, v - dt / TXT_OUT);
+        if (n !== v) changed = true;
+        return n;
+      });
+    });
+    return changed;
+  }
+
   let lastT = 0;
   function tick(t) {
     const dt = lastT ? Math.min((t - lastT) / 1000, .1) : 1 / 60; lastT = t;
     const k = 1 - Math.pow(1 - SMOOTH, dt * 60);   // 60Hz·120Hz 모니터에서 같은 속도
     const d = target - cur;
-    if (Math.abs(d) > 0.0001) { cur = reduce ? target : cur + d * k; render(); }
+    const moved = Math.abs(d) > 0.0001;
+    if (moved) cur = reduce ? target : cur + d * k;
+    const txt = stepText(t, dt, false);
+    if (moved || txt) render();
     requestAnimationFrame(tick);
   }
   window.addEventListener('scroll', readScroll, { passive: true });
   window.addEventListener('resize', () => { measure(); readScroll(); render(); });
-  window.addEventListener('load', () => { measure(); readScroll(); cur = target; render(); });
+  window.addEventListener('load', () => { measure(); readScroll(); cur = target; stepText(0, 0, true); render(); });
 
-  window.__stSync = () => { readScroll(); cur = target; render(); };
-  measure(); readScroll(); cur = target; render(); requestAnimationFrame(tick);
+  window.__stSync = () => { readScroll(); cur = target; stepText(0, 0, true); render(); };   // 메뉴로 바로 이동하면 글자도 바로 맞춤
+  measure(); readScroll(); cur = target; stepText(0, 0, true); render(); requestAnimationFrame(tick);
 })();
 </script>
 
@@ -1355,8 +1476,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
 <!-- ═══════════════ location_920 (오시는길) ═══════════════
      피그마 33:185 (v37 피그마 갱신: 1920×900) 좌표 그대로. 화면 너비/1920 비율
-     사진 x294 y0 762×900 / 지도 x1283 y221 410×398 (v39: 1267 → 1283, 글자 1267/1340 → 1283/1356) (모서리 10, 그림자: 왼쪽 위 흰빛 -2 -3 4 .77 + 오른쪽 아래 3 5 3 -1 .21)
-     지도 안 오른쪽 아래 워드마크 x1582 y597 94.8×10 / 글자 y650·697
+     사진 x294 y0 762×900 / (11-13 피그마 수정) 지도 x1325 y240 317×317 정사각형 (모서리 6, 그림자: 왼쪽 위 흰빛 -2 -3 4 .77 + 오른쪽 아래 3 5 3 -1 .21)
+     지도 위 워드마크 없앰 / 글자: '오시는길' x1325 (Medium 18) · 주소 x1398 y582, 교통 안내 x1398 y629 (Regular 16). 사진~지도 사이 = 오른쪽 여백 = 269
+     (이전 v39: 지도 x1283 y221 410×398 모서리 10 + 워드마크 x1582 y597, 글자 1283/1356 y650·697)
      움직임: 사진 틀은 제자리, 안쪽 사진만 스크롤 따라 조금씩 커짐 (1 → ZOOM). 사진 1524×1800 = 2배 -->
 <style>
   .lo-section { position: relative; z-index: 3; background: var(--bg); }
@@ -1364,16 +1486,14 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   .lo-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 900px; transform-origin: 0 0; }
   .lo-photo { position: absolute; left: 294px; top: 0; width: 762px; height: 900px; margin: 0; overflow: hidden; }
   .lo-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; transform-origin: 50% 50%; will-change: transform; }
-  .lo-map { position: absolute; left: 1283px; top: 221px; width: 410px; height: 398px; margin: 0; border-radius: 10px; overflow: hidden;
+  .lo-map { position: absolute; left: 1325px; top: 240px; width: 317px; height: 317px; margin: 0; border-radius: 6px; overflow: hidden;
     box-shadow: -2px -3px 4px 0 rgba(255,255,255,.77), 3px 5px 3px -1px rgba(0,0,0,.21); }
   .lo-map img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
-  /* 지도 위 워드마크 (피그마 Group 12) 94.8×10, x1582 y597 (v39) */
-  .lo-word { position: absolute; left: 1582px; top: 597px; width: 94.8px; height: 10px; object-fit: contain; }
   /* 글자: Pretendard 18 검정 */
-  .lo-label { position: absolute; left: 1283px; top: 650px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 500; white-space: nowrap; color: var(--ink); }
-  /* 줄 높이 21 = 피그마 글상자 42 ÷ 2줄 (글꼴이 바뀌어도 아래 안내문과 겹치지 않게 고정) */
-  .lo-addr  { position: absolute; left: 1356px; top: 650px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 400; letter-spacing: -0.72px; white-space: nowrap; color: var(--ink); font-style: normal; }
-  .lo-route { position: absolute; left: 1356px; top: 697px; margin: 0; font-size: 18px; line-height: 1.3; font-weight: 400; letter-spacing: -0.72px; white-space: nowrap; color: var(--ink); }
+  .lo-label { position: absolute; left: 1325px; top: 582px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 500; white-space: nowrap; color: var(--ink); }
+  /* (11-13 피그마) 주소·교통 안내 18 → 16, 자간 -4%(-0.64). 주소 줄 높이 19 = 피그마 글상자 38 ÷ 2줄 (글꼴이 바뀌어도 아래 안내문과 겹치지 않게 고정) */
+  .lo-addr  { position: absolute; left: 1398px; top: 582px; margin: 0; font-size: 16px; line-height: 19px; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); font-style: normal; }
+  .lo-route { position: absolute; left: 1398px; top: 629px; margin: 0; font-size: 16px; line-height: 1.3; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진 → 지도 → 글자 순으로 쌓기) */
   @media (max-width: 767px) {
@@ -1381,8 +1501,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     .lo-pin { position: static; height: auto !important; }
     .lo-cv { position: static; width: auto; height: auto; transform: none !important; }
     .lo-photo { position: relative; left: 0; width: 100%; height: auto; aspect-ratio: 762 / 900; }
-    .lo-word { display: none; }
-    .lo-map { position: relative; left: 0; top: 0; width: calc(100% - 40px); max-width: 410px; height: auto; aspect-ratio: 410 / 398; margin: 48px 20px 0; }
+    .lo-map { position: relative; left: 0; top: 0; width: calc(100% - 40px); max-width: 317px; height: auto; aspect-ratio: 1 / 1; margin: 48px 20px 0; }
     .lo-label, .lo-addr, .lo-route { position: static; margin: 0 20px; font-size: 15px; white-space: normal; }
     .lo-label { margin-top: 20px; }
     .lo-addr { margin-top: 6px; }
@@ -1395,11 +1514,10 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
  <div class="lo-pin" id="loPin">
   <div class="lo-cv" id="loCv">
     <figure class="lo-photo"><img id="loImg" src="img/lo_garden_v2.jpg" alt="단풍 든 숲과 연못을 배경으로 기와 담장과 정자가 이어진 한국정원을 위에서 내려다본 모습" loading="lazy"></figure>
-    <figure class="lo-map"><img src="img/lo_map_v2.jpg" alt="메덩골길과 금왕길 사이에 표시된 메덩골정원 위치 지도" loading="lazy"></figure>
-    <img class="lo-word" src="img/cg_wordmark.png" alt="" aria-hidden="true">
+    <figure class="lo-map"><img src="img/lo_map_v3.jpg" alt="메덩골길과 금왕길 사이에 표시된 메덩골정원 위치 지도" loading="lazy"></figure>
     <p class="lo-label">오시는길</p>
     <address class="lo-addr">경기도 양평군 양동면 메덩골길 1<br>메덩골정원 주차장</address>
-    <p class="lo-route">자가용을 이용할 경우 동양평 IC에서 (15분)<br>버스를 이용할 경우 용문 버스터미널 택시(25분)<br>기차를 이용할 경우 용문역 택시(25분)</p>
+    <p class="lo-route">자가용 이용시 동양평 IC에서 (15분)<br>버스를 이용시 용문 버스터미널 택시(25분)<br>기차를 이용시 용문역 택시(25분)</p>
   </div>
  </div>
 </section>
@@ -1673,13 +1791,13 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 <style>
   .to-top { position: fixed; z-index: 40;
     right: calc(40 / 1920 * 100vw); bottom: calc(40 / 1920 * 100vw);
-    width: max(44px, calc(48 / 1920 * 100vw)); height: max(44px, calc(48 / 1920 * 100vw));
+    width: max(40px, calc(40 / 1920 * 100vw)); height: max(45px, calc(45 / 1920 * 100vw));   /* 40×45 (새 그림 비율) */
     padding: 0; border: 0; background: none; cursor: pointer;
     opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility 0s linear .4s, transform .25s ease; }
   .to-top.on { opacity: 1; visibility: visible; transition: opacity .4s ease, visibility 0s, transform .25s ease; }
   .to-top svg { width: 100%; height: 100%; display: block; overflow: visible; }
   .to-top:hover { transform: translateY(-3px); }
-  .to-top:focus-visible { outline: 1px solid #000; outline-offset: 4px; border-radius: 50%; }
+  .to-top:focus-visible { outline: 1px solid #000; outline-offset: 4px; }
   @media (max-width: 767px) {
     .to-top { right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   }
@@ -1687,22 +1805,26 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 </style>
 
 <button class="to-top" id="toTop" type="button" aria-label="맨 위로">
-  <!-- arrow80.svg (12:51 교체): 흰색 80% 원 + 화살표 구멍 + 그림자. 피그마 내보내기의 shape-rendering="crispEdges"는 원 가장자리가 계단처럼 깨져 보여서 뺌 -->
-  <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-    <g filter="url(#ttShadow)">
-      <path d="M257 512C398.4 512 513 397.4 513 256C513 114.6 398.4 0 257 0C115.6 0 1 114.6 1 256C1 397.4 115.6 512 257 512ZM378 271C387.4 280.4 387.4 295.6 378 304.9C368.6 314.2 353.4 314.3 344.1 304.9L257.1 217.9L170.1 304.9C160.7 314.3 145.5 314.3 136.2 304.9C126.9 295.5 126.8 280.3 136.2 271L240 167C249.4 157.6 264.6 157.6 273.9 167L378 271Z" fill="white" fill-opacity="0.8"/>
-    </g>
+  <!-- 사용자 교체 (2026-11-12, arrow.svg): 가로 40 × 세로 45 네모 + 흰색 27% 채움 + 미색(#E6E2D8) 가는 테두리 + 가는 화살표. 피그마 좌표 (1845, 892)를 0,0으로 옮김 -->
+  <svg viewBox="0 0 40 45" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <defs>
-      <filter id="ttShadow" x="0" y="0" width="520" height="520" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <!-- 사용자 교체 (16:29, 새 arrow.svg): 그림자 오른쪽 1 아래 2, 흐림 1.5, 검정 20%, 네모 바깥에만 / 테두리 #C9C3B8 / 화살표 #A9A6A0 -->
+      <filter id="toTopShadow" x="-0.1" y="-0.1" width="1.35" height="1.35" color-interpolation-filters="sRGB">
         <feFlood flood-opacity="0" result="BackgroundImageFix"/>
         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-        <feOffset dx="3" dy="4"/><feGaussianBlur stdDeviation="2"/>
+        <feOffset dx="1" dy="2"/>
+        <feGaussianBlur stdDeviation="1.5"/>
         <feComposite in2="hardAlpha" operator="out"/>
-        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
         <feBlend mode="normal" in2="BackgroundImageFix" result="effect1"/>
         <feBlend mode="normal" in="SourceGraphic" in2="effect1" result="shape"/>
       </filter>
     </defs>
+    <g transform="translate(-1845 -892)">
+      <path d="M1845 892H1885V937H1845V892Z" fill="white" fill-opacity="0.27" filter="url(#toTopShadow)" shape-rendering="crispEdges"/>
+      <path d="M1885 892V937H1845V892H1885ZM1845.7 936.3H1884.3V892.7H1845.7V936.3Z" fill="#C9C3B8"/>
+      <path d="M1861.46 907.535C1861.27 907.34 1861.27 907.023 1861.46 906.828L1864.65 903.646C1864.84 903.451 1865.16 903.451 1865.35 903.646L1868.54 906.828C1868.73 907.023 1868.73 907.34 1868.54 907.535C1868.34 907.73 1868.02 907.73 1867.83 907.535L1865.5 905.207L1865.5 926L1864.5 926L1864.5 905.207L1862.17 907.535C1861.98 907.73 1861.66 907.73 1861.46 907.535Z" fill="#A9A6A0"/>
+    </g>
   </svg>
 </button>
 
@@ -1733,6 +1855,570 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     veil.classList.add('on');
     setTimeout(() => { jump(); requestAnimationFrame(() => veil.classList.remove('on')); }, 360);
   });
+})();
+</script>
+
+<!-- ═══════════════ 메뉴바 (피그마 Group 17 = 전체 바 / Group 16 + 햄버거 82:84~87 = 작은 바) ═══════════════
+     인트로가 끝난 뒤부터 보임.
+     위·아래 스크롤 모두 = 작은 바 (햄버거 + MENU / 가운데 워드마크 / 예약하기), 배경 없음, 아래 사진 밝기에 따라 흰색·검정
+     MENU를 누르면 = (2026-11-12 변경) 유리 메뉴 상자가 왼쪽 위에 열림. 가운데 로고·예약하기는 그대로. 스크롤하거나 바깥을 누르면 닫힘
+       (예전: 전체 바 = 미색 배경 + 메뉴 6개. 그 마크업 .nb-full / .nb-bg 은 남아 있지만 데스크톱에서는 더 쓰지 않음)
+     현대정원·한국정원 화면에서는 가운데 워드마크 숨김. 좌표는 피그마 1920×120 그대로, 화면너비/1920 비율 -->
+<style>
+  .nb { position: fixed; left: 0; top: 0; width: 100%; z-index: 45; pointer-events: none;
+        opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility 0s linear .45s; }
+  .nb.on { opacity: 1; visibility: visible; transition: opacity .45s ease, visibility 0s; }
+  /* 한국정원 겨울 사진 위 예약하기 뒤: 흰색 77×21 상자, 불투명도 60%, 레이어 블러 4.5px (피그마 Rectangle 57, 87:445). 겨울 사진이 보이는 만큼만 나타남 */
+  .nb-blur { position: absolute; left: 0; top: 0; width: 0; height: 0; background: #fff; opacity: 0; pointer-events: none; }
+  .nb.full .nb-blur { display: none; }
+  .nb-bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: var(--bg);
+           transform: translateY(-100%); transition: transform .5s cubic-bezier(.22,.61,.36,1); }
+  .nb.full .nb-bg { transform: none; }
+  .nb-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 120px; transform-origin: 0 0; }
+  .nb a, .nb button { pointer-events: auto; }
+
+  /* 영역별 글자색: 기본 검정, 아래가 어두운 사진이면 흰색 (작은 바일 때만) */
+  .nb-z { color: var(--ink); transition: color .35s ease, opacity .4s ease; }
+  .nb:not(.full) .nb-z.lt { color: #fff; }
+
+  .nb-logo { position: absolute; left: 818px; top: 46px; width: 284.75px; height: 30px; display: block;
+             background-color: currentColor;
+             -webkit-mask: var(--logo) center/contain no-repeat; mask: var(--logo) center/contain no-repeat; }
+  .nb-a { position: absolute; top: 50px; font-size: 18px; line-height: normal; letter-spacing: -0.72px;
+          font-weight: 400; white-space: nowrap; text-decoration: none; color: inherit; }
+  .nb-a:hover, .nb-a.hov { text-decoration: underline; text-underline-offset: 5px; }
+
+  /* 햄버거 + MENU (피그마: 선 18/18/12 × 2px, 5px 간격, x120 / MENU x144 y50) */
+  .nb-menu { position: absolute; left: 120px; top: 50px; height: 21px; padding: 0 0 0 24px; border: 0; background: none;
+             font: 400 18px/21px var(--font); letter-spacing: -0.72px; color: inherit; cursor: pointer; white-space: nowrap; }
+  .nb-menu i { position: absolute; left: 0; height: 2px; background: currentColor; }
+  .nb-menu i:nth-child(1) { top: 4px; width: 18px; height: 3px; border-radius: 1.5px; }   /* 피그마 Group 19: 첫째 줄만 3px(둥근 끝), 둘째·셋째 2px */
+  .nb-menu i:nth-child(2) { top: 10px; width: 18px; }
+  .nb-menu i:nth-child(3) { top: 15px; width: 12px; }
+  .nb-menu::after { content: ''; position: absolute; inset: -12px -10px; }   /* 누르는 영역 넓힘 */
+
+  /* 전체 바에서만 보이는 메뉴 */
+  .nb-full { opacity: 0; visibility: hidden; transition: opacity .35s ease, visibility 0s linear .35s; }
+  .nb.full .nb-full { opacity: 1; visibility: visible; transition: opacity .45s ease .12s, visibility 0s; }
+  .nb.full .nb-menu { opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
+
+  /* (사용자 요청 2026-11-12) SKIP 전부 삭제 / 현대정원 작은 워드마크·한국정원 타이포 로고 삭제
+     → 메뉴바가 그 역할을 맡음. 요소는 스크립트가 참조해서 화면에서만 숨김 */
+  /* (사용자 요청 2026-11-13) 가로 스크롤 구간(세 정원)의 SKIP은 되살림 (피그마 tre_Garden_2000~2002 Group 9, x169 y520) */
+  .cg-skip, .cg-word, .kg-logo { display: none !important; }
+  /* 현대정원·한국정원 화면에서는 메뉴바 가운데 워드마크도 숨김 (작은 바일 때만, 전체 바를 열면 보임) */
+  .nb-logo { transition: color .35s ease, opacity .4s ease, visibility 0s; }
+  /* 디오니소스 사진이 바 띠를 지나가는 동안: MENU·로고·예약하기(밑줄 포함) 잠깐 숨김 */
+  .nb .nb-menu, .nb .nb-logo, .nb .nb-book, .nb .nb-ul { transition-property: opacity, visibility, color; }
+  .nb.bar-off:not(.full) .nb-menu, .nb.bar-off:not(.full) .nb-logo, .nb.bar-off:not(.full) .nb-book, .nb.bar-off:not(.full) .nb-ul {
+    opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transition: opacity .3s ease, visibility 0s linear .3s; }
+  .nb.no-logo:not(.full) .nb-logo { opacity: 0; visibility: hidden; transition: color .35s ease, opacity .4s ease, visibility 0s linear .4s; }
+  /* 오시는길 (사용자 요청 2026-11-12): 멈춘 동안에는 로고가 보이고, 들어오거나 나가며 움직이는 동안에는 로고만 숨김 (MENU·예약하기는 그대로) */
+  .nb.lo-move:not(.full) .nb-logo { opacity: 0; visibility: hidden; transition: color .35s ease, opacity .4s ease, visibility 0s linear .4s; }
+
+  /* 예약하기: 마우스를 올리면 글자가 한 글자씩 차례로 아래에서 올라옴 */
+  .nb-book .ch, .nb-menu .ch { display: inline-block; overflow: hidden; vertical-align: top; }
+  .nb-book .ch > span, .nb-menu .ch > span { display: inline-block; }
+  .nb-menu .mt { display: inline-block; }
+  @keyframes nbBar { 0% { transform: scaleX(1); } 45% { transform: scaleX(.45); } 100% { transform: scaleX(1); } }
+  @keyframes nbRise { from { transform: translateY(105%); opacity: 0; } to { transform: none; opacity: 1; } }
+  @media (hover: hover) {
+    .nb-book:hover .ch > span, .nb-menu:hover .ch > span, .nb-book.hov .ch > span, .nb-menu.hov .ch > span { animation: nbRise .55s cubic-bezier(.22,.61,.36,1) both; animation-delay: calc(var(--i) * 70ms); }
+    .nb-a.nb-book:hover, .nb-a.nb-book.hov { text-decoration: none; }
+    /* 햄버거: 첫째 줄은 고정, 둘째·셋째 줄만 길었다 → 줄었다 → 길어짐 (셋째 줄은 0.09초 늦게) */
+    .nb-menu i:nth-child(2), .nb-menu i:nth-child(3) { transform-origin: 0 50%; }
+    .nb-menu:hover i:nth-child(2), .nb-menu.hov i:nth-child(2) { animation: nbBar .7s ease-in-out both; }
+    .nb-menu:hover i:nth-child(3), .nb-menu.hov i:nth-child(3) { animation: nbBar .7s ease-in-out .09s both; }
+  }
+
+  /* 예약하기 밑줄 (사용자 선택 2026-11-12, 시안 A, 마우스를 올릴 때만 나타남): 확대·축소되는 캔버스 밖에서 화면 픽셀 한 줄로 그림 (십자선과 같은 방식) */
+  .nb-ul { position: absolute; left: 0; top: 0; width: 0; height: 1px; background: currentColor; opacity: 0;
+           color: var(--ink); pointer-events: none; transform: scaleX(0); transform-origin: 0 50%;
+           transition: transform .25s ease, opacity .25s ease, color .35s ease; }
+  /* 평소에는 없다가, 마우스를 올리면 글자가 차례로 올라오는 동안 왼쪽에서 오른쪽으로 그어짐 */
+  .nb-ul.on { opacity: .85; transform: none;
+              transition: transform .75s cubic-bezier(.22,.61,.36,1), opacity .2s ease, color .35s ease; }
+  .nb:not(.full) .nb-ul.lt { color: #fff; }
+  @media (min-width: 768px) { .nb.full #nbUlM { opacity: 0 !important; transition: opacity .15s ease; } }
+
+  /* 사진이 닿는 부분만 흰색 (사용자 요청 2026-11-12)
+     눈에 보이는 글자는 같은 모양의 두 겹: 검정 겹(b) + 흰 겹(w). 흰 겹은 '사진이 바 밑에 있는 영역'만 보이게 잘라내고(스크립트가 계산),
+     검정 겹은 그 영역만 뺌 → 글자 하나가 사진 경계에서 반은 흰색·반은 검정으로 갈라짐.
+     진짜 메뉴(클릭·키보드용)는 투명하게 맨 위에 둠. 마우스 올림은 .hov 로 두 겹에 같이 전달 */
+  .nb-vl { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+  .nb-vl.b { color: var(--ink); }
+  .nb-vl.w { color: #fff; clip-path: inset(100%); }
+  .nb-vl .nb-z, .nb-vl .nb-a, .nb-vl .nb-menu, .nb-vl .nb-ul { color: inherit; }
+  .nb .nb-vl a, .nb .nb-vl button { pointer-events: none; }
+  .nb > .nb-cv, .nb > .nb-cv * { color: transparent !important; }
+  .nb > .nb-cv .nb-list { background: transparent; }
+  .nb > .nb-cv a:focus-visible, .nb > .nb-cv button:focus-visible { outline-color: #888 !important; }
+
+  .nb a:focus-visible, .nb button:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+  /* 휴대폰 (피그마 시안 없음 → 임시 배치): 작은 바만, MENU를 누르면 아래로 목록 */
+  @media (max-width: 767px) {
+    .nb-cv { position: relative; width: 100%; height: 56px; transform: none !important; }
+    .nb-logo { left: 50%; top: 20px; width: 140px; height: 15px; transform: translateX(-50%); }
+    .nb-menu { left: 16px; top: 18px; font-size: 13px; letter-spacing: -0.52px; padding-left: 20px; }
+    .nb-menu i:nth-child(1), .nb-menu i:nth-child(2) { width: 15px; }
+    .nb-menu i:nth-child(3) { width: 10px; }
+    .nb-menu i { height: 1.5px; }
+    .nb-menu i:nth-child(1) { height: 2.25px; border-radius: 1.1px; }
+    .nb-a { font-size: 13px; letter-spacing: -0.52px; top: 18px; }
+    .nb-a.nb-book { left: auto !important; right: 16px; }
+    .nb-full { display: none; }
+    .nb-list { position: absolute; left: 0; top: 56px; width: 100%; margin: 0; padding: 8px 16px 20px; list-style: none;
+               background: var(--bg); display: none; }
+    .nb.full .nb-list { display: block; }
+    .nb.full .nb-menu { opacity: 1; visibility: visible; }
+    .nb-list a { display: block; padding: 10px 0; color: var(--ink); text-decoration: none; font-size: 15px; letter-spacing: -0.6px; }
+    .nb.full .nb-bg { height: auto; bottom: auto; }
+  }
+  @media (min-width: 768px) { .nb-list { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .nb, .nb-bg, .nb-z, .nb-full { transition: none !important; } }
+
+  /* ── 유리 메뉴 상자 (사용자 결정 2026-11-12, 시안 A-2 '맑은 유리 + 뒤를 살짝 어둡게') ──
+     피그마 structure > Group 20 (87:621): x0 y0 305×367, 모서리 왼쪽 위 0 / 나머지 8. X 121,60 (42.5×42.1, 선 2.13 둥근 끝) / MENU 203,54 /
+     메뉴 203, y98·139·180·217·258·299, Pretendard Medium 18 자간 -0.72 흰색.
+     MENU를 누르면 햄버거+MENU 자리에 이 상자가 열림 (가운데 로고·오른쪽 예약하기는 그대로). 데스크톱만, 휴대폰은 예전 목록 그대로.
+     재질: 흰색 10% + 배경 블러 28 + 뒤 밝기 80% + 안쪽 1px 흰색 22% + 위 하이라이트 35% + 그림자 Y8 블러24 12%
+     --u = 화면너비/1920 (스크립트 layout에서 넣음) */
+  /* (2026-11-13 피그마 'nav' 프레임 118:112, Rectangle 60 100:24) 왼쪽 전체 높이 판 305×1000, 모서리·테두리 없음.
+     채우기 #4B4536 70% + 글라스 frost 4(굴절은 CSS로 안 돼서 배경 블러 2로) + 안쪽 그림자 -1 -2 2 흰색 25% (시안 D).
+     X 247,46 32.34×32 (MENU 글자 없음) / 메뉴 x202, y147·201·255·309·363·417, Regular 24 자간 -0.96, 줄 높이 29(=1.193) */
+  .nb-gl { position: absolute; left: 0; top: 0; width: calc(305 * var(--u)); height: 100vh; height: 100dvh; display: none;
+           border-radius: 0;
+           background: rgba(75,69,54,.70);   /* (사용자 결정 11-13, 시안 D) #4B4536 70%: 미색 위 흰 글자 대비 약 4.4:1. 이전 77% */
+           -webkit-backdrop-filter: blur(calc(2 * var(--u)));
+                   backdrop-filter: blur(calc(2 * var(--u)));
+           box-shadow: inset calc(-1 * var(--u)) calc(-2 * var(--u)) calc(2 * var(--u)) rgba(255,255,255,.25);   /* (사용자 결정 11-13, 시안 D) 안쪽 그림자 -1 -2 2 흰색 25%. 이전 -2 -2 2 */
+           color: #fff; font: 400 calc(24 * var(--u))/1.193 var(--font);   /* (11-13 피그마 nav) Medium → Regular */
+           letter-spacing: calc(-0.96 * var(--u));
+           opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(calc(-16 * var(--u)));
+           transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s; }
+  @media (min-width: 768px) {
+    .nb-gl { display: block; }
+    .nb.gl .nb-gl { opacity: 1; visibility: visible; pointer-events: auto; transform: none;
+                    transition: opacity .45s ease, transform .6s cubic-bezier(.22,.61,.36,1), visibility 0s; }
+    /* (사용자 확인 11-13: 의도) 피그마처럼 닫힌 상태의 햄버거+MENU가 판 뒤로 비쳐 보임 → 눈에 보이는 겹은 그대로 두고, 진짜 단추(클릭·키보드용)만 숨김 */
+    .nb.gl > .nb-cv .nb-menu { opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
+  }
+  /* 상자 뒤가 거의 다 밝을 때(미색 배경·눈 사진): 흰 글자가 안 보이므로 검정 글자 + 밝은 유리로 (스크립트 glTone이 판단) */
+  .nb-gl.dk { color: var(--ink); text-shadow: none; background: rgba(255,255,255,.30);
+              -webkit-backdrop-filter: blur(calc(28 * var(--u))) saturate(1.4) brightness(.97);
+                      backdrop-filter: blur(calc(28 * var(--u))) saturate(1.4) brightness(.97);
+              box-shadow: inset 0 0 0 1px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.6), 0 calc(8 * var(--u)) calc(24 * var(--u)) rgba(0,0,0,.12); }
+  .nb-gl a, .nb-gl button { position: absolute; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit;
+                            letter-spacing: inherit; text-shadow: inherit; text-decoration: none; white-space: nowrap; cursor: pointer; }
+  .nb-gx { left: calc(247 * var(--u)); top: calc(46 * var(--u)); width: calc(32.336 * var(--u)); height: calc(32 * var(--u)); }
+  .nb-gx::after { content: ''; position: absolute; inset: calc(-10 * var(--u)); }   /* 누르는 영역 넓힘 (52×52) */
+  .nb-gx svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; overflow: visible; transform-origin: 50% 50%; }
+  /* (사용자 요청 2026-11-13) X를 누르면 제자리(가운데 기준)에서 반 바퀴(180°) 돈 뒤 판이 닫힘 */
+  .nb-gx.spin svg { transform: rotate(180deg); transition: transform .5s cubic-bezier(.65,0,.35,1); }
+  .nb-gi { left: calc(202 * var(--u)); top: calc(var(--y) * var(--u)); }
+  .nb-gi::after { content: ''; position: absolute; inset: calc(-10 * var(--u)) calc(-16 * var(--u)); }   /* 누르는 영역 넓힘 */
+  .nb-gi .t { display: inline-block; }
+  /* (11-13 피그마 수정) '건  축  물': 피그마 글자 그대로(글자 사이 빈칸 2개씩) + 이 메뉴만 자간 -4.5%(-1.08). 다른 메뉴는 -4%.
+     빈칸이 사라지지 않게 white-space: pre. 이전에는 네 글자 폭에 세 글자를 양끝 맞춤(.tj)했음 → 자간 수정이 보이도록 바꿈 */
+  .nb-gi .t.ts { white-space: pre; letter-spacing: calc(-1.08 * var(--u)); min-width: calc(81 * var(--u)); }   /* 글자 폭(약 80)이 달라도 밑줄은 다른 메뉴처럼 x282까지 */
+  /* (사용자 요청 2026-11-13) 마우스를 올리면 밑줄이 왼쪽→오른쪽으로 그어지고, 같은 속도로 글자가 연해졌다(가운데) 다시 진해짐.
+     둘 다 0.7초, 같은 곡선(천천히-빠르게-천천히) → 선이 절반 왔을 때 글자가 가장 연함. 마우스를 떼면 선은 0.25초에 사라짐 */
+  /* (11-13 피그마 nav 118:112, Line 29) 선: x0 → x282, y177 (글상자 147~176 바로 아래에 붙음), 1px 흰색 100%.
+     오른쪽 끝은 글상자 끝(283)보다 1 안쪽. 나머지 메뉴도 같은 규칙(각 글상자 위 + 29 → 1920에서 y176~177). 이전 y175 */
+  .nb-gi::before { content: ''; position: absolute; left: calc(-202 * var(--u)); right: calc(1 * var(--u)); top: calc(29 * var(--u)); top: calc(round(calc((var(--y) + 29) * var(--u)), 1px) - var(--y) * var(--u)); height: 1px;   /* 화면 픽셀에 맞춰 선이 번지지 않게 */
+                   background: currentColor; opacity: 0; transform: scaleX(0); transform-origin: 0 50%; pointer-events: none;
+                   transition: opacity .25s ease, transform 0s linear .25s; }
+  .nb-gi:hover::before, .nb-gi:focus-visible::before { opacity: 1; transform: scaleX(1);
+                   transition: transform .7s cubic-bezier(.65,0,.35,1), opacity .12s ease; }
+  /* (사용자 요청 11-13) 글자가 한꺼번에가 아니라, 선의 머리가 닿는 순서대로 한 글자씩 밝아짐.
+     마우스를 올리면 글자 전체가 0.15초에 연해지고(.35), 선이 각 글자 왼쪽 끝에 닿는 순간(--d)부터 그 글자를 다 지나는 동안(--l) 원래 진하기로.
+     --d·--l 은 선과 같은 0.7초 곡선 cubic-bezier(.65,0,.35,1)에서 계산한 값 (선 길이·시간을 바꾸면 다시 계산) */
+  @keyframes nbGiDim { to { opacity: .35; } }
+  @keyframes nbGiLit { from { opacity: .35; } to { opacity: 1; } }
+  .nb-gi:hover .c, .nb-gi:focus-visible .c { animation: nbGiDim .15s ease forwards, nbGiLit var(--l) linear var(--d) forwards; }
+  .nb-gi:focus-visible { outline: none; }
+  /* 열릴 때 글자가 위에서부터 차례로 나타남 */
+  @keyframes nbGlIn { from { opacity: 0; transform: translateY(calc(8 * var(--u))); } to { opacity: 1; transform: none; } }
+  .nb.gl .nb-gx, .nb.gl .nb-gi { animation: nbGlIn .55s cubic-bezier(.22,.61,.36,1) both; animation-delay: calc(.08s + var(--i) * 45ms); }
+  @media (prefers-reduced-motion: reduce) { .nb-gx.spin svg { transition: none; transform: none; } .nb-gl { transition: none !important; transform: none !important; } .nb.gl .nb-gx, .nb.gl .nb-gi, .nb-gi .c { animation: none !important; } .nb-gi::before { transition: none !important; } }
+</style>
+
+<header class="nb" id="nb">
+  <div class="nb-blur" id="nbBlur" aria-hidden="true"></div>
+  <div class="nb-bg" id="nbBg"></div>
+  <nav class="nb-cv" id="nbCv" aria-label="주 메뉴 (상단 고정)">
+    <button class="nb-menu nb-z" id="nbMenu" type="button" aria-expanded="false" aria-controls="nbGl nbList" data-zone="menu" aria-label="MENU">
+      <i></i><i></i><i></i><span class="mt" id="nbMenuTxt" aria-hidden="true"><span class="ch"><span style="--i:0">M</span></span><span class="ch"><span style="--i:1">E</span></span><span class="ch"><span style="--i:2">N</span></span><span class="ch"><span style="--i:3">U</span></span></span>
+    </button>
+    <div class="nb-full" id="nbFull">
+      <a class="nb-a" href="#con-garden" style="left:120px">현대정원</a>
+      <a class="nb-a" href="#korean-garden" style="left:221px">한국정원</a>
+      <a class="nb-a" href="#structure" style="left:322px">건축물</a>
+      <a class="nb-a" href="#reservation" style="left:1553px">관람안내</a>
+      <a class="nb-a" href="#location" style="left:1654px">오시는길</a>
+    </div>
+    <a class="nb-logo nb-z" id="nbLogo" href="#intro" data-zone="logo"><span class="sr">MÉDONGAULE 메덩골정원</span></a>
+    <a class="nb-a nb-book nb-z" id="nbBook" href="#reservation" style="left:1755px" data-zone="book" aria-label="예약하기"><span class="ch" aria-hidden="true"><span style="--i:0">예</span></span><span class="ch" aria-hidden="true"><span style="--i:1">약</span></span><span class="ch" aria-hidden="true"><span style="--i:2">하</span></span><span class="ch" aria-hidden="true"><span style="--i:3">기</span></span></a>
+    <ul class="nb-list" id="nbList">
+      <li><a href="#con-garden">현대정원</a></li><li><a href="#korean-garden">한국정원</a></li><li><a href="#structure">건축물</a></li>
+      <li><a href="#reservation">관람안내</a></li><li><a href="#location">오시는길</a></li><li><a href="#reservation">예약하기</a></li>
+    </ul>
+  </nav>
+  <!-- 유리 메뉴 상자 (데스크톱): 닫혀 있을 때는 inert -->
+  <nav class="nb-gl" id="nbGl" aria-label="메뉴" inert>
+    <button class="nb-gx" id="nbGx" type="button" aria-label="메뉴 닫기" style="--i:0"><svg viewBox="0 0 32.336 32.001" aria-hidden="true"><path fill="currentColor" d="M30.6204 0.236659C30.9361 -0.0788188 31.4483 -0.0789023 31.764 0.236659C32.0796 0.552285 32.0795 1.06451 31.764 1.38021L17.3108 15.8324L32.0989 30.6204C32.4144 30.9362 32.4146 31.4484 32.0989 31.764C31.7833 32.0796 31.2711 32.0795 30.9554 31.764L16.1673 16.9759L1.38018 31.764C1.06447 32.0795 0.552245 32.0796 0.236627 31.764C-0.0789258 31.4484 -0.0788254 30.9361 0.236627 30.6204L15.0237 15.8324L0.571588 1.38021C0.256125 1.06452 0.255999 0.552278 0.571588 0.236659C0.887205 -0.0789588 1.39943 -0.0788137 1.71514 0.236659L16.1673 14.6888L30.6204 0.236659Z"/></svg></button>
+    <a class="nb-gi" href="#con-garden" style="--y:147;--i:1"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">현</span><span class="c" style="--d:0.436s;--l:0.036s">대</span><span class="c" style="--d:0.472s;--l:0.056s">정</span><span class="c" style="--d:0.528s;--l:0.172s">원</span></span></a>
+    <a class="nb-gi" href="#korean-garden" style="--y:201;--i:2"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">한</span><span class="c" style="--d:0.436s;--l:0.036s">국</span><span class="c" style="--d:0.472s;--l:0.056s">정</span><span class="c" style="--d:0.528s;--l:0.172s">원</span></span></a>
+    <a class="nb-gi" href="#structure" style="--y:255;--i:3" aria-label="건축물"><span class="t ts" aria-hidden="true"><span class="c" style="--d:0.409s;--l:0.043s">건</span>  <span class="c" style="--d:0.452s;--l:0.076s">축</span>  <span class="c" style="--d:0.528s;--l:0.172s">물</span></span></a>
+    <a class="nb-gi" href="#reservation" style="--y:309;--i:4"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">관</span><span class="c" style="--d:0.436s;--l:0.036s">람</span><span class="c" style="--d:0.472s;--l:0.056s">안</span><span class="c" style="--d:0.528s;--l:0.172s">내</span></span></a>
+    <a class="nb-gi" href="#location" style="--y:363;--i:5"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">오</span><span class="c" style="--d:0.436s;--l:0.036s">시</span><span class="c" style="--d:0.472s;--l:0.056s">는</span><span class="c" style="--d:0.528s;--l:0.172s">길</span></span></a>
+    <a class="nb-gi" href="#reservation" style="--y:417;--i:6"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">예</span><span class="c" style="--d:0.436s;--l:0.036s">약</span><span class="c" style="--d:0.472s;--l:0.056s">하</span><span class="c" style="--d:0.528s;--l:0.172s">기</span></span></a>
+  </nav>
+</header>
+
+<script>
+(function () {
+  const DOWN_HIDE = 8;    // 전체 바를 연 뒤 위·아래로 이만큼(px) 스크롤하면 다시 작은 바
+
+  const nb = document.getElementById('nb'), cv = document.getElementById('nbCv');
+  const menuBtn = document.getElementById('nbMenu');
+  const gl = document.getElementById('nbGl'), gx = document.getElementById('nbGx');   // 유리 메뉴 상자
+  const intro = document.getElementById('intro');
+  const mobile = () => window.innerWidth < 768;
+
+  let lastY = window.scrollY, upAcc = 0, full = false, shown = false, quietUntil = 0;
+
+  /* 눈에 보이는 두 겹 (검정 / 흰색). 진짜 메뉴(cv)는 투명하게 맨 위에서 클릭만 받음 */
+  const realItems = [...cv.querySelectorAll('a, button')];
+  function makeLayer(cls) {
+    const d = document.createElement('div');
+    d.className = 'nb-vl ' + cls; d.setAttribute('aria-hidden', 'true'); d.setAttribute('inert', '');
+    const c = cv.cloneNode(true);
+    c.removeAttribute('id'); c.removeAttribute('aria-label');
+    c.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+    c.querySelectorAll('[aria-controls]').forEach(e => e.removeAttribute('aria-controls'));
+    const u1 = document.createElement('span'); u1.className = 'nb-ul';
+    const u2 = document.createElement('span'); u2.className = 'nb-ul';
+    d.append(c, u1, u2); nb.insertBefore(d, cv);
+    return { el: d, cv: c, ul: u1, ulM: u2, items: [...c.querySelectorAll('a, button')] };
+  }
+  const LB = makeLayer('b'), LW = makeLayer('w');
+  const layers = [LB, LW];
+
+  function layout() {
+    const s = window.innerWidth / 1920;
+    const tf = mobile() ? '' : 'scale(' + s + ')';
+    nb.querySelectorAll('.nb-cv').forEach(c => { c.style.transform = tf; });
+    nb.style.height = mobile() ? '56px' : (120 * s) + 'px';
+    nb.style.setProperty('--u', s + 'px');   // 유리 메뉴 상자의 1920 기준 1px
+    placeUl(); wantMask = true;
+  }
+  const book = document.getElementById('nbBook'), menuTxt = document.getElementById('nbMenuTxt');
+  function placeOne(target, lines) {
+    const r = target.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    const k = mobile() ? 1 : window.innerWidth / 1920;            // 캔버스 배율
+    const gap = (mobile() ? 4 : 6) * k;                           // 글자 아래 간격 (1920 기준 6px)
+    lines.forEach(line => {
+      line.style.left = Math.round(r.left * dpr) / dpr + 'px';
+      line.style.width = Math.round(r.width * dpr) / dpr + 'px';
+      line.style.top = Math.round((r.bottom + gap) * dpr) / dpr + 'px';
+      line.style.height = (1 / dpr) + 'px';                       // 실제 픽셀 한 줄
+    });
+  }
+  function placeUl() { placeOne(book, layers.map(L => L.ul)); placeOne(menuTxt, layers.map(L => L.ulM)); }
+  // 마우스를 올리면(또는 키보드로 초점이 오면) 두 겹에 같이 전달: 글자 효과(.hov) + 밑줄(.on). 클릭 뒤 남는 초점으로는 안 나타남
+  function bindMirror(el, i, lineKey) {
+    const set = on => layers.forEach(L => {
+      L.items[i].classList.toggle('hov', on);
+      if (lineKey) L[lineKey].classList.toggle('on', on);
+    });
+    el.addEventListener('mouseenter', () => set(true));
+    el.addEventListener('mouseleave', () => set(false));
+    el.addEventListener('focus', () => { if (el.matches(':focus-visible')) set(true); });
+    el.addEventListener('blur', () => set(false));
+  }
+  realItems.forEach((el, i) => bindMirror(el, i, el === book ? 'ul' : null));
+  function setFull(v) {
+    if (full === v) return;
+    full = v;
+    // 데스크톱: 유리 메뉴 상자(gl) / 휴대폰: 예전처럼 아래로 목록(full)
+    const m = mobile();
+    nb.classList.toggle('full', v && m);
+    nb.classList.toggle('gl', v && !m);
+    gl.inert = !(v && !m);
+    menuBtn.setAttribute('aria-expanded', String(v));
+    wantMask = true;
+    if (v && !m) { const mi = realItems.indexOf(menuBtn); layers.forEach(L => { L.items[mi].classList.remove('hov'); L.ulM.classList.remove('on'); });   // 판 뒤에 비치는 MENU에 hover 모양이 남지 않게
+      gx.classList.remove('spin'); glTone(true); gx.focus({ preventScroll: true }); }
+    if (!v && nb.contains(document.activeElement)) document.activeElement.blur();
+  }
+  /* 유리 상자 글자색: 글자 자리 15곳의 뒤 밝기를 읽어, 밝은 곳(.72 초과)이 절반을 넘으면 검정 글자 + 밝은 유리.
+     건축물처럼 위쪽 띠만 미색이고 나머지가 사진이면 흰 글자 그대로 (시안 A-2). 열려 있는 동안 0.4초마다 다시 확인 (깜빡임 방지 .4 / .6) */
+  let glDark = false;
+  function glTone(first) {
+    if (mobile()) return;
+    const k = window.innerWidth / 1920, pts = [[142, 81]];
+    [54, 98, 139, 180, 217, 258, 299].forEach(y => pts.push([218, y + 10], [250, y + 10]));
+    let bright = 0;
+    for (const [px, py] of pts) { const x = px * k, y = py * k, d = 10 * k; if (lumAt(x, y, [x - d, y - d, x + d, y + d]) > .72) bright++; }   // .72: 하늘(.5~.65)은 흰 글자 그대로, 미색(.92)·눈·구름만 '밝음'
+    const f = bright / pts.length;
+    glDark = first ? f >= .5 : (glDark ? !(f <= .4) : f >= .6);
+    gl.classList.toggle('dk', false);   // (11-13) 새 판은 자체 색(#827A66 57%)이 있어 피그마대로 항상 흰 글자
+  }
+  function onScroll() {
+    const y = window.scrollY;
+    const introEnd = intro.offsetTop + intro.offsetHeight - window.innerHeight;
+    const show = y >= introEnd - 2;
+    if (show !== shown) { shown = show; nb.classList.toggle('on', show); if (!show) setFull(false); }
+    wantMask = true;
+    const dy = y - lastY; lastY = y;
+    if (!show || performance.now() < quietUntil) { upAcc = 0; return; }
+    // (사용자 요청) 위·아래 스크롤 모두 작은 바로 통일. 전체 바는 MENU를 눌렀을 때만, 스크롤하면 닫힘
+    if (full && Math.abs(dy) >= DOWN_HIDE) setFull(false);
+    wantSample = true; wantMask = true;
+  }
+
+  menuBtn.addEventListener('click', () => { setFull(!full); upAcc = 0; });
+  const backToMenu = () => setTimeout(() => menuBtn.focus({ preventScroll: true }), 80);   // 숨겨졌던 단추가 다시 보인 뒤에 초점
+  // X: 제자리에서 반 바퀴 돈 뒤 닫힘 (0.5초 회전, 0.32초 지점부터 판이 사라지기 시작). 동작 줄이기 설정이면 바로 닫힘
+  let spinT = 0;
+  gx.addEventListener('click', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setFull(false); backToMenu(); return; }
+    if (gx.classList.contains('spin')) return;
+    gx.classList.add('spin');
+    clearTimeout(spinT);
+    spinT = setTimeout(() => { if (full) { setFull(false); backToMenu(); } }, 320);
+  });
+  // 상자 바깥을 누르면 닫힘
+  document.addEventListener('click', (e) => { if (full && !mobile() && !gl.contains(e.target) && !menuBtn.contains(e.target)) setFull(false); });
+  // 메뉴로 이동하면 작은 바로 돌아감 (이동 자체를 '위로 스크롤'로 보지 않게 잠깐 무시)
+  nb.addEventListener('click', (e) => {
+    if (!e.target.closest('a')) return;
+    quietUntil = performance.now() + 500;
+    setTimeout(() => { setFull(false); lastY = window.scrollY; wantSample = true; }, 0);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && full) { setFull(false); backToMenu(); } });
+
+  /* ── 아래 사진 밝기 읽기 (작은 바 글자색) ──
+     각 글자 자리 바로 밑에 있는 사진을 찾아, 작게 줄인 사진에서 그 부분의 평균 밝기를 계산 */
+  const cache = new Map();
+  function pixels(img) {
+    const key = img.currentSrc || img.src;
+    if (cache.has(key)) return cache.get(key);
+    let d = null;
+    try {
+      const w = 96, h = Math.max(1, Math.round(96 * img.naturalHeight / img.naturalWidth));
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0, w, h);
+      d = { w, h, px: g.getImageData(0, 0, w, h).data };
+    } catch (e) { d = null; }
+    cache.set(key, d);
+    return d;
+  }
+  function seen(el) {
+    if (el.checkVisibility && !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) return false;
+    let o = 1;
+    for (let n = el; n && n !== document.body; n = n.parentElement) { o *= parseFloat(getComputedStyle(n).opacity); if (o < .5) return false; }
+    return true;
+  }
+  function lumOfImg(img, x0, y0, x1, y1) {
+    const p = pixels(img); if (!p) return 0.3;   // 못 읽으면 사진으로 보고 어둡게
+    const r = img.getBoundingClientRect(), cs = getComputedStyle(img);
+    const nw = img.naturalWidth, nh = img.naturalHeight;
+    let dw = r.width, dh = r.height;
+    if (cs.objectFit === 'cover' || cs.objectFit === 'contain') {
+      const k = cs.objectFit === 'cover' ? Math.max(r.width / nw, r.height / nh) : Math.min(r.width / nw, r.height / nh);
+      dw = nw * k; dh = nh * k;
+    }
+    const pos = cs.objectPosition.split(' ').map(v => v.endsWith('%') ? parseFloat(v) / 100 : 0.5);
+    const ox = r.left + (r.width - dw) * (pos[0] ?? .5), oy = r.top + (r.height - dh) * (pos[1] ?? .5);
+    const u0 = Math.max(0, Math.floor((x0 - ox) / dw * p.w)), u1 = Math.min(p.w - 1, Math.ceil((x1 - ox) / dw * p.w));
+    const v0 = Math.max(0, Math.floor((y0 - oy) / dh * p.h)), v1 = Math.min(p.h - 1, Math.ceil((y1 - oy) / dh * p.h));
+    let sum = 0, n = 0;
+    for (let v = v0; v <= v1; v++) for (let u = u0; u <= u1; u++) {
+      const i = (v * p.w + u) * 4;
+      sum += (0.2126 * p.px[i] + 0.7152 * p.px[i + 1] + 0.0722 * p.px[i + 2]) / 255; n++;
+    }
+    return n ? sum / n : 0.3;
+  }
+  function lumAt(x, y, box) {
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (nb.contains(el)) continue;
+      if (el.tagName === 'IMG' && el.complete && el.naturalWidth && seen(el)) return lumOfImg(el, box[0], box[1], box[2], box[3]);
+      const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+      if (m && (m[3] === undefined ? 1 : +m[3]) > .5 && seen(el))
+        return (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255;
+    }
+    return 0.92;   // 아무것도 없으면 미색 배경
+  }
+  const NO_LOGO = ['con-garden', 'korean-garden'];
+  function sectionUnderBar() {
+    const y = 20, x = window.innerWidth / 2;
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (nb.contains(el)) continue;
+      const sec = el.closest('section'); if (sec) return sec.id;
+    }
+    return '';
+  }
+  function sample() {
+    if (!shown) return;
+    nb.classList.toggle('no-logo', NO_LOGO.includes(sectionUnderBar()));
+  }
+
+  /* ── 사진이 바에 닿는 영역 계산 → 그 영역만 흰 글자 ──
+     1) 화면 위쪽 바 띠(0 ~ 바 높이)에 걸친 사진을 찾음 (부모의 overflow로 잘린 부분은 뺌)
+     2) 그 사진이 실제로 맨 위에 보이는지 몇 군데 찍어서 확인 (미색 판이 덮은 부분은 뺌)
+     3) 글자 자리(MENU / 로고 / 예약하기)마다 그 자리 밑 사진의 밝기를 따로 읽어서, 밝으면(눈·하늘) 흰 글자가 안 보이므로 검정 유지
+        (경계에서 깜빡이지 않게 .40 / .48). 흰색이 되는 영역 = 사진 영역 ∩ 어두운 글자 자리
+     4) 남은 영역을 겹치지 않는 사각형으로 합쳐서 흰 겹은 그 모양으로 보이게, 검정 겹은 그 모양만 빼고 보이게 자름 */
+  function effRect(img, r) {
+    let x0 = r.left, y0 = r.top, x1 = r.right, y1 = r.bottom;
+    for (let p = img.parentElement; p && p !== document.documentElement; p = p.parentElement) {
+      const cs = getComputedStyle(p);
+      if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible' || cs.clipPath !== 'none' || cs.contain.includes('paint')) {
+        const pr = p.getBoundingClientRect();
+        x0 = Math.max(x0, pr.left); y0 = Math.max(y0, pr.top); x1 = Math.min(x1, pr.right); y1 = Math.min(y1, pr.bottom);
+      }
+    }
+    return { x0, y0, x1, y1 };
+  }
+  function hitsImg(x, y, img) {
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (nb.contains(el)) continue;
+      if (el === img) return true;
+      if (el.tagName === 'IMG') { if (KG_PHOTO.includes(el.id) && !seen(el)) continue; return false; }   // 한국정원: 투명한 겨울 사진이 가을 사진을 가리지 않게
+      const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+      if (m && (m[3] === undefined ? 1 : +m[3]) > .5) return false;
+    }
+    return false;
+  }
+  function visibleParts(img, R, d) {
+    const w = R.x1 - R.x0, h = R.y1 - R.y0;
+    if (w < .5 || h < .5) return [];
+    let hit = 0, tot = 0;
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+      tot++; if (hitsImg(R.x0 + (i + .5) / 3 * w, R.y0 + (j + .5) / 3 * h, img)) hit++;
+    }
+    if (hit === tot) return [R];
+    if (hit === 0 || d >= 3) return hit / tot >= .5 && d >= 3 ? [R] : [];
+    const mx = (R.x0 + R.x1) / 2, my = (R.y0 + R.y1) / 2;
+    return [
+      ...visibleParts(img, { x0: R.x0, y0: R.y0, x1: mx, y1: my }, d + 1),
+      ...visibleParts(img, { x0: mx, y0: R.y0, x1: R.x1, y1: my }, d + 1),
+      ...visibleParts(img, { x0: R.x0, y0: my, x1: mx, y1: R.y1 }, d + 1),
+      ...visibleParts(img, { x0: mx, y0: my, x1: R.x1, y1: R.y1 }, d + 1)
+    ];
+  }
+  function disjoint(rs) {        // 겹치는 사각형들 → 겹치지 않는 사각형들
+    if (!rs.length) return [];
+    const xs = [...new Set(rs.flatMap(r => [r.x0, r.x1]))].sort((a, b) => a - b), out = [];
+    for (let i = 0; i < xs.length - 1; i++) {
+      const xa = xs[i], xb = xs[i + 1];
+      const ys = rs.filter(r => r.x0 <= xa && r.x1 >= xb).map(r => [r.y0, r.y1]).sort((a, b) => a[0] - b[0]);
+      let cur = null;
+      for (const [a, b] of ys) {
+        if (cur && a <= cur[1]) cur[1] = Math.max(cur[1], b);
+        else { if (cur) out.push({ x0: xa, y0: cur[0], x1: xb, y1: cur[1] }); cur = [a, b]; }
+      }
+      if (cur) out.push({ x0: xa, y0: cur[0], x1: xb, y1: cur[1] });
+    }
+    return out;
+  }
+  const KG_PHOTO = ['kgFall', 'kgWinter'];   // 한국정원 오른쪽 사진 (사용자 요청 2026-11-12 수정: 이 위의 예약하기는 밝기와 상관없이 검정)
+  const brightImg = new WeakMap();      // 사진 → [글자 자리별 '밝음' 여부]
+  const logoEl = document.getElementById('nbLogo');
+  function zoneRects() {                // 글자 자리 (밑줄까지 포함해서 조금 넉넉하게)
+    return [menuBtn, logoEl, book].map(el => {
+      const r = el.getBoundingClientRect(), k = mobile() ? 1 : window.innerWidth / 1920;
+      return { x0: r.left - 6 * k, y0: r.top - 6 * k, x1: r.right + 6 * k, y1: r.bottom + 14 * k };
+    });
+  }
+  let lastMask = '';
+  function updateMask() {
+    const dpr = window.devicePixelRatio || 1, snap = v => Math.round(v * dpr) / dpr;
+    const W = window.innerWidth, H = window.innerHeight, barH = parseFloat(nb.style.height) || 120;
+    let rects = [], barOff = false, blurOp = 0;
+    if (shown) {      // 유리 메뉴 상자·휴대폰 목록 모두 윗줄에 미색 배경이 없어서, 메뉴를 열어도 계속 계산
+      const zs = zoneRects();
+      for (const img of document.images) {
+        if (!img.complete || !img.naturalWidth) continue;
+        const r = img.getBoundingClientRect();
+        if (r.width < 2 || r.height < 2 || r.bottom <= 0 || r.top >= barH || r.right <= 0 || r.left >= W) continue;
+        if (!seen(img)) continue;
+        const e = effRect(img, r);
+        const R = { x0: Math.max(0, e.x0), y0: Math.max(0, e.y0), x1: Math.min(W, e.x1), y1: Math.min(barH, e.y1) };
+        if (R.x1 - R.x0 < .5 || R.y1 - R.y0 < .5) continue;
+        const parts = visibleParts(img, R, 0);
+        if (!parts.length) continue;
+        if ((img.getAttribute('src') || '').includes('st_dionysos')) barOff = true;   // 디오니소스 사진이 바 띠에 보이는 동안
+        if (img.id === 'kgWinter') {      // 겸울 사진이 예약하기 자리에 보이는 만큼 블러 상자 표시
+          const Z = zs[2];
+          if (parts.some(P => Math.min(P.x1, Z.x1) - Math.max(P.x0, Z.x0) > .5 && Math.min(P.y1, Z.y1) - Math.max(P.y0, Z.y0) > .5)) blurOp = parseFloat(img.style.opacity) || 0;
+        }
+        let st = brightImg.get(img); if (!st) { st = []; brightImg.set(img, st); }
+        zs.forEach((Z, zi) => {
+          for (const P of parts) {
+            const I = { x0: Math.max(P.x0, Z.x0), y0: Math.max(P.y0, Z.y0), x1: Math.min(P.x1, Z.x1), y1: Math.min(P.y1, Z.y1) };
+            if (I.x1 - I.x0 < .5 || I.y1 - I.y0 < .5) continue;
+            const l = lumOfImg(img, I.x0, I.y0, I.x1, I.y1), was = st[zi];
+            // 흰 글자와 검정 글자의 대비가 같아지는 밝기는 약 .46. 경계에서 깜빡이지 않게 흰색→검정은 .48 넘을 때, 검정→흰색은 .40 아래일 때
+            const bright = (zi === 2 && KG_PHOTO.includes(img.id)) ? true
+                         : was === undefined ? l > .44 : was ? !(l < .40) : (l > .48);
+            st[zi] = bright;
+            if (!bright) rects.push(I);
+          }
+        });
+      }
+      rects = disjoint(rects).map(r => ({ x0: snap(r.x0), y0: snap(r.y0), x1: snap(r.x1), y1: snap(r.y1) }))
+                             .filter(r => r.x1 > r.x0 && r.y1 > r.y0);
+    }
+    {   // 한국정원 세 정원(가로 스크롤)이 끝나고 화면째 위로 밀려 올라가는 동안도 숨김
+      const tg = document.getElementById('korean-gardens');
+      if (tg) { const tb = tg.getBoundingClientRect().bottom; if (tb > barH && tb < H) barOff = true; }   // 올라가는 화면의 아래 모서리가 바 띠를 벗어나는 순간 바 다시 보임 (= 건축물 시작)
+    }
+    {   // 함께한 사람들 (사용자 요청 2026-11-12): 흐르는 사진 줄이 바 띠에 들어오면 MENU·로고·예약하기 숨김 → 사진 위에 걸치지 않음
+      const ar = document.getElementById('architects');   // 섹션 전체가 바 띠에 걸쳐 있는 동안 숨김
+      if (ar) { const rr = ar.getBoundingClientRect(); if (rr.height > 0 && rr.bottom > 0 && rr.top < barH) barOff = true; }
+    }
+    let loMove = false;
+    {   // 오시는길 (사용자 요청 2026-11-12): 섹션이 바 띠에 걸쳐 있고 멈춘 상태가 아니면 로고만 숨김
+      const lo = document.getElementById('location'), lp = document.getElementById('loPin');
+      if (lo && lp && !mobile()) {
+        const sr = lo.getBoundingClientRect();
+        if (sr.top < barH && sr.bottom > 0) {
+          const pinTop = parseFloat(lp.style.top) || 0;
+          loMove = Math.abs(lp.getBoundingClientRect().top - pinTop) > .5;   // 화면에 붙어 있으면(멈춤) 위끝 = sticky top
+        }
+      }
+    }
+    nb.classList.toggle('lo-move', loMove);
+    {   // 블러 상자: 예약하기 글자 왼쪽 위 (-9, -1) 크기 77×21 (스케일 k)
+      const bl = document.getElementById('nbBlur'), br = book.getBoundingClientRect(), k = mobile() ? 1 : window.innerWidth / 1920;
+      Object.assign(bl.style, { left: (br.left - 9 * k) + 'px', top: (br.top - 1 * k) + 'px', width: 77 * k + 'px', height: 21 * k + 'px',
+        filter: 'blur(' + 4.5 * k + 'px)', opacity: String(.6 * blurOp) });
+    }
+    nb.classList.toggle('bar-off', barOff);
+    const d = rects.map(r => `M${r.x0} ${r.y0}H${r.x1}V${r.y1}H${r.x0}Z`).join('');
+    if (d === lastMask) return; lastMask = d;
+    LW.el.style.clipPath = d ? `path("${d}")` : 'inset(100%)';
+    LB.el.style.clipPath = d ? `path(evenodd, "M0 0H${W}V${H}H0Z${d}")` : 'none';
+  }
+  let wantSample = true, wantMask = true, lastSample = 0;
+  (function tick(t) {
+    if (wantSample && t - lastSample > 120) { wantSample = false; lastSample = t; sample(); }
+    if (wantMask) { wantMask = false; updateMask(); }
+    requestAnimationFrame(tick);
+  })(0);
+  // 사진이 바뀌는 연출(가을→겨울, 건축물 넘김 등)은 스크롤이 멈춰도 진행되므로 가끔 다시 읽음
+  setInterval(() => { wantSample = true; wantMask = true; if (full) glTone(false); }, 400);
+  document.addEventListener('load', () => { wantMask = true; }, true);
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { if (full) setFull(false); layout(); wantSample = true; });
+  layout(); onScroll();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeUl);
+  window.addEventListener('load', placeUl);
 })();
 </script>
 
@@ -1812,9 +2498,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     const vh = window.innerHeight;
     if (id === 'intro') return 0;
     if (id === 'con-garden') return window.__cgFull ? window.__cgFull() : el.offsetTop + vh * 1.2;
-    if (id === 'korean-garden') return el.offsetTop + (el.offsetHeight - vh) * 0.2;   // 글자 3줄이 다 올라온 지점
+    if (id === 'korean-garden') return el.offsetTop + (el.offsetHeight - vh) * 0.3;   // 글자 3줄이 다 올라온 지점
     if (id === 'korean-gardens') return el.offsetTop + (el.offsetHeight - vh) * 0.12; // 사진이 열린 첫 장면
-    if (id === 'structure') return el.offsetTop + vh * 1.35;                           // 세 정원이 다 올라가고 첫 장면 글자(본문까지) 다 나온 지점
+    if (id === 'structure') return el.offsetTop + vh * 1.2;                           // 세 정원이 다 올라가고 첫 장면 글자(본문까지) 다 나온 지점
     return el.offsetTop;
   }
   function goTo(id) {
@@ -1841,4 +2527,321 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 })();
 </script>
 
+<!-- ===== 로고 인트로 (로딩 화면, 2026-11-13 v23) ===== -->
+<div class="ld" id="ld" aria-hidden="true">
+  <!-- 미색 막 + 꽃잎 모양 창(마스크). 창을 통해 아래의 첫 사진이 보임 -->
+  <svg class="ld-mask" id="ldSvg">
+    <defs>
+      <mask id="ldHole" maskUnits="userSpaceOnUse">
+        <rect id="ldMaskRect" x="0" y="0" width="100%" height="100%" fill="#fff"/>
+        <g id="ldHoleG">
+          <g transform="translate(-5 -5)" id="ldHolePetals" fill="#000" stroke="#000" stroke-width=".08" stroke-linejoin="round">
+            <path d="M5 5H2.5A2.5 2.5 0 1 1 5 2.5Z"/>
+            <path d="M5 5V2.5A2.5 2.5 0 1 1 7.5 5Z"/>
+            <path d="M5 5H7.5A2.5 2.5 0 1 1 5 7.5Z"/>
+            <path d="M5 5V7.5A2.5 2.5 0 1 1 2.5 5Z"/>
+          </g>
+        </g>
+      </mask>
+      <!-- v14: 꽃 칸에만 보이는 노을 사본용 마스크 (꽃잎 = 흰색, 칸 채움 정도는 위 창과 같이 움직임) -->
+      <mask id="ldGlowMask" maskUnits="userSpaceOnUse">
+        <g id="ldGlowG">
+          <g transform="translate(-5 -5)" id="ldGlowPetals" fill="#fff" stroke="#fff" stroke-width=".08" stroke-linejoin="round">
+            <path d="M5 5H2.5A2.5 2.5 0 1 1 5 2.5Z"/>
+            <path d="M5 5V2.5A2.5 2.5 0 1 1 7.5 5Z"/>
+            <path d="M5 5H7.5A2.5 2.5 0 1 1 5 7.5Z"/>
+            <path d="M5 5V7.5A2.5 2.5 0 1 1 2.5 5Z"/>
+          </g>
+        </g>
+      </mask>
+    </defs>
+    <rect x="0" y="0" width="100%" height="100%" fill="#2B201A" style="fill:var(--ld-bg)" mask="url(#ldHole)"/>
+  </svg>
+
+  <!-- v21 (사용자 '숫자가 로고 뒤로 지나가게'): 쌓는 순서 = 밤색 막 → 가로선·숫자 → 로고 칸(밤색 꽃 + 첫 사진) → 꽃 선 → 워드마크
+       → 가로선과 숫자가 꽃 모양 뒤로 가려지며 지나감 -->
+  <p class="ld-pct" id="ldPct">0%</p>
+  <svg class="ld-mask" id="ldTop" aria-hidden="true">
+    <g id="ldCoverG">
+      <g transform="translate(-5 -5)" style="fill:var(--ld-bg);stroke:var(--ld-bg)" stroke-width=".08" stroke-linejoin="round">
+            <path d="M5 5H2.5A2.5 2.5 0 1 1 5 2.5Z"/>
+            <path d="M5 5V2.5A2.5 2.5 0 1 1 7.5 5Z"/>
+            <path d="M5 5H7.5A2.5 2.5 0 1 1 5 7.5Z"/>
+            <path d="M5 5V7.5A2.5 2.5 0 1 1 2.5 5Z"/>
+      </g>
+    </g>
+    <!-- 꽃 칸에 보이는 인트로 첫 사진 사본 (인트로 첫 화면과 같은 위치·크기) -->
+    <image id="ldGlowImg" href="img/02_korean_autumn.jpg" preserveAspectRatio="none" mask="url(#ldGlowMask)"/>
+  </svg>
+
+  <!-- 선으로 그려지는 꽃 로고 (가운데 정렬, 창과 같은 크기) -->
+  <!-- v22 (사용자 '선이 왜 끊어진 것처럼 보여'): 가로선은 로고 칸 위로 올려 끊김 없이 이어지게 — 숫자만 로고 뒤로 지나감 -->
+  <div class="ld-rule" id="ldRule"></div>
+  <svg class="ld-line" id="ldLine" viewBox="0 0 10 10" aria-hidden="true">
+    <g id="ldLineG">
+      <!-- 한붓그리기 (사용자 손그림 영상 순서): 가운데 → ① 왼쪽 위 → 가운데 → ② 오른쪽 아래 → 가운데 → ③ 오른쪽 위 → 가운데 → ④ 왼쪽 아래
+           ①②에서 곧은 선 네 개가 모두 그려지므로, ③④는 이미 있는 곧은 선 위를 지나간 뒤 둥근 선만 새로 보임 -->
+      <path pathLength="1" d="M5 5V2.5A2.5 2.5 0 1 0 2.5 5H5 H7.5A2.5 2.5 0 1 1 5 7.5V5 V2.5A2.5 2.5 0 1 1 7.5 5H5 H2.5A2.5 2.5 0 1 0 5 7.5"/>
+    </g>
+  </svg>
+  <span class="ld-word" id="ldWord"></span>
+</div>
+
+<style>
+.ld-line{width:var(--ld-size);height:var(--ld-size);transform-origin:50% 50%;top:calc(481 / 1000 * 100%)}
+.ld-line path{fill:none;stroke:var(--ld-ink);stroke-linejoin:round;stroke-linecap:round}
+.ld-line.grow path{vector-effect:non-scaling-stroke;stroke-width:1.2px;stroke-dasharray:none!important}
+.ld-word{position:absolute;left:50%;top:calc(926 / 1000 * 100%);transform:translateX(-50%);margin-top:0!important}   /* v7: 워드마크는 처음부터 아래 y926 */
+</style>
+
+<script>
+(function(){
+  /* ── 조절값 ───────────────────────────────
+     DRAW  : 로고 선이 다 그려지는 최소 시간(사진이 늦게 오면 92%에서 기다림)
+     HOLD  : 100% 뒤 쉬는 시간
+     PFILL : 꽃잎 하나가 다 그려진 뒤 그 칸에 뒤 장면(사진)이 차오르는 시간
+     FADE  : 마지막 칸이 찬 뒤 선·글자가 사라지는 시간
+     OPEN  : 꽃잎 창이 화면 전체로 커지는 시간
+     SIZE  : 로고 크기 = 1920 화면에서 120px (화면 폭에 비례, 최소 76px) */
+  const DRAW = 4300, HOLD = 0, PFILL = 600, FADE = 400, OPEN = 1300;   // v9: 100%가 되자마자 숫자·선이 0.4초에 사라지고 바로 커짐(100%→커짐 0.8초→0.4초), 커지는 시간 1600→1300, 줄인 0.3초를 숫자 이동에 더함(DRAW 4000→4300). v8: 100% 사라진 뒤 바로 커짐(HOLD 500→200: 숫자가 다 사라지는 순간 시작), 커지는 시간 2000→1600, 줄인 0.4초를 숫자 이동에 더함(DRAW 3600→4000). v6: 3600/500/600/500/2000
+  /* 숫자 이동 구간 (1920 기준): 0%일 때 글자 왼쪽 끝이 PX0, 100%일 때 글자 오른쪽 끝이 PX1 (메뉴 바깥 끝과 같은 여백) */
+  const PX0 = 40, PX1 = 1880;   // v7: 사용자 피그마 07(0% x40)·08(100% 오른쪽 끝 x1880)
+  const CY = .481;              // v7: 로고·가로선 세로 위치 (1000 중 481)
+  const FILLW = .12;            // v12: 칸이 차오르는 구간 = 꽃잎이 닫히기 전 진행값 12% (약 0.5초, 예전 PFILL과 비슷한 길이)
+  const PAUSE100 = 150;          // v23 (사용자 '100%일 때 0.1초라도 잠깐 멈췄다가 커지게'): 꽃이 완성된 100% 그대로 멈추는 시간(ms)
+  const PCT_OUT = 120;
+  /* v18 (사용자 '전체로 보여줘'): 꽃잎 창이 커지면서 단풍 사진이 화면 가득 열림 → 잠깐 보여준 뒤 인트로 첫 화면으로 서서히 바뀜
+     FULL_HOLD : 단풍 사진이 화면을 다 덮은 뒤 머무는 시간 / FULL_XFADE : 인트로 첫 사진으로 바뀌는 시간 */
+  const FULL_HOLD = 0, FULL_XFADE = 250;   // v19: 열린 사진 = 인트로 첫 화면과 같은 사진·같은 크기 → 머물지 않고 0.25초만에 실제 화면으로 이어짐 (v18: 500 / 700, 다른 사진으로 바뀜)
+  /* 단풍 사진 위치: e=0 꽃 안에 PHOTO_AT 부분(꽃 크기 기준 배율) → e=1 화면 덮기(가운데 맞춤). 배율은 로그 보간 */
+  function placeGlow(e){
+    const g0 = size / PHOTO_SPAN, g1 = Math.max(W / PHOTO_W, H / PHOTO_H) * KEN0;   // v19: 다 열렸을 때 = 인트로 첫 화면 사진 크기(화면 덮기 × 1.1)
+    const gs = Math.exp(Math.log(g0) + (Math.log(g1) - Math.log(g0)) * e);
+    const ex = PHOTO_W / 2, ey = PHOTO_H / 2 + (H * CY - H / 2) / g1;   // 다 열렸을 때 꽃 가운데 아래에 오는 사진 지점
+    const px = PHOTO_AT[0] + (ex - PHOTO_AT[0]) * e, py = PHOTO_AT[1] + (ey - PHOTO_AT[1]) * e;
+    glowImg.setAttribute('width', PHOTO_W * gs); glowImg.setAttribute('height', PHOTO_H * gs);
+    glowImg.setAttribute('x', W / 2 - px * gs); glowImg.setAttribute('y', H * CY - py * gs);
+  }          // v11 (사용자 요청): 100%가 사라지는 시간(ms). 선이 다 그려지는 순간과 맞춤 — 깜빡이지 않을 만큼만 짧게
+  const RULE_INK = .36;
+  /* v14: 꽃 칸에 보일 노을 지점 (첫 사진 원본 2400×1250 기준 픽셀) — 아치 아래 노을. 사진 크기는 인트로 첫 화면과 같게(화면 덮기 × 1.1) */
+  const PHOTO_AT = [2181, 694], PHOTO_W = 2400, PHOTO_H = 1250, KEN0 = 1.1;   // v19: 인트로 사진 파일(02_korean_autumn 2400×1250)을 바로 씀 — 같은 단풍 지점(v17 [2341,745] @2576 × 0.932). 별도 파일 ld_petal.jpg 안 받아도 됨   // v17: 범위 270 → 220으로 좁히며 초록이 가운데 남게 살짝 위로   // v16 (사용자가 보낸 부분 = 주황·초록·붉은 단풍이 섞인 오른쪽 지점, 사진에서 찾아 맞춤). v15: [470,880] 주황 단풍만
+  const PHOTO_SPAN = 205;        // v19: v17의 220(2576 기준)을 2400 기준으로 환산
+  // v17: PHOTO_SPAN 220        // v17 (사용자 '진행'): 270 → 220. 잎 질감이 더 보이고 아래 칸 기와 모서리가 빠짐, 초록은 유지. (190부터 초록이 줄어듦)
+  // v16: PHOTO_SPAN 270        // v16: 꽃 너비 안에 담을 사진 폭(원본 픽셀) — 사용자가 보낸 부분 크기 그대로 → 초록·주황·붉은색이 꽃 안에 같이 보임
+  const GLOW_GROW = .65;         // v18: 창이 커지는 시간 중 단풍 사진이 화면 덮기 크기까지 커지는 구간 (앞 65%) — 창보다 먼저 커져 가장자리 빈틈 없음
+  const GLOW_OUT = .38;          // (v17까지 사용, v18부터 안 씀)          // v14: 창이 커지는 시간 중 노을 사본이 사라지는 구간 (앞 38%) — 창이 사본보다 커지기 전에 다 사라짐         // v10 (사용자 요청 '선의 존재감 더 없게'): 가로선 진하기 배율. 1 = 피그마 0.7px 검정 그대로, .36 = 일반 화면에서 25%
+  /* 칸 채우는 순서 = 선이 그려지는 순서: ① 왼쪽 위 → ② 오른쪽 아래 → ③ 오른쪽 위 → ④ 왼쪽 아래
+     (창 안 path 순서는 왼쪽 위, 오른쪽 위, 오른쪽 아래, 왼쪽 아래)
+     DONE = 선이 그 꽃잎을 다 돌아 닫히는 지점(전체 선 길이에 대한 비율) */
+  /* v13 (사용자 요청 '꽃이 한 번 주춤하는 느낌이 어색'): 이미 그려진 곧은 선을 다시 지나가는 구간(③ 앞 2.5, ④ 앞 5.0 — 전체 선의 11.6%)을
+     건너뛰어 새 선이 끊김 없이 이어지게 함. 진행값(shown, 숫자 %)은 '보이는 선 길이' 기준, 실제 선 위치는 toPath()로 바꿔 씀.
+     길이(로고 10 단위, 브라우저 측정): 전체 64.6305 / 보이는 선 57.1305 / ② 닫힘 33.5653 / ③ 둥근 선 끝 45.3479 */
+  const L_ALL = 64.6305, L_VIS = 57.1305, J1 = 33.5653, J2 = 45.3479;
+  const toPath = (u) => { const v = u * L_VIS; return (v <= J1 ? v : v <= J2 ? v + 2.5 : v + 7.5) / L_ALL; };
+  const CELL = [0, 2, 1, 3], DONE = [16.7826 / L_VIS, J1 / L_VIS, J2 / L_VIS, 1];   // v13: 보이는 선 기준 닫히는 지점 29.4% / 58.8% / 79.4% / 100% (v12: 25.97 / 51.94 / 74.06 / 100)
+  const root = document.documentElement;
+  const ld = document.getElementById('ld');
+  const svg = document.getElementById('ldSvg');
+  const holeG = document.getElementById('ldHoleG');
+  const petals = document.getElementById('ldHolePetals');
+  const cells = petals.querySelectorAll('path');
+  const glowG = document.getElementById('ldGlowG');
+  const cells2 = document.querySelectorAll('#ldGlowPetals path');
+  const glowImg = document.getElementById('ldGlowImg');
+  const topSvg = document.getElementById('ldTop'), coverG = document.getElementById('ldCoverG');   // v21
+  const line = document.getElementById('ldLine');
+  const paths = line.querySelectorAll('path');
+  const word = document.getElementById('ldWord');
+  const pct = document.getElementById('ldPct');
+  const rule = document.getElementById('ldRule');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let size = 120, W = innerWidth, H = innerHeight, raf = 0, skipReq = false;
+
+  function layout(){
+    W = innerWidth; H = innerHeight;
+    size = Math.max(76, Math.round(W / 1920 * 120));
+    ld.style.setProperty('--ld-size', size + 'px');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    topSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);   // v21
+    word.style.width = (size * 1.08) + 'px';
+    word.style.marginTop = '0px';
+    placeGlow(1);   // v20 (사용자 '꽃 안 사진이 커지기 전에 움직이는 게 어색'): 처음부터 인트로 첫 화면과 같은 위치·크기 원본 사진 — 꽃만 커짐
+    ruleLine();
+    paths.forEach(p => p.style.strokeWidth = (1.2 * 10 / size));   // 화면에서 1.2px 두께
+  }
+  /* 숫자 위치: 진행값 v(0~1)만큼 왼쪽 → 오른쪽. 글자 기준점도 왼쪽 끝 → 오른쪽 끝으로 같이 옮겨 화면 밖으로 안 나감 */
+  /* v8: 가로선 굵기 0.7px (피그마 값). 화면 실제 픽셀에 맞춰 두께·진하기 계산 → 어떤 배율에서도 0.7px과 같은 먹 양 */
+  function ruleLine(){
+    const dpr = window.devicePixelRatio || 1;
+    const dev = .7 * dpr, px = Math.max(1, Math.ceil(dev - .01));
+    rule.style.height = (px / dpr) + 'px';
+    rule.style.marginTop = (-px / dpr / 2) + 'px';
+    rule.dataset.op = Math.min(1, dev / px) * RULE_INK;   // v10: 있는 듯 없는 듯 — 0.7px 검정의 36% 진하기 (일반 화면 1px×25%)
+    rule.style.opacity = rule.dataset.op;
+  }
+  function placePct(v){
+    const x0 = W * PX0 / 1920, x1 = W * PX1 / 1920;
+    pct.style.left = (x0 + (x1 - x0) * v) + 'px';
+    pct.style.transform = `translate(${-v * 100}%, calc(-100% - 5px))`;   // 선 바로 위
+  }
+  /* 꽃잎 창과 선 로고를 같은 배율 s로 */
+  function setScale(s){
+    holeG.setAttribute('transform', `translate(${W/2} ${H*CY}) scale(${size/10 * s})`);
+    glowG.setAttribute('transform', holeG.getAttribute('transform'));   // v14: 노을 사본 마스크도 같은 자리·배율
+    coverG.setAttribute('transform', holeG.getAttribute('transform'));  // v21: 숫자·가로선을 가리는 밤색 꽃도 같은 자리
+    line.style.transform = `translate(-50%,-50%) scale(${s})`;
+  }
+  /* 창이 화면을 다 덮는 배율: 꽃잎 사이 오목한 곳(중심에서 로고 크기의 25%)이 화면 모서리 밖으로 */
+  const fullScale = () => Math.hypot(W / 2, Math.max(H * CY, H * (1 - CY))) / (size * .25) * 1.04;   // v7: 중심이 y48.1%라 먼 쪽 모서리 기준
+
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const ease = (t) => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  const pen = (t) => t + Math.sin(t * Math.PI * 2) * -.045;   // 펜 속도: 처음과 끝만 살짝 느리게, 가운데는 거의 일정
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+  /* 실제 로딩: 첫 사진 + 글꼴 */
+  function whenReady(){
+    const img = document.querySelector('#frame .layer img');
+    const imgP = new Promise((res) => {
+      if (!img || (img.complete && img.naturalWidth)) return res();
+      img.addEventListener('load', res, {once:true});
+      img.addEventListener('error', res, {once:true});
+    });
+    const fontP = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    const cap = new Promise((res) => setTimeout(res, 6000));   // 아무리 늦어도 6초면 진행
+    return Promise.race([Promise.all([imgP, fontP]), cap]);
+  }
+
+  function run(){
+    cancelAnimationFrame(raf);
+    skipReq = false;
+    scrollTo(0, 0);
+    root.classList.add('ld-on');
+    ld.style.display = ''; ld.style.opacity = 1;
+    layout(); setScale(1);
+    root.classList.remove('ld-pre');
+    cells.forEach(c => c.style.opacity = 0); cells2.forEach(c => c.style.opacity = 0); glowImg.style.opacity = 1;
+    coverG.style.display = '';
+    const fillAt = [0, 0, 0, 0];
+    line.style.opacity = 1; line.style.visibility = ''; line.classList.remove('grow');
+    word.style.opacity = 1; pct.style.opacity = 1; pct.textContent = '0%'; placePct(0);   // v7: 워드마크 처음부터 보임
+    rule.style.opacity = rule.dataset.op || .7;
+    paths.forEach(p => { p.style.strokeDasharray = '1 2'; p.style.strokeDashoffset = 1; });
+
+    let loaded = false;
+    whenReady().then(() => { loaded = true; });
+
+    if (reduce){                       // '동작 줄이기' 설정: 선 그리기 없이 조용히 사라짐
+      paths.forEach(p => p.style.strokeDashoffset = 0); word.style.opacity = 1; pct.style.opacity = 0;
+      whenReady().then(() => { ld.style.transition = 'opacity .5s'; ld.style.opacity = 0; setTimeout(finish, 520); });
+      return;
+    }
+
+    const t0 = performance.now();
+    let shown = 0, tDone = 0;
+    function tick(now){
+      const t = now - t0;
+      if (!tDone){
+        // 1) 선 그리기 + 숫자
+        const target = Math.min(pen(clamp(t / DRAW)), loaded ? 1 : .92);
+        shown += (target - shown) * .18;
+        if (skipReq && loaded) shown = 1;
+        if (target >= 1 && shown > .995) shown = 1;
+        paths.forEach(p => p.style.strokeDashoffset = 1 - toPath(shown));   // 한 줄로 이어 그림 (v13: 다시 지나가는 선은 건너뜀)
+        pct.textContent = Math.floor(shown * 100 + 1e-6) + '%';   // v11: 내림 → 선이 다 그려진 순간에만 100%
+        placePct(shown);                                            // 숫자가 오르면서 오른쪽으로 이동
+        if (shown >= 1) tDone = now;
+      }
+      // 2) 꽃잎 하나가 닫힐 때마다 그 칸에 뒤 장면이 차오름 (선은 계속 다음 꽃잎으로)
+      let lastFill = 0;
+      CELL.forEach((ci, k) => {
+        // v12 (사용자 요청 '꽃이 100%와 같이 완성'): 칸이 선을 따라 미리 차올라 꽃잎이 닫히는 순간 다 참
+        //   → 마지막 ④ 칸도 100%와 동시에 완성 (v11까지는 닫힌 뒤 0.6초 동안 차올라 100%보다 늦게 완성)
+        const f = clamp((shown - (DONE[k] - FILLW)) / FILLW);
+        cells[ci].style.opacity = cells2[ci].style.opacity = ease(f);
+        if (k === 3) lastFill = f;
+      });
+      if (tDone){
+        // 마지막 칸이 차는 동안 선·글자가 사라짐 → 창이 커질 때 선 잔상 없음
+        const tEnd = tDone + (skipReq ? 0 : PAUSE100);              // v23: 100%에서 잠깐 멈춘 뒤 시작
+        const g = clamp((now - tEnd) / FADE);                        // v9: 멈춤이 끝나면 사라지기 시작
+        coverG.style.display = 'none';                               // v21: 100%면 네 칸이 다 사진으로 차 있어 밤색 꽃은 필요 없음 (창이 커질 때 가리지 않게)
+        line.style.opacity = 1 - g;
+        line.style.visibility = g >= 1 ? 'hidden' : '';
+        word.style.opacity = 1 - easeOut(g);
+        pct.style.opacity = 1 - clamp((now - tEnd) / PCT_OUT);     // v11·v23: 멈춤이 끝나는 순간 100%도 곧바로 사라짐
+        rule.style.opacity = (rule.dataset.op || .7) * (1 - easeOut(g));                 // 창이 커지기 전에 가로선도 사라짐
+        const u = now - tEnd - FADE - (skipReq ? 0 : HOLD);          // v9: 다 사라지는 순간 커지기 시작
+        // 3) 꽃잎 창이 화면 전체로 (배율은 로그 보간 → 일정한 속도감)
+        const o = clamp(u / OPEN);
+        const s = Math.exp(Math.log(fullScale()) * ease(o));
+        // v20: 사진은 움직이지 않음 (v18~19: 꽃 안 부분 사진이 창과 함께 커지며 화면 덮기 크기로 바뀜)
+        setScale(s);
+        if (o >= 1){
+          // v18: 단풍 사진을 FULL_HOLD 동안 보여준 뒤 FULL_XFADE 동안 인트로 첫 화면으로 서서히 바뀜
+          const x = clamp((u - OPEN - FULL_HOLD) / FULL_XFADE);
+          glowImg.style.opacity = 1 - ease(x);
+          if (x >= 1){ finish(); return; }
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function finish(){
+    ld.style.display = 'none'; ld.style.transition = '';
+    root.classList.remove('ld-on');
+    dispatchEvent(new Event('scroll'));
+  }
+
+  ld.addEventListener('click', () => { skipReq = true; });   // 클릭하면 로딩이 끝난 즉시 열림
+  addEventListener('resize', () => { if (root.classList.contains('ld-on')) layout(); });
+  run();
+})();
+</script>
+
+<script>
+/* 스크롤 안내: 로고 인트로가 끝나고(ld-on 해제) 1초 뒤 서서히 나타남.
+   v3 (사용자 요청): 첫 사진(디오니소스)이 화면에 있는 동안은 스크롤 중이든 아니든 계속 보임.
+   디오니소스 → 한국정원 가을로 바뀌는 만큼(인트로 T.x1 구간) 같이 사라지고, 위로 돌아오면 다시 보임.
+   조절값: DELAY 1000(ms), 1920 기준 TXT 14 / TOP 873 / GAP 14 / LEN 64 */
+(function(){
+  const el=document.getElementById('scue'), t=document.getElementById('scueT'), l=document.getElementById('scueL');
+  const intro=document.getElementById('intro'), root=document.documentElement;
+  const next=document.querySelectorAll('#frame .layer')[1];   // 두 번째 사진(한국정원 가을)
+  if(!el||!intro||!next) return;
+  const DELAY=1000, TXT=14, TOP=873, GAP=14, LEN=64;   // (사용자 결정 11-13) TOP 868 → 873: 글자와 선을 5 내림
+  function place(){
+    const W=innerWidth, H=innerHeight, dpr=devicePixelRatio||1;
+    let cx, top, fs, gap, len;
+    if(W>=768){
+      const s=Math.min(W/1920,H/1000), ox=(W-1920*s)/2, oy=(H-1000*s)/2;
+      cx=ox+960*s; top=oy+TOP*s; fs=TXT*s; gap=GAP*s; len=LEN*s;
+    }else{   // 휴대폰 (임시): 아래 메뉴 줄 위로
+      fs=12; gap=10; len=40; cx=W/2;
+      top=H-64-len-gap-fs;   // 아래 메뉴 줄(바닥에서 22px) 위로 약 25px 띄움
+    }
+    t.style.fontSize=fs+'px'; t.style.marginBottom=gap+'px';
+    l.style.height=Math.round(len)+'px'; l.style.width=(1/dpr*Math.max(1,Math.round(dpr)))+'px';
+    el.style.top=Math.round(top)+'px';
+    el.style.left=Math.round(cx*dpr)/dpr+'px'; el.style.transform='translateX(-50%)';
+  }
+  let last=-1;
+  function follow(){
+    const k=Math.max(0,1-(parseFloat(next.style.opacity)||0));   // 다음 사진이 덮은 만큼 사라짐
+    if(Math.abs(k-last)>.002){ el.style.setProperty('--k',k.toFixed(3)); el.style.visibility=k<.01?'hidden':''; last=k; }
+    requestAnimationFrame(follow);
+  }
+  function start(){ setTimeout(()=>{ el.classList.add('on'); requestAnimationFrame(follow); },DELAY); }
+  place();
+  addEventListener('resize',place);
+  if(root.classList.contains('ld-on')){
+    const mo=new MutationObserver(()=>{ if(!root.classList.contains('ld-on')){ mo.disconnect(); start(); } });
+    mo.observe(root,{attributes:true,attributeFilter:['class']});
+  }else start();
+})();
+</script>
+</body></html>
 </body></html>
