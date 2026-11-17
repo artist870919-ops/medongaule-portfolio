@@ -23,7 +23,24 @@ html.ld-on, html.ld-on body{overflow:hidden}
 :root{--ld-bg:#2B201A;--ld-ink:#EEEDE9}
 html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-index:10000}
 /* v21: 워드마크를 글자 모양 마스크로 칠해 사이트 배경색과 정확히 같은 미색(--ld-ink #EEEDE9) — v14~20은 필터로 비슷한 색 */
-.ld .ld-word{background:var(--ld-ink);-webkit-mask:url(img/logo_wordmark.png) center/contain no-repeat;mask:url(img/logo_wordmark.png) center/contain no-repeat;aspect-ratio:1200/126;height:auto}
+/* v58 (피그마 logo_intro_11): 워드마크 = 미색 글자 이미지(img/ld_word.png, typologo 원본)를 글자 10개로 잘라 한 글자씩 흐림 → 선명 */
+.ld .ld-word{display:flex;opacity:1}
+.ld-ch{display:block;overflow:hidden;flex:none;opacity:0;will-change:opacity,filter}
+.ld-ch img{display:block;max-width:none;height:100%}
+/* v58: 선 끝을 따라가는 빛 (참고 영상보다 10% 약하게) */
+.ld-spark{position:absolute;left:0;top:0;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff;pointer-events:none;opacity:0;
+  box-shadow:0 0 6px 3px rgba(255,255,255,.81),0 0 18px 8px rgba(238,237,233,.45),0 0 42px 16px rgba(238,237,233,.16)}
+.ld-spark::before,.ld-spark::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.ld-spark::before{width:96px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent)}
+.ld-spark::after{width:1px;height:60px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.63),transparent)}
+/* v58 (피그마 logo_intro_11 · logo_ hover): Skip 버튼 오른쪽 아래 (1920×1000 기준 x1793 y926, 70×25) */
+.ld-skip{position:fixed;right:max(20px,calc(57 / 1920 * 100vw));bottom:max(20px,calc(49 / 1000 * 100vh));z-index:10001;width:70px;height:25px;box-sizing:border-box;padding:0;
+  border:1px solid var(--ld-ink);border-radius:50px;background:transparent;color:#fff;font:400 13px/16px 'Pretendard','Noto Sans KR',sans-serif;cursor:pointer;
+  opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s,background-color .2s}
+.ld-skip.on{opacity:1;visibility:visible;transition:opacity .4s,visibility 0s,background-color .2s}
+.ld-skip:hover,.ld-skip:focus-visible{background:rgba(217,217,217,.35)}
+.ld-skip:focus-visible{outline:1px solid var(--ld-ink);outline-offset:3px}
+@media (hover:none){.ld-skip{width:88px;height:36px}}
 /* v8: 휴대폰도 10px (피그마 값) */
 </style>
 <script>
@@ -109,7 +126,12 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 .mi span{grid-area:1/1}
 .mi .b{font-weight:500;color:var(--on-photo)}
 .mi .r{font-weight:400;color:var(--ink);opacity:0}
-.mi:hover span{text-decoration:underline;text-underline-offset:5px}
+/* v51 (사용자 요청 2026-11-17): 밑줄 뺌 → 상단 바 '예약하기'와 같은 글자 롤 (글자가 위로 밀려 올라가고 같은 글자가 아래에서 따라 올라옴) */
+.mi .b,.mi .r{display:block;overflow:hidden;height:1.193em;line-height:1.193em}
+.mi .m{display:block;text-shadow:0 1.193em 0 currentColor;transition:transform .55s cubic-bezier(.65,0,.35,1)}
+@media (hover:hover){.mi:hover .m{transform:translateY(-1.193em)}}
+.mi:focus-visible .m{transform:translateY(-1.193em)}
+@media (prefers-reduced-motion:reduce){.mi .m{transition:none}}
 .mi:focus-visible,.d-logo:focus-visible,.m-logo a:focus-visible,.m-nav a:focus-visible{outline:1px solid currentColor;outline-offset:4px}
 
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -177,12 +199,12 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     <!-- 데스크톱 로고·메뉴 (피그마 좌표) -->
     <nav class="cv cv-front" id="cvFront" aria-label="주 메뉴">
       <a class="d-logo" id="dLogo" href="#intro"><span class="sr">MÉDONGAULE 메덩골정원</span></a>
-      <a class="mi" href="#con-garden" data-x="118,120"><span class="b">현대정원</span><span class="r" aria-hidden="true">현대정원</span></a>
-      <a class="mi" href="#korean-garden" data-x="207,221"><span class="b">한국정원</span><span class="r" aria-hidden="true">한국정원</span></a>
-      <a class="mi" href="#structure" data-x="296,322"><span class="b">건축물</span><span class="r" aria-hidden="true">건축물</span></a>
-      <a class="mi" href="#reservation" data-x="1582,1537"><span class="b">관람안내</span><span class="r" aria-hidden="true">관람안내</span></a>
-      <a class="mi" href="#location" data-x="1671,1638"><span class="b">오시는길</span><span class="r" aria-hidden="true">오시는길</span></a>
-      <a class="mi" href="#reservation" data-x="1760,1739"><span class="b">예약하기</span><span class="r" aria-hidden="true">예약하기</span></a>
+      <a class="mi" href="#con-garden" data-x="118,120"><span class="b"><span class="m">현대정원</span></span><span class="r" aria-hidden="true"><span class="m">현대정원</span></span></a>
+      <a class="mi" href="#korean-garden" data-x="207,221"><span class="b"><span class="m">한국정원</span></span><span class="r" aria-hidden="true"><span class="m">한국정원</span></span></a>
+      <a class="mi" href="#structure" data-x="296,322"><span class="b"><span class="m">건축물</span></span><span class="r" aria-hidden="true"><span class="m">건축물</span></span></a>
+      <a class="mi" href="#reservation" data-x="1582,1537"><span class="b"><span class="m">관람안내</span></span><span class="r" aria-hidden="true"><span class="m">관람안내</span></span></a>
+      <a class="mi" href="#location" data-x="1671,1638"><span class="b"><span class="m">오시는길</span></span><span class="r" aria-hidden="true"><span class="m">오시는길</span></span></a>
+      <a class="mi" href="#reservation" data-x="1760,1739"><span class="b"><span class="m">예약하기</span></span><span class="r" aria-hidden="true"><span class="m">예약하기</span></span></a>
     </nav>
 
     <!-- 스크롤 안내 (첫 화면에만, 조금이라도 스크롤하면 사라짐) -->
@@ -487,7 +509,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     <!-- 마지막 -->
     <img class="cg-dot" src="img/cg_flower.svg" alt="" style="left:1124px;top:4962.5px" data-dot><!-- '눈을' 첫 줄(4941~4994)의 세로 가운데 -->
     <p class="cg-q ty" style="right:120px;top:4941px" id="cgQuote" data-ty="lines">눈을 사로잡는 장면은<br>오래가지 않지만 마음을 흔드는<br>경험은 시간이 흘러도 기억됩니다</p>
-    <img class="cg-endlogo" src="img/cg_wordmark.png" alt="MÉDONGAULE" style="right:120px;top:5127px">
+    <img class="cg-endlogo" src="img/cg_wordmark.png" alt="MÉDONGAULE" style="right:120px;top:5159px;width:142.75px;height:15.04px">
    </div>
   </div>
 </section>
@@ -1214,11 +1236,11 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
         <p class="st-body" style="left:1268px;top:716px;text-shadow:0 4px 4px rgba(0,0,0,.6)"><span class="st-ln"><span class="st-e"><span class="st-s">독일의 철학자 니체의 ‘영원회귀’ 사상에서 영감을 받아 붉은 테라코타</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">벽돌로 쌓은 원형 미로로 길을 잃으며 내면을 마주하게 하는 사유 공간입니다</span></span></span></p>
       </div>
 
-      <!-- 2 선곡서원 본관 (33:270~272) -->
+      <!-- 2 선곡서원 (v58 = 피그마 structure_01 215:207: 사진 교체(채도 -10%, 어둡게 보정된 사진), 제목 y555, 본문 y665 줄바꿈 '승효상' 뒤, 본문 그림자 0 4 4 .6, 제목 그림자 없음) -->
       <div class="st-slide" data-slide="1">
-        <figure class="st-photo" style="top:120px"><img src="img/st_seongok_main.jpg" alt="돌계단 마당을 사이에 두고 마주 선 선곡서원 본관의 콘크리트 회랑과 유리창" loading="lazy"></figure>
-        <h3 class="st-title" style="left:1268px;top:607px;text-shadow:1px 1px 2px rgba(0,0,0,.45)"><span class="st-ln"><span class="st-e"><span class="st-s">선곡서원 본관</span></span></span></h3>
-        <p class="st-body" style="left:1268px;top:716px;text-shadow:1px 1px 2px rgba(0,0,0,.57)"><span class="st-ln"><span class="st-e"><span class="st-s">유네스코 세계유산으로 등재된 안동의 병산서원을 ‘빈자의 미학’으로 유명한</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">승효상 건축가가 현대적으로 재해석하여 디자인한 건축물입니다</span></span></span></p>
+        <figure class="st-photo" style="top:120px"><img src="img/st_seongok_v3.jpg" alt="파란 하늘 아래 기둥 위에 떠 있는 선곡서원의 노출 콘크리트 회랑과 나무 문" loading="lazy"></figure>
+        <h3 class="st-title" style="left:1268px;top:555px"><span class="st-ln"><span class="st-e"><span class="st-s">선곡서원</span></span></span></h3>
+        <p class="st-body" style="left:1268px;top:665px;text-shadow:0 4px 4px rgba(0,0,0,.6)"><span class="st-ln"><span class="st-e"><span class="st-s">유네스코 세계유산으로 등재된 안동의 병산서원을 ‘빈자의 미학’으로 유명한 승효상</span></span></span><span class="st-ln"><span class="st-e"><span class="st-s">건축가가 현대적으로 재해석하여 디자인한 건축물입니다</span></span></span></p>
       </div>
 
       <!-- 3 DIONYSOS (33:273~275) -->
@@ -1490,7 +1512,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
 <!-- ═══════════════ location_920 (오시는길) ═══════════════
      피그마 33:185 (v37 피그마 갱신: 1920×900) 좌표 그대로. 화면 너비/1920 비율
-     사진 x294 y0 762×900 / (11-13 피그마 수정) 지도 x1325 y240 317×317 정사각형 (모서리 6, 그림자: 왼쪽 위 흰빛 -2 -3 4 .77 + 오른쪽 아래 3 5 3 -1 .21)
+     사진 x223 y0 833×900 (v61 11-17 피그마 수정, 이전 x294 762) / (11-13 피그마 수정) 지도 x1325 y240 317×317 정사각형 (모서리 6, 그림자: 왼쪽 위 흰빛 -2 -3 4 .77 + 오른쪽 아래 3 5 3 -1 .21)
      지도 위 워드마크 없앰 / 글자: '오시는길' x1325 (Medium 18) · 주소 x1398 y582, 교통 안내 x1398 y629 (Regular 16). 사진~지도 사이 = 오른쪽 여백 = 269
      (이전 v39: 지도 x1283 y221 410×398 모서리 10 + 워드마크 x1582 y597, 글자 1283/1356 y650·697)
      움직임: 사진 틀은 제자리, 안쪽 사진만 스크롤 따라 조금씩 커짐 (1 → ZOOM). 사진 1524×1800 = 2배 -->
@@ -1498,23 +1520,23 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   .lo-section { position: relative; z-index: 3; background: var(--bg); }
   .lo-pin { position: sticky; top: 0; overflow: hidden; }   /* 멈춤 (v36): 섹션 안에서 화면에 붙어 있는 부분 */
   .lo-cv { position: absolute; left: 0; top: 0; width: 1920px; height: 900px; transform-origin: 0 0; }
-  .lo-photo { position: absolute; left: 294px; top: 0; width: 762px; height: 900px; margin: 0; overflow: hidden; }
+  .lo-photo { position: absolute; left: 223px; top: 0; width: 833px; height: 100%; margin: 0; overflow: hidden; }
   .lo-photo img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; transform-origin: 50% 50%; will-change: transform; }
-  .lo-map { position: absolute; left: 1325px; top: 240px; width: 317px; height: 317px; margin: 0; border-radius: 6px; overflow: hidden;
+  .lo-map { position: absolute; left: 1325px; top: calc(240px + var(--lo-dy, 0px)); width: 317px; height: 317px; margin: 0; border-radius: 6px; overflow: hidden;
     box-shadow: -2px -3px 4px 0 rgba(255,255,255,.77), 3px 5px 3px -1px rgba(0,0,0,.21); }
   .lo-map img { width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; }
   /* 글자: Pretendard 18 검정 */
-  .lo-label { position: absolute; left: 1325px; top: 582px; margin: 0; font-size: 18px; line-height: 21px; font-weight: 500; white-space: nowrap; color: var(--ink); }
+  .lo-label { position: absolute; left: 1325px; top: calc(582px + var(--lo-dy, 0px)); margin: 0; font-size: 18px; line-height: 21px; font-weight: 500; white-space: nowrap; color: var(--ink); }
   /* (11-13 피그마) 주소·교통 안내 18 → 16, 자간 -4%(-0.64). 주소 줄 높이 19 = 피그마 글상자 38 ÷ 2줄 (글꼴이 바뀌어도 아래 안내문과 겹치지 않게 고정) */
-  .lo-addr  { position: absolute; left: 1398px; top: 582px; margin: 0; font-size: 16px; line-height: 19px; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); font-style: normal; }
-  .lo-route { position: absolute; left: 1398px; top: 629px; margin: 0; font-size: 16px; line-height: 1.3; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); }
+  .lo-addr  { position: absolute; left: 1398px; top: calc(582px + var(--lo-dy, 0px)); margin: 0; font-size: 16px; line-height: 19px; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); font-style: normal; }
+  .lo-route { position: absolute; left: 1398px; top: calc(629px + var(--lo-dy, 0px)); margin: 0; font-size: 16px; line-height: 1.3; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진 → 지도 → 글자 순으로 쌓기) */
   @media (max-width: 767px) {
     .lo-section { height: auto !important; padding: 0 0 80px; }
     .lo-pin { position: static; height: auto !important; }
     .lo-cv { position: static; width: auto; height: auto; transform: none !important; }
-    .lo-photo { position: relative; left: 0; width: 100%; height: auto; aspect-ratio: 762 / 900; }
+    .lo-photo { position: relative; left: 0; width: 100%; height: auto; aspect-ratio: 833 / 900; }
     .lo-map { position: relative; left: 0; top: 0; width: calc(100% - 40px); max-width: 317px; height: auto; aspect-ratio: 1 / 1; margin: 48px 20px 0; }
     .lo-label, .lo-addr, .lo-route { position: static; margin: 0 20px; font-size: 15px; white-space: normal; }
     .lo-label { margin-top: 20px; }
@@ -1527,7 +1549,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 <section class="lo-section" id="location" aria-label="오시는길">
  <div class="lo-pin" id="loPin">
   <div class="lo-cv" id="loCv">
-    <figure class="lo-photo"><img id="loImg" src="img/lo_garden_v2.jpg" alt="단풍 든 숲과 연못을 배경으로 기와 담장과 정자가 이어진 한국정원을 위에서 내려다본 모습" loading="lazy"></figure>
+    <figure class="lo-photo"><img id="loImg" src="img/lo_garden_v4.jpg" alt="단풍 든 숲과 연못을 배경으로 기와 담장과 정자가 이어진 한국정원을 위에서 내려다본 모습" loading="lazy"></figure>
     <figure class="lo-map"><img src="img/lo_map_v3.jpg" alt="메덩골길과 금왕길 사이에 표시된 메덩골정원 위치 지도" loading="lazy"></figure>
     <p class="lo-label">오시는길</p>
     <address class="lo-addr">경기도 양평군 양동면 메덩골길 1<br>메덩골정원 주차장</address>
@@ -1551,9 +1573,12 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 
   function measure() {
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (vw < 768) { cv.style.transform = ''; section.style.height = pin.style.height = pin.style.top = ''; return; }   // 휴대폰: 멈춤 없음
-    const s = vw / 1920, h = 900 * s;
+    if (vw < 768) { cv.style.transform = cv.style.height = ''; section.style.height = pin.style.height = pin.style.top = ''; return; }   // 휴대폰: 멈춤 없음
+    const s = vw / 1920, h = Math.max(vh, 900 * s);   // v57 (사용자 '오시는길 사진 확대 제약'): 창이 900 비율보다 높으면 섹션 = 창 높이
     cv.style.transform = `scale(${s})`;
+    /* 피그마 제약: 사진 = 세로 Top and bottom(높이 꽉 참, 사진은 cover로 채움) / 지도·글자 = 세로 Center */
+    const Hc = h / s; cv.style.height = Hc + 'px';
+    cv.style.setProperty('--lo-dy', ((Hc - 900) / 2) + 'px');
     pin.style.height = h + 'px';
     // 섹션 전체가 화면에 보이는 순간 멈춤: 화면보다 낮으면 위끝이 화면 맨 위에 닿을 때, 화면보다 크면 아래끝이 화면 바닥에 닿을 때
     pin.style.top = Math.min(0, vh - h) + 'px';
@@ -1639,8 +1664,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진 위 제목·버튼, 그 아래 카드 내용 쌓기) */
   @media (max-width: 767px) {
     .rs-section { height: auto !important; }
-    .rs-pin { position: static; height: auto !important; }
-    .rs-cv { position: relative; width: auto; height: auto; transform: none !important; padding: 0 0 64px; }
+    .rs-pin { position: relative; bottom: auto !important; }
     .rs-bg { position: relative; width: 100%; height: 72vw; }
     .rs-title { left: 20px; top: 24px; font-size: 36px; }
     .rs-cta { left: 20px; top: calc(72vw - 112px); font-size: 22px; }
@@ -1658,35 +1682,260 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   }
 </style>
 
-<section class="rs-section" id="reservation" aria-label="관람안내">
+<style>
+/* ═══ 관람안내 v52: 선곡서원 버튼·설명 상자 (claude/관람안내_버튼상자_시안.md) ═══ */
+.ri{
+  --font:'Pretendard','Noto Sans KR',system-ui,sans-serif;
+  --ink:#000; --cream:#EEEDE9;
+  
+  --pill:rgba(43,32,26,.40);        
+  --pill-hov:rgba(43,32,26,.56);    
+  --pill-on:rgba(229,229,229,.64);       
+  
+  --box:rgba(229,229,229,.64);   
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+.ri{position:absolute;left:0;top:0;width:1920px;height:100%;overflow:hidden;font-family:var(--font);color:#000}
+.ri .scene{position:absolute;inset:0;will-change:transform}
+.ri .bg{position:absolute;left:-36px;top:-36px;width:1992px;height:972px;max-width:none;display:block}
+.ri .cap{position:absolute;left:1720px;top:859px;font:600 15px/18px var(--font);color:#fff;letter-spacing:-.3px}
+.ri .pin{position:absolute;height:45px;padding:0 0 0 6px;border:0;border-radius:50px;display:flex;align-items:center;gap:8px;
+  background:var(--pill);color:#fff;cursor:pointer;font:500 17px/20px var(--font);letter-spacing:-.34px;white-space:nowrap;
+  -webkit-backdrop-filter:blur(13px) saturate(1.15);backdrop-filter:blur(13px) saturate(1.15);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.22), inset -1px -1px 0 rgba(255,255,255,.06);
+  transition:background .45s var(--ease),color .35s ease,opacity .45s ease,transform .45s var(--ease)}
+.ri .pin .ring{position:relative;flex:none;width:33px;height:33px;border-radius:50%;border:.7px solid var(--cream);
+  transition:box-shadow .5s var(--ease),background .5s var(--ease),border-color .35s ease}
+.ri .pin .ring::after{content:'';position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px 0 0 -2px;border-radius:50%;background:#D9D9D9;
+  transition:transform .5s var(--ease),background .35s ease}
+.ri .pin .ring::before{content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid rgba(238,237,233,.55);opacity:0;animation:riBreathe 3.6s ease-out infinite}
+.ri .pin:nth-of-type(2) .ring::before{animation-delay:.9s}
+.ri .pin:nth-of-type(3) .ring::before{animation-delay:1.8s}
+.ri .pin:nth-of-type(4) .ring::before{animation-delay:2.7s}
+@keyframes riBreathe{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(1.6);opacity:0}}
+.ri .pin:focus-visible{outline:1px solid #fff;outline-offset:3px}
+.ri .pin .glint{position:absolute;left:calc(22.5px - 55px);top:calc(22.5px - 55px);width:110px;height:110px;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 50% 50%,transparent 15.75px,rgba(255,250,236,.4) 17px,rgba(255,250,236,.33) 20px,rgba(255,250,236,.25) 24px,rgba(255,250,236,.17) 28px,rgba(255,250,236,.1) 32px,rgba(255,250,236,.05) 36px,rgba(255,250,236,.02) 40px,rgba(255,250,236,0) 44px);
+  filter:blur(5px);
+  -webkit-mask:radial-gradient(circle at 50% 50%,transparent 16.5px,#000 16.5px);mask:radial-gradient(circle at 50% 50%,transparent 16.5px,#000 16.5px);
+  opacity:0;transition:opacity .6s cubic-bezier(.33,0,.2,1)}
+.ri .pin .ring,.ri .pin .lbl{position:relative;z-index:1}
+@media (hover:hover){.ri .pin:not(.on):hover .glint{opacity:1}}
+.ri .pin .ring{z-index:1}
+.ri .pin.on{background:var(--pill-on);color:var(--ink)}
+.ri .pin.on .ring{border-color:var(--ink);box-shadow:none;background:transparent}
+.ri .pin.on .ring::after{background:var(--ink);transform:none}
+.ri .pin.on .ring::before{animation:none}
+.ri.open .pin:not(.on){opacity:.7}
+.ri.open .pin:not(.on):hover{opacity:1}
+.ri.open .pin.under{opacity:0;pointer-events:none}
+.ri .lead{display:none;position:absolute;width:1px;background:linear-gradient(var(--cream),rgba(238,237,233,.35));transform:scaleY(0);transform-origin:50% 0;
+  transition:transform .3s var(--ease);pointer-events:none}
+.ri .lead.on{transform:none;transition:transform .45s var(--ease)}
+.ri .box{position:absolute;border-radius:10px;background:var(--box);color:var(--ink);
+  -webkit-backdrop-filter:blur(29px) saturate(1.2);backdrop-filter:blur(29px) saturate(1.2);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.55), inset -1px -1px 0 rgba(255,255,255,.15), 0 18px 40px -18px rgba(20,12,6,.45);
+  display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transform:translateY(14px) scale(.985);transform-origin:50% 0;filter:blur(4px);
+  transition:opacity .3s ease,transform .35s var(--ease),filter .3s ease,visibility 0s linear .35s}
+.ri .box.on{opacity:1;visibility:visible;transform:none;filter:none;
+  transition:opacity .55s ease .18s,transform .7s var(--ease) .18s,filter .55s ease .18s,visibility 0s}
+.ri .box-hd{flex:none;position:relative;padding:25px var(--pr,32px) 0 var(--pl,32px);height:51px;box-sizing:border-box}
+.ri .box-hd h2{margin:0;font:500 22px/26px var(--font);letter-spacing:-.44px}
+.ri .x{position:absolute;right:var(--xr,32px);top:var(--xt,29px);width:18px;height:18px;padding:0;border:0;background:none;cursor:pointer;color:var(--ink);transition:transform .45s var(--ease)}
+.ri .x::before,.ri .x::after{content:'';position:absolute;left:50%;top:50%;width:25px;height:1px;margin:-.5px 0 0 -12.5px;background:currentColor;transform:rotate(45deg)}
+.ri .x::after{transform:rotate(-45deg)}
+@media (hover:hover){.ri .x:hover{transform:rotate(90deg)}}
+.ri .x:focus{outline:none}
+.ri .x{-webkit-tap-highlight-color:transparent}
+.ri .box-bd{flex:1;min-height:0;overflow:auto;padding:32px var(--pr,32px) 40px var(--pl,32px);font:400 20px/30px var(--font);letter-spacing:-.4px;overscroll-behavior:contain;word-break:keep-all;overflow-wrap:break-word;
+  scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.25) transparent}
+/* v62 (사용자 '창 스크롤할 때 글자 왼쪽에 선 잔상이 남아'): 스크롤 판을 따로 그리게 해서(합성 레이어) 지나간 선(.grp 왼쪽 선)이 화면에 남지 않게.
+   원인: 흐림 배경(backdrop-filter) + 아래쪽 흐려짐(mask) + 화면 배율(0.8배 등)에서 1px 선이 소수점 위치에 그려져, 스크롤 때 일부만 다시 그려지며 자국이 남음 */
+.ri .box-bd{will-change:scroll-position,transform;transform:translateZ(0);contain:paint;backface-visibility:hidden}
+.ri .box-bd::-webkit-scrollbar{width:4px}
+.ri .box-bd::-webkit-scrollbar-thumb{background:rgba(0,0,0,.25);border-radius:4px}
+/* v63 (사용자 '스크롤할 때도 입장시 유의사항처럼 제목과 본문 사이 공간 유지'): 본문 맨 위 32px(처음 간격) 안에서 글자가 흐려지며 사라짐 → 내려도 제목 아래 빈 공간 유지. 처음 화면은 그대로 */
+.ri .box-bd{-webkit-mask-image:linear-gradient(transparent 14px,#000 32px);mask-image:linear-gradient(transparent 14px,#000 32px)}
+.ri .box-bd.more{-webkit-mask-image:linear-gradient(transparent 14px,#000 32px,#000 calc(100% - 64px),transparent);mask-image:linear-gradient(transparent 14px,#000 32px,#000 calc(100% - 64px),transparent)}
+.ri #b-hours .box-bd{-webkit-mask-image:none;mask-image:none}
+.ri .box-bd p{margin:0}
+.ri .grp{border-left:1px solid #000;padding-left:16px}
+.ri .grp + .grp{margin-top:16px}
+.ri .sec + .sec{margin-top:40px}
+.ri .sec h3{margin:0 0 14px;font:500 20px/24px var(--font);letter-spacing:-.4px}
+.ri .sec .grp p + p{margin-top:10px}
+.ri .box-bd .ln{opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.ri .box.on .ln{opacity:1;transform:none;transition:opacity .6s ease,transform .8s var(--ease);transition-delay:calc(.38s + var(--i) * 60ms)}
+.ri #b-hours{--xr:35px;--xt:30px}
+.ri #b-hours .box-bd{padding:24px 0 0 32px;overflow:hidden;font-size:20px;line-height:24px}
+.ri #b-hours .grp + .grp{margin-top:25px}
+.ri .mail{color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.35)}
+@media (hover:hover){.ri .mail:hover{border-bottom-color:#000}}
+.ri .tabs{display:flex;gap:28px;margin:0 0 16px}
+.ri .tab{position:relative;padding:0 0 8px;border:0;background:none;cursor:pointer;font:400 20px/24px var(--font);letter-spacing:-.4px;color:rgba(0,0,0,.4);transition:color .3s ease}
+.ri .tab::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:#000;transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--ease)}
+.ri .tab[aria-selected=true]{color:#000;margin-bottom:0}
+.ri .tabs{padding-bottom:2px}
+.ri .tab[aria-selected=true]::after{transform:none}
+@media (hover:hover){.ri .tab:hover{color:#000}}
+.ri .tab:focus-visible{outline:1px solid #000;outline-offset:3px}
+.ri table{width:100%;border-collapse:collapse;border-top:1.5px solid #000;border-bottom:1.5px solid #000;font:400 20px/24px var(--font);letter-spacing:-.4px}
+.ri th,.ri td{padding:8px 12px 9px;text-align:left;vertical-align:top;font-weight:400}
+.ri thead th{background:rgba(238,237,233,.25);    border-bottom:1px solid rgba(0,0,0,.6)}
+.ri tbody tr + tr td,.ri tbody tr + tr th{border-top:1px solid rgba(0,0,0,.18)}
+.ri col.c1{width:293px}
+.ri table.t3 col.c1{width:150px}
+.ri table.t3 tbody th{font-weight:400}
+.ri .note2{margin-top:16px}
+.ri col.c2{width:197px}
+.ri #b-ticket{--pl:41px;--pr:43px;--xr:45px;--xt:30px}
+.ri #b-ticket h2{font-weight:600}
+.ri #b-ticket .sec + .sec{margin-top:48px}
+.ri #b-ticket .box-bd{padding-top:33px}
+.ri td small{font-size:inherit}
+.ri tbody{transition:opacity .25s ease}
+.ri tbody.swap{opacity:0}
+.ri .note{margin:16px 0 0 12px}
+</style>
+<section class="rs-section" id="reservation" aria-label="관람안내 — 운영일 및 시간, 입장권 요금, 입장시 유의사항, 기타사항">
  <div class="rs-gap" id="rsGap" aria-hidden="true"></div>
  <div class="rs-pin" id="rsPin">
   <div class="rs-cv" id="rsCv">
-    <figure class="rs-bg"><img src="img/rs_bg_v2.jpg" alt="눈 덮인 한국정원의 기와 담장과 정자, 물결처럼 이어지는 돌담 계단식 정원을 위에서 내려다본 모습" loading="lazy"></figure>
+   <!-- v52 (사용자 결정 2026-11-17 '관람안내를 이걸로 교체'): 선곡서원 이용 정보 화면. 피그마 섹션 196:2 (5개 상태) 좌표 그대로 -->
+   <div class="ri" id="riCv">
+  <!-- v2 (사용자 '화면이 약간씩 움직였으면'): 사진·버튼·상자가 한 판(.scene)으로 같이 움직임 → 버튼이 건물 위 제자리에 붙어 있음 -->
+  <div class="scene" id="riScene">
+  <img class="bg" src="img/rs_seongok2_bleed.jpg" alt="단풍 숲 속 선곡서원을 위에서 내려다본 모습">
 
-    <h2 class="rs-title">관람안내</h2>
-    <p class="rs-cta">예약 바로가기</p>
-    <a class="rs-btn" href="https://medongaule.com/" target="_blank" rel="noopener noreferrer" aria-label="RESERVATION 예약 바로가기 (메덩골정원 공식 사이트, 새 창)"><span>RESERVATION</span></a>
+  <!-- 버튼 4개 (피그마 좌표) -->
+  <button class="pin" style="left:383px;top:446px;width:159px" data-box="b-hours" aria-expanded="false" aria-controls="b-hours"><span class="ring"></span>운영일 및 시간</button>
+  <button class="pin" style="left:1004px;top:232px;width:145px" data-box="b-ticket" aria-expanded="false" aria-controls="b-ticket"><span class="ring"></span>입장권 요금</button>
+  <button class="pin" style="left:1219px;top:440px;width:171px" data-box="b-rules" aria-expanded="false" aria-controls="b-rules"><span class="ring"></span>입장시 유의사항</button>
+  <button class="pin" style="left:1374px;top:295px;width:125px" data-box="b-etc" aria-expanded="false" aria-controls="b-etc"><span class="ring"></span>기타사항</button>
+  <button class="pin" style="left:1032px;top:689px;width:139px" data-box="b-tour" aria-expanded="false" aria-controls="b-tour"><span class="ring"></span>도슨트 투어</button>
 
-    <div class="rs-card" aria-hidden="true"></div>
-    <figure class="rs-photo"><img src="img/rs_card_v2.jpg" alt="눈 덮인 한국정원 전경과 곡선 돌담" loading="lazy"></figure>
+  <!-- 잇는 선 (원 가운데 x, 버튼 아래 → 상자 위) -->
+  <i class="lead" id="l-b-hours"  style="left:446px;top:428px;height:45px"></i>
+  <i class="lead" id="l-b-ticket" style="left:1005px;top:247px;height:41px"></i>
+  <i class="lead" id="l-b-rules"  style="left:1161px;top:419px;height:41px"></i>
+  <i class="lead" id="l-b-etc"    style="left:1322px;top:298px;height:42px"></i>
 
-    <h3 class="rs-h rs-h--tour">도슨트 투어</h3>
-    <p class="rs-body">메덩골정원에서는 각 정원에 대한 더욱 깊은 이해를 위해 도슨트 프로그램을 운영하고 있습니다.<br>사전 신청 없이 각 구역 도슨트 시작 장소에서 선착순으로 참여하실 수 있습니다.</p>
+  <!-- ① 운영일 및 시간: 피그마 Group 39 자리 x383 y473 493×323 -->
+  <section class="box" id="b-hours" role="dialog" aria-label="운영일 및 시간" style="left:383px;top:501px;width:493px;height:323px">
+    <div class="box-hd"><h2>운영일 및 시간</h2><button class="x" aria-label="닫기"></button></div>
+    <div class="box-bd" data-scroll-inner>
+      <div class="grp ln" style="--i:0"><p>매주 화요일~일요일<br>&lt;월요일 휴관&gt;</p></div>
+      <div class="grp ln" style="--i:1"><p>월요일이 공휴일인 경우 정상 운영하고<br>그 다음 첫 번째 평일에 휴관합니다</p></div>
+      <div class="grp ln" style="--i:2"><p>2026년 9월 14일부터 11월 16일까지<br>가을 단풍 시즌에는 한시적으로 월요일도 운영합니다.<br>10:00~18:00 (입장 마감 16:30)</p></div>
+    </div>
+  </section>
 
-    <h3 class="rs-h rs-h--time" id="rsTimeLabel">시간표</h3>
-    <table class="rs-table" aria-labelledby="rsTimeLabel">
-      <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
-      <thead><tr><th scope="col"><span class="sr">구분</span></th><th scope="col">한국정원</th><th scope="col">현대정원</th></tr></thead>
-      <tbody>
-        <tr><th scope="row">시작장소</th><td>‘민초들의 삶’ 사이니지 앞</td><td>‘생각의 섬’ 사이니지 앞</td></tr>
-        <tr><th scope="row">1차</th><td>10:30~12:00</td><td>10:30~12:00</td></tr>
-        <tr><th scope="row">2차</th><td>13:00~14:30</td><td>13:00~14:30</td></tr>
-        <tr><th scope="row">3차</th><td>15:00~16:30</td><td>15:00~16:30</td></tr>
-      </tbody>
-    </table>
+  <!-- ② 입장권 요금 및 예약: 버튼 아래 750 폭, 안쪽 스크롤 -->
+  <section class="box" id="b-ticket" role="dialog" aria-label="입장권 요금 및 예약" style="left:379px;top:287px;width:770px;height:574px">
+    <div class="box-hd"><h2>입장권 요금 및 예약</h2><button class="x" aria-label="닫기"></button></div>
+    <div class="box-bd" data-scroll-inner>
+      <div class="sec ln" style="--i:0"><h3>입장권 종류</h3><div class="grp"><p>메덩골정원의 입장권은 [한국정원 관람권], [현대정원 관람권], 그리고 두 정원을 모두 관람하실 수 있는 [통합관람권] 의 세 종류가 있습니다.</p></div></div>
+      <div class="sec ln" style="--i:1">
+        <div class="tabs" role="tablist" aria-label="입장권 종류">
+          <button class="tab" role="tab" aria-selected="true" data-k="kr">한국정원</button>
+          <button class="tab" role="tab" aria-selected="false" data-k="ct">현대정원</button>
+          <button class="tab" role="tab" aria-selected="false" data-k="all">통합관람권</button>
+        </div>
+        <table><colgroup><col class="c1"><col class="c2"><col></colgroup>
+          <thead><tr><th scope="col">대상</th><th scope="col">평일</th><th scope="col">주말</th></tr></thead>
+          <tbody id="riFee"></tbody></table>
+        <p class="note">※ 유아와 미취학 아동, 초등학생은 보호자 동반 필수</p>
+      </div>
+      <div class="sec ln" style="--i:2"><h3>요금 안내</h3><div class="grp">
+        <p>평일에는 경로(65세 이상), 장애인, 군인·경찰관·소방관, 국가유공자·보훈자, 지역주민의 경우 할인 혜택이 있습니다. 정확한 가격은 예매 진행 시 확인 가능합니다.</p>
+        <p>모든 가격 할인은 중복 적용이 불가능하며, 증빙서류를 반드시 지참하여야 합니다.</p>
+        <p>증빙서류 미지참 시, 정상 요금이 적용됩니다.</p></div></div>
+      <div class="sec ln" style="--i:3"><h3>증빙서류 안내</h3><div class="grp">
+        <p>중·고등학생, 대학(원)생: 학생증</p>
+        <p>미취학 아동, 초등학생:<br>ㆍ부모, 조부모 동반 시: 신분증 및 가족관계증명서<br>ㆍ기타 보호자 동반 시: 재원증명서 등 나이 증명 서류</p>
+        <p>유아(24개월 미만): 보호자 신분증 및 가족관계증명서</p>
+        <p>경로(65세 이상): 신분증</p>
+        <p>장애인: 복지카드</p>
+        <p>군인·경찰관·소방관: 신분증, 현직 증명 서류</p>
+        <p>국가유공자·보훈자: 신분증, 유공자증, 보훈증 증명서</p>
+        <p>양평군민·양동면민: 신분증, 거주지 확인 가능한 증명 서류</p></div></div>
+      <div class="sec ln" style="--i:4"><h3>예약 가능일</h3><div class="grp">
+        <p>매월 1일 오후 5시, 다음 달 예매가 오픈됩니다.<br>(예: 8월 1일 → 9월 예매 오픈)</p>
+        <p>1인당 1회 최대 5매까지 예매하실 수 있습니다.</p>
+        <p>잔여석에 한해 현장 발권이 가능합니다.</p></div></div>
+      <div class="sec ln" style="--i:5"><h3>환불정책</h3><div class="grp">
+        <p>관람 1일 전부터는 환불이 불가합니다.</p>
+        <p>관람 2일 전 취소 시, 결제 금액의 30%를 공제한 후 환불해 드립니다.</p>
+        <p>관람 3일 전까지 취소 시, 전액 환불해 드립니다.</p></div></div>
+      <div class="sec ln" style="--i:6"><h3>단체 관람</h3><div class="grp">
+        <p>메덩골정원은 모든 관람객에게 최적의 경험을 제공하기 위해, 20인 이상 단체 관람은 사전 예약 및 조율을 통해 운영하고 있습니다.</p>
+        <p>단체 관람을 원하실 경우 아래 연락처로 문의해 주시기 바랍니다.<br>ㆍ이메일: <a class="mail" href="mailto:info.medongaule@mdale.co.kr">info.medongaule@mdale.co.kr</a><br>ㆍ전화: 031-771-1700</p></div></div>
+    </div>
+  </section>
 
-    <img class="rs-word" src="img/cg_wordmark.png" alt="MÉDONGAULE">
+  <!-- ③ 입장시 유의사항: 버튼 아래 왼쪽으로 펼침 (오른쪽 끝이 버튼 원에 걸림) -->
+  <section class="box" id="b-rules" role="dialog" aria-label="입장시 유의사항" style="left:1139px;top:495px;width:770px;height:395px">
+    <div class="box-hd"><h2>입장시 유의사항</h2><button class="x" aria-label="닫기"></button></div>
+    <div class="box-bd" data-scroll-inner>
+      <div class="sec ln" style="--i:0"><h3>소지품 및 반입 금지 물품</h3><div class="grp">
+        <p>소지품은 소형 가방(20x30x10cm 이하)만 반입 가능합니다.</p>
+        <p>외부 음식물 및 음료의 반입은 금지되어 있습니다.</p>
+        <p>담배·라이터 등 발화물질, 삼각대(셀카봉 삼각대 포함), 드론, 킥보드, 유아용 웨건, 돗자리, 텐트, 채집 도구 등 다른 관람객에게 불편을 끼칠 수 있는 물품 등은 반입을 금지하고 있습니다.</p></div></div>
+      <div class="sec ln" style="--i:1"><h3>시설 안내</h3><div class="grp">
+        <p>상업 목적의 모든 촬영은 불가합니다.<br>비상업적 촬영이라 하더라도, 웨딩 사진, 바디프로필, 코스프레 등 정원 관람이 주목적이 아닌 촬영은 하실 수 없습니다.</p>
+        <p>메덩골정원은 주차장을 포함한 전 구역이 금연구역이며, 전자담배 또한 허용되지 않습니다.</p>
+        <p>반려동물의 출입은 펫 캐리어 사용 여부와 관계없이 제한됩니다.</p>
+        <p>유모차와 휠체어는 이용이 가능하나, 일부 공간은 진입이 제한될 수 있습니다.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ④ 기타사항: 버튼 아래 오른쪽 -->
+  <!-- ⑤ 도슨트 투어 (v55, 사용자 피그마 '6 도슨트 투어' 193:138): 버튼 오른쪽 15px, 높이 500 (v56 사용자 지정) → 아래 끝은 그대로 880, 위로 늘어나 y380. 가로 770 (다른 큰 상자와 같은 폭) -->
+  <section class="box" id="b-tour" role="dialog" aria-label="도슨트 투어" style="left:1181px;top:390px;width:728px;height:500px">
+    <div class="box-hd"><h2>도슨트 투어</h2><button class="x" aria-label="닫기"></button></div>
+    <div class="box-bd" data-scroll-inner>
+      <div class="sec ln" style="--i:0"><h3>도슨트 투어 안내</h3><div class="grp">
+        <p>메덩골정원에서는 각 정원에 대한 더욱 깊은 이해를 위해 도슨트 프로그램을 운영하고 있습니다.</p>
+        <p>사전 신청 없이 각 구역 도슨트 시작 장소에서 선착순으로 참여하실 수 있습니다.</p>
+        <p>정시 시작이며, 매표소 입구부터 도슨트 시작지점까지 성인 기준 7-8분 정도 시간이 소요되니 여유 있게 이동해 주시기 바랍니다.</p></div></div>
+      <div class="sec ln" style="--i:1"><h3 id="tourT1">도슨트 투어 시간표</h3>
+        <table class="t3" aria-labelledby="tourT1"><colgroup><col class="c1"><col><col></colgroup>
+          <thead><tr><th scope="col"><span class="sr">구분</span></th><th scope="col">한국정원</th><th scope="col">현대정원</th></tr></thead>
+          <tbody><tr><th scope="row">시작 장소</th><td>'민초들의 삶' 사이니지 앞</td><td>'생각의 섬' 사이니지 앞</td></tr>
+          <tr><th scope="row">1차</th><td>10:30~12:00</td><td>10:30~12:00</td></tr>
+          <tr><th scope="row">2차</th><td>13:00~14:30</td><td>13:00~14:30</td></tr>
+          <tr><th scope="row">3차</th><td>15:00~16:30</td><td>15:00~16:30</td></tr></tbody></table></div>
+      <div class="sec ln" style="--i:2"><h3>팔산대 공연 안내</h3><div class="grp">
+        <p>메덩골정원에서는 하루 6차례, 풍무 김운태 단장이 이끄는 '연희단 팔산대'의 전통 공연이 펼쳐집니다. 1950~60년대 유랑 여성 농악단의 맥을 이어온 연희단 팔산대는 가·무·악이 어우러진 전통 연희를 바탕으로 정원 곳곳에서 관람객들과 호흡하며 공연을 이어가고 있습니다.</p>
+        <p>대금과 가야금 산조, 판소리, 법고춤, 승무 등 매번 새로운 다양한 공연을 만나보실 수 있습니다.</p>
+        <p>사전 예약 없이 시간에 맞추어 공연 장소로 가시면 관람하실 수 있습니다. 도슨트 투어에 참여하신다면, 투어의 중간이나 마지막에 공연이 포함되어 있습니다. 정원의 아름다운 자연을 배경으로 우리 가락과 춤을 가까이에서 느껴보시기 바랍니다.</p></div></div>
+      <div class="sec ln" style="--i:3"><h3 id="tourT2">팔산대 공연 시간표</h3>
+        <table class="t3" aria-labelledby="tourT2"><colgroup><col class="c1"><col><col></colgroup>
+          <thead><tr><th scope="col"><span class="sr">구분</span></th><th scope="col">한국정원</th><th scope="col">현대정원</th></tr></thead>
+          <tbody><tr><th scope="row">공연 장소</th><td>경신재 (선곡서원 내)</td><td>FATI (위버하우스 2층)</td></tr>
+          <tr><th scope="row">1차</th><td>11:20</td><td>12:00</td></tr>
+          <tr><th scope="row">2차</th><td>13:50</td><td>14:30</td></tr>
+          <tr><th scope="row">3차</th><td>15:50</td><td>16:30</td></tr></tbody></table>
+        <div class="grp note2"><p>*팔산대 공연 시간 / 장소 변경 안내<br>겨울 시즌을 맞아 팔산대의 공연 장소가 실내로 변경됩니다(2026/11/16 부터). 한국정원에서는 선곡서원 내 경신재에서, 현대정원에서는 위버하우스 2층 FATI 에서 공연이 진행됩니다. 시간과 장소를 확인하셔서 참여 부탁드립니다.</p></div></div>
+      <div class="sec ln" style="--i:4"><h3>참여시 유의 사항</h3><div class="grp">
+        <p>조용한 관람 환경 유지를 위하여, 도슨트 투어 또는 팔산대 공연 참여가 제한될 수 있는 점 양해해 주시기 바랍니다.</p>
+        <p>도슨트 프로그램 참여시 전체를 녹취하는 것은 삼가 주시기 바랍니다.</p></div></div>
+    </div>
+  </section>
+
+  <section class="box" id="b-etc" role="dialog" aria-label="기타사항" style="left:1349px;top:350px;width:560px">
+    <div class="box-hd"><h2>기타사항</h2><button class="x" aria-label="닫기"></button></div>
+    <div class="box-bd" data-scroll-inner>
+      <div class="sec ln" style="--i:0"><h3>기타 안내사항</h3><div class="grp"><p>갑작스런 우천 시 우산을 무료로 대여해 드립니다.</p></div></div>
+      <div class="sec ln" style="--i:1"><h3>문의처 안내</h3><div class="grp">
+        <p>이메일 문의: <a class="mail" href="mailto:info.medongaule@mdale.co.kr">info.medongaule@mdale.co.kr</a></p>
+        <p>전화 문의: 031-771-1700 (9:00~18:00)</p></div></div>
+    </div>
+  </section>
+
+  </div>
+   </div>
   </div>
   <footer class="ft-section" id="footer">
   <div class="ft-cv" id="ftCv">
@@ -1719,10 +1968,14 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
      관람안내 + 푸터가 한 화면에 다 들어가면 페이지가 바로 끝나므로 멈춤 없음 */
   function measure() {
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (vw < 768) { cv.style.transform = ''; section.style.height = pin.style.height = pin.style.bottom = pin.style.paddingTop = gap.style.height = ''; return; }   // 휴대폰: 멈춤 없음
-    const s = vw / 1920, h = 900 * s;
+    const s = vw / 1920;
+    /* v54 (사용자 '화면이 커져도 꽉 차게'): 데스크톱은 섹션 높이 = 창 높이(최소 900 비율). 사진이 화면을 꽉 덮고 버튼·상자는 사진 위 제자리를 따라감 (__riLayout)
+       휴대폰은 피그마 시안 없음 → 900 비율 그대로 축소 (임시) */
+    const h = vw < 768 ? 900 * s : Math.max(vh, 900 * s);
+    cv.style.height = (h / s) + 'px';
+    window.__riLayout && window.__riLayout(h / s);
     cv.style.transform = `scale(${s})`;
-    const f = 475 * vw / 1940, all = h + f;                         // 푸터 높이 (피그마 1940×475, 화면 너비 비율 — 푸터 스크립트와 같은 계산)
+    const f = vw < 768 ? (document.getElementById('footer').offsetHeight || 0) : 475 * vw / 1940, all = h + f;                         // 푸터 높이 (피그마 1940×475, 화면 너비 비율 — 푸터 스크립트와 같은 계산)
     pin.style.height = ''; pin.style.paddingTop = h + 'px';           // 관람안내 캔버스(겹쳐 놓임) 아래에 푸터
     const top = Math.min(0, vh - h);                                   // 멈출 때 관람안내 위끝 위치
     pin.style.bottom = (vh - top - all) + 'px';
@@ -1734,6 +1987,114 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   window.addEventListener('load', measure);
   measure();
 })();
+</script>
+
+<script>
+
+(function(){
+  const cv=document.getElementById('riCv'), Q=sel=>[...cv.querySelectorAll(sel)];
+  /* v54 화면 꽉 채우기 (피그마 제약: 사진 = Left and right · Top and bottom, 버튼·상자 = 사진을 따라 Scale)
+     캔버스 폭은 항상 1920, 높이 Hc(= 창 높이 / 배율, 최소 900). 사진(1920×900)을 c = Hc/900 배로 키워 가운데 맞춤(cover)
+     버튼: 원 가운데 점이 사진의 같은 지점에 오도록 이동, 크기는 그대로
+     상자: 자기 버튼과의 간격(피그마 값) 그대로 따라가고, 화면 밖으로 나가지 않게 가장자리 안쪽에 둠 */
+  const bgImg=cv.querySelector('.bg');
+  const base=el=>({x:parseFloat(el.style.left),y:parseFloat(el.style.top)});
+  const PB=Q('.pin').map(p=>({p,...base(p),b:document.getElementById(p.dataset.box)}));
+  PB.forEach(o=>{o.bx=parseFloat(o.b.style.left)-o.x;o.by=parseFloat(o.b.style.top)-o.y;});
+  window.__riLayout=function(Hc){
+    const c=Math.max(1,Hc/900), ox=(1920-1920*c)/2, oy=(Hc-900*c)/2;
+    bgImg.style.left=(ox-36*c)+'px';bgImg.style.top=(oy-36*c)+'px';bgImg.style.width=(1992*c)+'px';bgImg.style.height=(972*c)+'px';
+    PB.forEach(o=>{
+      const px=ox+(o.x+22.5)*c-22.5, py=oy+(o.y+22.5)*c-22.5;
+      o.p.style.left=px+'px';o.p.style.top=py+'px';
+      if(o.w0===undefined)o.w0=parseFloat(o.b.style.width);
+      let bw=o.w0;
+      const side=o.bx>=o.p.offsetWidth;            // 버튼 오른쪽에 붙는 상자(도슨트): 버튼과 겹치지 않게 폭을 줄임
+      if(side){bw=Math.min(o.w0,1920-11-(px+o.bx));o.b.style.width=bw+'px';}
+      const bh=parseFloat(o.b.style.height)||o.b.offsetHeight;
+      const bx=side?px+o.bx:Math.min(Math.max(px+o.bx,11),1920-11-bw), by=Math.min(py+o.by,Hc-11-bh);
+      o.b.style.left=bx+'px';o.b.style.top=by+'px';
+    });
+  };
+  window.__riLayout(cv.parentElement.offsetHeight||900);
+
+  /* 화면 움직임: ① 마우스 쪽과 반대로 따라감 ② 그 위에 아주 느린 흔들림
+     v62 (사용자 '창이 떴을 때 창은 안 움직이고 배경만, 움직임을 더 크게' — 참고 영상 FUTURE HUMAN: 가로 약 ±25px):
+       마우스 가로 ±14 → ±28px, 세로 ±10 → ±16px / 흔들림 가로 ±7 → ±8px, 세로 ±5px 그대로
+       → 가장 많이 움직여도 가로 36·세로 21px (사진이 사방 36px 크게 깔려 있어 가장자리가 비지 않음)
+       설명 상자(.box)는 판이 움직인 만큼 반대로 옮겨(translate) 화면에 고정. 사진·버튼은 같이 움직임(버튼이 건물 위 제자리)
+     '동작 줄이기' 설정이면 멈춤 */
+  const scene=document.getElementById('riScene');
+  let vis=false;new IntersectionObserver(es=>{vis=es[0].isIntersecting;}).observe(cv);
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    let tx=0,ty=0,x=0,y=0,last=performance.now();
+    const boxes=Q('.box');
+    addEventListener('pointermove',e=>{tx=-(e.clientX/innerWidth-.5)*56;ty=-(e.clientY/innerHeight-.5)*32;},{passive:true});   // v62: ±14·±10 → ±28·±16
+    document.addEventListener('pointerleave',()=>{tx=0;ty=0;});
+    (function loop(now){
+      const dt=Math.min(64,now-last);last=now;
+      const k=1-Math.exp(-dt/650);          // 0.65초 정도 늦게 따라옴 (부드럽게)
+      x+=(tx-x)*k;y+=(ty-y)*k;
+      const t=now/1000, sx=Math.sin(t*2*Math.PI/23)*8, sy=Math.sin(t*2*Math.PI/17+1)*5;
+      if(vis){const X=(x+sx).toFixed(2),Y=(y+sy).toFixed(2);
+        scene.style.transform=`translate3d(${X}px,${Y}px,0)`;
+        boxes.forEach(b=>{b.style.translate=`${-X}px ${-Y}px`;});}   // v62: 상자는 제자리
+      requestAnimationFrame(loop);
+    })(last);
+  }
+
+  /* 요금표 데이터 */
+  const L=['성인','대학생/대학원생','중학생/고등학생','미취학/초등학생<br>*부모 또는 조부모 동반 시 무료','미취학/초등학생<br>*기타 보호자 동반 시','유아(24개월 미만)','경로(65세 이상)','장애인','군인/경찰관/소방관','국가유공자/보훈자','양평군민','양동면민'];
+  const F={
+    kr:[[50,50],[40,40],[25,25],[0,0],[25,25],[0,0],[40,50],[40,50],[30,50],[30,50],[40,50],[25,50]],
+    ct:[[50,70],[40,56],[25,35],[0,0],[25,35],[0,0],[40,70],[40,70],[30,70],[30,70],[40,70],[25,70]],
+    all:[[80,90],[64,72],[40,45],[0,0],[40,45],[0,0],[64,90],[64,90],[48,90],[48,90],[64,90],[40,90]]};
+  const won=v=>v?v+',000원':'무료';
+  const tb=document.getElementById('riFee');
+  const fill=k=>{tb.innerHTML=L.map((l,i)=>`<tr><td>${l}</td><td>${won(F[k][i][0])}</td><td>${won(F[k][i][1])}</td></tr>`).join('');};
+  fill('kr');
+  cv.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    if(t.getAttribute('aria-selected')==='true')return;
+    cv.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',String(x===t)));
+    tb.classList.add('swap');setTimeout(()=>{fill(t.dataset.k);tb.classList.remove('swap');},220);
+  }));
+
+  /* 열기·닫기: 한 번에 하나만. 같은 버튼·X·바깥·Esc로 닫힘 */
+  const pins=Q('.pin');
+  /* 버튼마다: 빛(.glint) 한 겹 + 글자를 감싸 빛 위로 올림 */
+  pins.forEach(p=>{
+    [...p.childNodes].forEach(n=>{if(n.nodeType===3&&n.textContent.trim()){const sp=document.createElement('span');sp.className='lbl';sp.textContent=n.textContent;n.replaceWith(sp);}});
+    const g=document.createElement('span');g.className='glint';g.setAttribute('aria-hidden','true');p.prepend(g);
+  });
+  let cur=null;
+  function setMore(bd){bd.classList.toggle('more',bd.scrollHeight-bd.scrollTop-bd.clientHeight>4);}
+  cv.querySelectorAll('.box-bd').forEach(bd=>bd.addEventListener('scroll',()=>setMore(bd),{passive:true}));
+  function open(id){
+    if(cur===id){close();return;}
+    if(cur)hide(cur);
+    cur=id;
+    const p=pins.find(p=>p.dataset.box===id),b=document.getElementById(id);
+    p.classList.add('on');p.setAttribute('aria-expanded','true');
+    (document.getElementById('l-'+id)||document.createElement('i')).classList.add('on');
+    b.classList.add('on');cv.classList.add('open');
+    const bd=b.querySelector('.box-bd');bd.scrollTop=0;setMore(bd);
+    const R=e=>({l:e.offsetLeft,t:e.offsetTop,r:e.offsetLeft+e.offsetWidth,b:e.offsetTop+e.offsetHeight}),br=R(b);
+    pins.forEach(q=>{const r=R(q);q.classList.toggle('under',q!==p&&r.l<br.r&&r.r>br.l&&r.t<br.b&&r.b>br.t);});
+  }
+  function hide(id){
+    const p=pins.find(p=>p.dataset.box===id);
+    p.classList.remove('on');p.setAttribute('aria-expanded','false');
+    (document.getElementById('l-'+id)||document.createElement('i')).classList.remove('on');
+    document.getElementById(id).classList.remove('on');
+  }
+  function close(){pins.forEach(q=>q.classList.remove('under'));if(!cur)return;const id=cur;hide(id);cur=null;cv.classList.remove('open');}
+  pins.forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();open(p.dataset.box);}));
+  cv.querySelectorAll('.x').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();const id=cur;close();if(id)pins.find(p=>p.dataset.box===id).focus();}));
+  cv.querySelectorAll('.box').forEach(b=>b.addEventListener('click',e=>e.stopPropagation()));
+  document.addEventListener('click',close);
+  addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
+
 </script>
 
 <!-- ═══════════════ footer ═══════════════
@@ -2073,7 +2434,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   /* ② 메뉴판: 피그마 menubar (163:29) — 판 245×화면 높이, #17100C 84%, 오른쪽 위 모서리 둥글게, 안쪽 그림자 -1 -1 2 흰색 25%
         X 43,54 (25×25) / 항목 x98, y118부터 45 간격, Pretendard Regular 15 자간 -4% (건축물 -4.5%), 글자색 미색 #EEEDE9
         가로선 7줄: y103부터 45 간격, 판 너비 전체, 0.5px 미색 76% (화면에서는 1px 38%) */
-  .nb-gl { width: calc(245 * var(--u)); background: rgba(23,16,12,.84); border-radius: 0 calc(16 * var(--u)) 0 0;
+  .nb-gl { width: calc(245 * var(--u)); background: rgba(23,16,12,.84); border-radius: 0;   /* v57 피그마 menubar: 모서리 둥글림 없음 */
            box-shadow: inset calc(-1 * var(--u)) calc(-1 * var(--u)) calc(2 * var(--u)) rgba(255,255,255,.25);
            color: #EEEDE9; font: 400 calc(15 * var(--u))/1.193 var(--font); letter-spacing: calc(-0.6 * var(--u)); }
   .nb-gl::before { content: ''; position: absolute; left: 0; right: 0; top: calc(103 * var(--u)); height: calc(270 * var(--u) + 1px); pointer-events: none;
@@ -2128,8 +2489,8 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     <a class="nb-gi" href="#con-garden" style="--y:147;--i:1"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">현</span><span class="c" style="--d:0.436s;--l:0.036s">대</span><span class="c" style="--d:0.472s;--l:0.056s">정</span><span class="c" style="--d:0.528s;--l:0.172s">원</span></span></a>
     <a class="nb-gi" href="#korean-garden" style="--y:201;--i:2"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">한</span><span class="c" style="--d:0.436s;--l:0.036s">국</span><span class="c" style="--d:0.472s;--l:0.056s">정</span><span class="c" style="--d:0.528s;--l:0.172s">원</span></span></a>
     <a class="nb-gi" href="#structure" style="--y:255;--i:3" aria-label="건축물"><span class="t ts" aria-hidden="true"><span class="c" style="--d:0.409s;--l:0.043s">건</span>  <span class="c" style="--d:0.452s;--l:0.076s">축</span>  <span class="c" style="--d:0.528s;--l:0.172s">물</span></span></a>
-    <a class="nb-gi" href="#reservation" style="--y:309;--i:4"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">관</span><span class="c" style="--d:0.436s;--l:0.036s">람</span><span class="c" style="--d:0.472s;--l:0.056s">안</span><span class="c" style="--d:0.528s;--l:0.172s">내</span></span></a>
-    <a class="nb-gi" href="#location" style="--y:363;--i:5"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">오</span><span class="c" style="--d:0.436s;--l:0.036s">시</span><span class="c" style="--d:0.472s;--l:0.056s">는</span><span class="c" style="--d:0.528s;--l:0.172s">길</span></span></a>
+    <a class="nb-gi" href="#location" style="--y:309;--i:4"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">오</span><span class="c" style="--d:0.436s;--l:0.036s">시</span><span class="c" style="--d:0.472s;--l:0.056s">는</span><span class="c" style="--d:0.528s;--l:0.172s">길</span></span></a>
+    <a class="nb-gi" href="#reservation" style="--y:363;--i:5"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">관</span><span class="c" style="--d:0.436s;--l:0.036s">람</span><span class="c" style="--d:0.472s;--l:0.056s">안</span><span class="c" style="--d:0.528s;--l:0.172s">내</span></span></a>
     <a class="nb-gi" href="#reservation" style="--y:417;--i:6"><span class="t"><span class="c" style="--d:0.409s;--l:0.027s">예</span><span class="c" style="--d:0.436s;--l:0.036s">약</span><span class="c" style="--d:0.472s;--l:0.056s">하</span><span class="c" style="--d:0.528s;--l:0.172s">기</span></span></a>
   </nav>
 </header>
@@ -2195,7 +2556,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     el.addEventListener('focus', () => { if (el.matches(':focus-visible')) set(true); });
     el.addEventListener('blur', () => set(false));
   }
-  realItems.forEach((el, i) => bindMirror(el, i, el === book ? 'ul' : null));
+  realItems.forEach((el, i) => bindMirror(el, i, null));   // v51 (사용자 요청 2026-11-17): 예약하기 밑줄 뺌
   function setFull(v) {
     if (full === v) return;
     full = v;
@@ -2519,6 +2880,12 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     document.documentElement.classList.add('smooth-scroll');
     window.addEventListener('wheel', (e) => {
       if (e.ctrlKey) return;                        // 확대/축소는 그대로
+      for (let el = e.target; el && el !== document.body; el = el.parentElement) {   // v52: 관람안내 상자 안은 상자가 먼저 스크롤
+        if (el.hasAttribute && el.hasAttribute('data-scroll-inner') && el.scrollHeight > el.clientHeight + 1) {
+          if ((e.deltaY > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 1) || (e.deltaY < 0 && el.scrollTop > 0)) return;
+          break;
+        }
+      }
       e.preventDefault();
       const unit = e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1;
       push(e.deltaY * unit * WHEEL);
@@ -2584,7 +2951,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 })();
 </script>
 
-<!-- ===== 로고 인트로 (로딩 화면, 2026-11-13 v23) ===== -->
+<!-- ===== 로고 인트로 (로딩 화면, 2026-11-17 v58 = 피그마 logo_intro_11) ===== -->
 <div class="ld" id="ld" aria-hidden="true">
   <!-- 미색 막 + 꽃잎 모양 창(마스크). 창을 통해 아래의 첫 사진이 보임 -->
   <svg class="ld-mask" id="ldSvg">
@@ -2635,14 +3002,18 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   <!-- v22 (사용자 '선이 왜 끊어진 것처럼 보여'): 가로선은 로고 칸 위로 올려 끊김 없이 이어지게 — 숫자만 로고 뒤로 지나감 -->
   <div class="ld-rule" id="ldRule"></div>
   <svg class="ld-line" id="ldLine" viewBox="0 0 10 10" aria-hidden="true">
-    <g id="ldLineG">
+    <!-- v58: 선 빛번짐 (참고 영상보다 10% 약하게). 흐림 크기는 JS가 화면 px로 맞춤 -->
+    <defs><filter id="ldGlowF" filterUnits="userSpaceOnUse" x="-5" y="-5" width="20" height="20"><feGaussianBlur id="ldGlowB1" in="SourceGraphic" stdDeviation=".22" result="b1"/><feGaussianBlur id="ldGlowB2" in="SourceGraphic" stdDeviation=".7" result="b2"/><feComponentTransfer in="b1" result="g1"><feFuncA type="linear" slope=".765"/></feComponentTransfer><feComponentTransfer in="b2" result="g2"><feFuncA type="linear" slope=".4675"/></feComponentTransfer><feMerge><feMergeNode in="g2"/><feMergeNode in="g1"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g id="ldLineG" filter="url(#ldGlowF)">
       <!-- 한붓그리기 (사용자 손그림 영상 순서): 가운데 → ① 왼쪽 위 → 가운데 → ② 오른쪽 아래 → 가운데 → ③ 오른쪽 위 → 가운데 → ④ 왼쪽 아래
            ①②에서 곧은 선 네 개가 모두 그려지므로, ③④는 이미 있는 곧은 선 위를 지나간 뒤 둥근 선만 새로 보임 -->
       <path pathLength="1" d="M5 5V2.5A2.5 2.5 0 1 0 2.5 5H5 H7.5A2.5 2.5 0 1 1 5 7.5V5 V2.5A2.5 2.5 0 1 1 7.5 5H5 H2.5A2.5 2.5 0 1 0 5 7.5"/>
     </g>
   </svg>
+  <div class="ld-spark" id="ldSpark"></div>
   <span class="ld-word" id="ldWord"></span>
 </div>
+<button class="ld-skip" id="ldSkip" type="button">Skip</button>
 
 <style>
 .ld-line{width:var(--ld-size);height:var(--ld-size);transform-origin:50% 50%;top:calc(481 / 1000 * 100%)}
@@ -2665,8 +3036,17 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   const PX0 = 40, PX1 = 1880;   // v7: 사용자 피그마 07(0% x40)·08(100% 오른쪽 끝 x1880)
   const CY = .481;              // v7: 로고·가로선 세로 위치 (1000 중 481)
   const FILLW = .12;            // v12: 칸이 차오르는 구간 = 꽃잎이 닫히기 전 진행값 12% (약 0.5초, 예전 PFILL과 비슷한 길이)
+  const PIN = 450;               // v51: 선이 다 그려진 순간 꽃잎 배경(사진)이 나타나는 시간(ms)
   const PAUSE100 = 150;          // v23 (사용자 '100%일 때 0.1초라도 잠깐 멈췄다가 커지게'): 꽃이 완성된 100% 그대로 멈추는 시간(ms)
   const PCT_OUT = 120;
+  /* v58 (피그마 logo_intro_11): 로고 130px (1920 기준), 워드마크 249.66px · 로고 아래 26px (y572)
+     워드마크 등장 (참고 영상 FUTURE HUMAN): 꽃이 완성되면 왼쪽 → 오른쪽 한 글자씩 흐림 → 선명. 사용자 '잔상이 더 남게' → 흐림 8px, 한 글자 1.4초 */
+  const LOGO = 130, WORD_W = 249.66, WORD_GAP = 26;
+  const W_STEP = 70, W_DUR = 1400, W_BLUR = 8, W_HOLD = 300;
+  const W_CUT = [0,451,919,1409,1924,2395,2894,3378,3842,4289,4642], W_SRC = 4642, W_RATIO = 490 / 4642;
+  const SKIP_IN = 1000, SPARK_OUT = 400;
+  const SHINE = .85;   // v59 (사용자 '반짝이는 거 15% 줄여줘'): 선 끝 빛 전체 밝기 ×0.85 (선 번짐도 ×0.85)
+  const SEEN_KEY = 'mdgLoadingSeen';   // v58 (사용자 결정): 같은 방문(같은 탭) 안에서 다시 들어오면 로딩 건너뜀
   /* v18 (사용자 '전체로 보여줘'): 꽃잎 창이 커지면서 단풍 사진이 화면 가득 열림 → 잠깐 보여준 뒤 인트로 첫 화면으로 서서히 바뀜
      FULL_HOLD : 단풍 사진이 화면을 다 덮은 뒤 머무는 시간 / FULL_XFADE : 인트로 첫 사진으로 바뀌는 시간 */
   const FULL_HOLD = 0, FULL_XFADE = 250;   // v19: 열린 사진 = 인트로 첫 화면과 같은 사진·같은 크기 → 머물지 않고 0.25초만에 실제 화면으로 이어짐 (v18: 500 / 700, 다른 사진으로 바뀜)
@@ -2711,17 +3091,29 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   const word = document.getElementById('ldWord');
   const pct = document.getElementById('ldPct');
   const rule = document.getElementById('ldRule');
+  const spark = document.getElementById('ldSpark'), skipBtn = document.getElementById('ldSkip');
+  const glowB1 = document.getElementById('ldGlowB1'), glowB2 = document.getElementById('ldGlowB2');
+  word.setAttribute('role', 'img'); word.setAttribute('aria-label', 'MÉDONGAULE');
+  const chars = [];
+  for (let i = 0; i < 10; i++){ const c = document.createElement('span'); c.className = 'ld-ch'; const im = new Image(); im.src = 'img/ld_word.png'; im.alt = ''; c.appendChild(im); word.appendChild(c); chars.push(c); }
+  const easeOutW = (t) => 1 - Math.pow(1 - t, 2.6);
+  function showChars(t){   // t = 꽃 완성 뒤 지난 시간(ms)
+    chars.forEach((c, i) => { const e = easeOutW(clamp((t - i * W_STEP) / W_DUR)); c.style.opacity = e; c.style.filter = e >= 1 ? '' : `blur(${(W_BLUR * (1 - e)).toFixed(2)}px)`; });
+  }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let size = 120, W = innerWidth, H = innerHeight, raf = 0, skipReq = false;
 
   function layout(){
     W = innerWidth; H = innerHeight;
-    size = Math.max(76, Math.round(W / 1920 * 120));
+    size = Math.max(76, Math.round(W / 1920 * LOGO));   // v58: 120 → 130 (피그마 logo_intro_11)
     ld.style.setProperty('--ld-size', size + 'px');
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     topSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);   // v21
-    word.style.width = (size * 1.08) + 'px';
+    const ww = size * WORD_W / LOGO, wh = ww * W_RATIO;   // v58
+    word.style.width = ww + 'px'; word.style.height = wh + 'px';
+    chars.forEach((c, i) => { c.style.width = ((W_CUT[i + 1] - W_CUT[i]) / W_SRC * ww) + 'px'; c.style.height = wh + 'px'; const im = c.firstChild; im.style.width = ww + 'px'; im.style.height = wh + 'px'; im.style.marginLeft = (-W_CUT[i] / W_SRC * ww) + 'px'; });
+    glowB1.setAttribute('stdDeviation', 2.9 * 10 / size); glowB2.setAttribute('stdDeviation', 9 * 10 / size);   // v58: 화면에서 2.9px · 9px 번짐
     word.style.marginTop = '0px';
     placeGlow(1);   // v20 (사용자 '꽃 안 사진이 커지기 전에 움직이는 게 어색'): 처음부터 인트로 첫 화면과 같은 위치·크기 원본 사진 — 꽃만 커짐
     ruleLine();
@@ -2740,7 +3132,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   function placePct(v){
     const gap = 21 * size / 120;
     /* v26 (피그마 logo_intro_10 갱신): 숫자 없음(.ld-pct 숨김), 워드마크가 로고 바로 아래 16px (1920 기준, 피그마 y562) */
-    word.style.top = (H * CY + size / 2 + 16 * size / 120) + 'px';   // v24 (logo_intro_10): 로고 아래 21px (1920 기준, 로고 크기에 비례)
+    word.style.top = (H * CY + size / 2 + WORD_GAP * size / LOGO) + 'px';   // v58 (logo_intro_11): 로고 아래 26px → y572   // v24 (logo_intro_10): 로고 아래 21px (1920 기준, 로고 크기에 비례)
     pct.style.left = (W / 2) + 'px'; pct.style.top = (H * CY + size / 2 + gap) + 'px';   // 항상 로고 바로 아래 가운데 (v23까지: 선 위를 왼쪽 → 오른쪽으로 이동)
     pct.style.transform = 'translateX(-50%)';
   }
@@ -2772,7 +3164,9 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     return Promise.race([Promise.all([imgP, fontP]), cap]);
   }
 
+  function seen(){ try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch(e){ return false; } }
   function run(){
+    if (seen()){ root.classList.remove('ld-pre'); finish(); return; }   // v58: 이번 방문에 이미 봤으면 바로 인트로
     cancelAnimationFrame(raf);
     skipReq = false;
     scrollTo(0, 0);
@@ -2784,7 +3178,8 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     coverG.style.display = '';
     const fillAt = [0, 0, 0, 0];
     line.style.opacity = 1; line.style.visibility = ''; line.classList.remove('grow');
-    word.style.opacity = 0; pct.style.opacity = 1; pct.textContent = '0%'; placePct(0);   // v7: 워드마크 처음부터 보임
+    word.style.opacity = 1; showChars(-1); pct.style.opacity = 1; pct.textContent = '0%'; placePct(0);   // v58: 워드마크는 꽃이 완성된 뒤 한 글자씩
+    spark.style.opacity = 0; skipBtn.classList.remove('on');
     rule.style.opacity = rule.dataset.op || .7;
     paths.forEach(p => { p.style.strokeDasharray = '1 2'; p.style.strokeDashoffset = 1; });
 
@@ -2792,7 +3187,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     whenReady().then(() => { loaded = true; });
 
     if (reduce){                       // '동작 줄이기' 설정: 선 그리기 없이 조용히 사라짐
-      paths.forEach(p => p.style.strokeDashoffset = 0); word.style.opacity = 1; pct.style.opacity = 0;
+      paths.forEach(p => p.style.strokeDashoffset = 0); word.style.opacity = 1; showChars(1e9); pct.style.opacity = 0;
       whenReady().then(() => { ld.style.transition = 'opacity .5s'; ld.style.opacity = 0; setTimeout(finish, 520); });
       return;
     }
@@ -2802,8 +3197,8 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     function tick(now){
       const t = now - t0;
       /* v25 (사용자 요청 '타이포 로고는 서서히 나타나게, 너무 빠르지 않게'): 시작 0.6초 뒤부터 2.6초에 걸쳐 천천히 나타남. 숫자↑ = 더 천천히 */
-      const wIn = ease(clamp((t - 800) / 3400));   /* v27: 로딩이 길어진 만큼 같이 천천히 (0.8초 뒤부터 3.4초) */
-      if (!tDone) word.style.opacity = wIn;
+      const wIn = 1;   // v58: 워드마크는 꽃이 완성된 뒤 한 글자씩 (v25~27의 서서히 나타나기 대신)
+      if (!tDone && !skipReq) skipBtn.classList.toggle('on', t >= SKIP_IN);
       if (!tDone){
         // 1) 선 그리기 + 숫자
         const target = Math.min(pen(clamp(t / DRAW)), loaded ? 1 : .92);
@@ -2813,22 +3208,27 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
         paths.forEach(p => p.style.strokeDashoffset = 1 - toPath(shown));   // 한 줄로 이어 그림 (v13: 다시 지나가는 선은 건너뜀)
         pct.textContent = Math.floor(shown * 100 + 1e-6) + '%';   // v11: 내림 → 선이 다 그려진 순간에만 100%
         placePct(shown);                                            // 숫자가 오르면서 오른쪽으로 이동
-        if (shown >= 1) tDone = now;
+        placeSpark(toPath(shown)); spark.style.opacity = SHINE * clamp(t / 250);
+        if (shown >= 1){ tDone = now; skipBtn.classList.remove('on'); }
       }
       // 2) 꽃잎 하나가 닫힐 때마다 그 칸에 뒤 장면이 차오름 (선은 계속 다음 꽃잎으로)
       let lastFill = 0;
       CELL.forEach((ci, k) => {
         // v12 (사용자 요청 '꽃이 100%와 같이 완성'): 칸이 선을 따라 미리 차올라 꽃잎이 닫히는 순간 다 참
         //   → 마지막 ④ 칸도 100%와 동시에 완성 (v11까지는 닫힌 뒤 0.6초 동안 차올라 100%보다 늦게 완성)
-        const f = clamp((shown - (DONE[k] - FILLW)) / FILLW);
+        // v53 (사용자 요청 2026-11-17): 꽃잎 하나가 다 그려지는(닫히는) 순간 그 칸의 바탕이 PIN 동안 차오름 → 다음 꽃잎을 그리고 → 또 차오름
+        if (!fillAt[k] && shown >= DONE[k] - 1e-4) fillAt[k] = now;
+        const f = fillAt[k] ? clamp((now - fillAt[k]) / PIN) : 0;
         cells[ci].style.opacity = cells2[ci].style.opacity = ease(f);
         if (k === 3) lastFill = f;
       });
       if (tDone){
         // 마지막 칸이 차는 동안 선·글자가 사라짐 → 창이 커질 때 선 잔상 없음
-        const tEnd = tDone + (skipReq ? 0 : PAUSE100);              // v23: 100%에서 잠깐 멈춘 뒤 시작
+        spark.style.opacity = SHINE * (1 - clamp((now - tDone) / SPARK_OUT));   // v58: 꽃이 완성되면 빛 사라짐
+        if (!skipReq) showChars(now - tDone); else showChars(1e9);
+        const tEnd = skipReq ? tDone + PIN : Math.max(tDone + PIN + PAUSE100, tDone + 9 * W_STEP + W_DUR + W_HOLD);   // v58: 워드마크가 다 나온 뒤 0.3초 멈췄다가 창이 열림   // v51: 꽃잎 배경이 다 나타난 뒤 멈춤              // v23: 100%에서 잠깐 멈춘 뒤 시작
         const g = clamp((now - tEnd) / FADE);                        // v9: 멈춤이 끝나면 사라지기 시작
-        coverG.style.display = 'none';                               // v21: 100%면 네 칸이 다 사진으로 차 있어 밤색 꽃은 필요 없음 (창이 커질 때 가리지 않게)
+        if (lastFill >= 1) coverG.style.display = 'none';                               // v21: 100%면 네 칸이 다 사진으로 차 있어 밤색 꽃은 필요 없음 (창이 커질 때 가리지 않게)
         line.style.opacity = 1 - g;
         line.style.visibility = g >= 1 ? 'hidden' : '';
         word.style.opacity = wIn * (1 - easeOut(g));
@@ -2852,13 +3252,23 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
     raf = requestAnimationFrame(tick);
   }
 
+  /* v58: 선 끝(전체 선 길이에 대한 비율 f) 화면 위치에 빛 점 */
+  let pathLen = 0;
+  function placeSpark(f){
+    const p = paths[0]; if (!pathLen) pathLen = p.getTotalLength();
+    const pt = p.getPointAtLength(pathLen * clamp(f));
+    spark.style.left = (W / 2 + (pt.x - 5) * size / 10) + 'px'; spark.style.top = (H * CY + (pt.y - 5) * size / 10) + 'px';
+  }
   function finish(){
+    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch(e){}
+    skipBtn.classList.remove('on'); skipBtn.style.display = 'none';
     ld.style.display = 'none'; ld.style.transition = '';
     root.classList.remove('ld-on');
     dispatchEvent(new Event('scroll'));
   }
 
   ld.addEventListener('click', () => { skipReq = true; });   // 클릭하면 로딩이 끝난 즉시 열림
+  skipBtn.addEventListener('click', (e) => { e.stopPropagation(); skipReq = true; skipBtn.classList.remove('on'); });   // v58: Skip = 클릭과 같음 (워드마크 등장도 건너뜀)
   addEventListener('resize', () => { if (root.classList.contains('ld-on')) layout(); });
   run();
 })();
