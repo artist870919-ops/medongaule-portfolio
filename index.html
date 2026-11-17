@@ -2028,7 +2028,8 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
   let vis=false;new IntersectionObserver(es=>{vis=es[0].isIntersecting;}).observe(cv);
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
     let tx=0,ty=0,x=0,y=0,last=performance.now();
-    const boxes=Q('.box');
+    const boxes=Q('.box'), pinsM=Q('.pin');
+    let pf=0;   // v65: 상자가 열려 있는 정도 (0 닫힘 → 1 열림, 0.3초 정도로 부드럽게)
     addEventListener('pointermove',e=>{tx=-(e.clientX/innerWidth-.5)*56;ty=-(e.clientY/innerHeight-.5)*32;},{passive:true});   // v62: ±14·±10 → ±28·±16
     document.addEventListener('pointerleave',()=>{tx=0;ty=0;});
     (function loop(now){
@@ -2038,7 +2039,14 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
       const t=now/1000, sx=Math.sin(t*2*Math.PI/23)*8, sy=Math.sin(t*2*Math.PI/17+1)*5;
       if(vis){const X=(x+sx).toFixed(2),Y=(y+sy).toFixed(2);
         scene.style.transform=`translate3d(${X}px,${Y}px,0)`;
-        boxes.forEach(b=>{b.style.translate=`${-X}px ${-Y}px`;});}   // v62: 상자는 제자리
+        boxes.forEach(b=>{b.style.translate=`${-X}px ${-Y}px`;});   // v62: 상자는 제자리
+        /* v65 (사용자 '창이 움직이지 않게 고정, 배경만 움직여야'): 상자가 열려 있는 동안 버튼도 화면에 고정 → 움직이는 건 사진뿐.
+           (영상 측정: 상자는 이미 0px 고정이었지만 바로 옆 버튼이 사진과 같이 ±14px 움직여 상자가 흔들려 보였음)
+           닫혀 있을 땐 버튼이 다시 사진과 같이 움직임(건물 위 제자리). 열고 닫을 때 튀지 않게 pf로 서서히 바뀜 */
+        const open=boxes.some(b=>b.classList.contains('on'));
+        pf+=((open?1:0)-pf)*(1-Math.exp(-dt/120));
+        const PX=(-X*pf).toFixed(2),PY=(-Y*pf).toFixed(2);
+        pinsM.forEach(p=>{p.style.translate=`${PX}px ${PY}px`;});}
       requestAnimationFrame(loop);
     })(last);
   }
@@ -3031,7 +3039,7 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
      FADE  : 마지막 칸이 찬 뒤 선·글자가 사라지는 시간
      OPEN  : 꽃잎 창이 화면 전체로 커지는 시간
      SIZE  : 로고 크기 = 1920 화면에서 120px (화면 폭에 비례, 최소 76px) */
-  const DRAW = 5600,   /* v27 (사용자 '조금 더 천천히'): 4300 → 5600 */ HOLD = 0, PFILL = 600, FADE = 400, OPEN = 1300;   // v9: 100%가 되자마자 숫자·선이 0.4초에 사라지고 바로 커짐(100%→커짐 0.8초→0.4초), 커지는 시간 1600→1300, 줄인 0.3초를 숫자 이동에 더함(DRAW 4000→4300). v8: 100% 사라진 뒤 바로 커짐(HOLD 500→200: 숫자가 다 사라지는 순간 시작), 커지는 시간 2000→1600, 줄인 0.4초를 숫자 이동에 더함(DRAW 3600→4000). v6: 3600/500/600/500/2000
+  const DRAW = 5600,   /* v27 (사용자 '조금 더 천천히'): 4300 → 5600 */ HOLD = 0, PFILL = 600, FADE = 700, OPEN = 1000, OPEN_AT = .35;   /* v64 (사용자 '미색선이 확 사라지지 말고 부드럽게, 선이 없어지고 커지는 속도는 더 빠르게'): 선·가로선·워드마크가 0.4초 → 0.7초에 사인 곡선으로 부드럽게 사라짐. 창은 사라지기 시작 0.25초(FADE×OPEN_AT) 뒤부터 커짐(선도 창과 같이 커지며 흐려짐), 커지는 시간 1300 → 1000. 사라짐 시작 → 화면 다 덮음 1.7초 → 1.25초 */   // v9: 100%가 되자마자 숫자·선이 0.4초에 사라지고 바로 커짐(100%→커짐 0.8초→0.4초), 커지는 시간 1600→1300, 줄인 0.3초를 숫자 이동에 더함(DRAW 4000→4300). v8: 100% 사라진 뒤 바로 커짐(HOLD 500→200: 숫자가 다 사라지는 순간 시작), 커지는 시간 2000→1600, 줄인 0.4초를 숫자 이동에 더함(DRAW 3600→4000). v6: 3600/500/600/500/2000
   /* 숫자 이동 구간 (1920 기준): 0%일 때 글자 왼쪽 끝이 PX0, 100%일 때 글자 오른쪽 끝이 PX1 (메뉴 바깥 끝과 같은 여백) */
   const PX0 = 40, PX1 = 1880;   // v7: 사용자 피그마 07(0% x40)·08(100% 오른쪽 끝 x1880)
   const CY = .481;              // v7: 로고·가로선 세로 위치 (1000 중 481)
@@ -3229,12 +3237,13 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
         const tEnd = skipReq ? tDone + PIN : Math.max(tDone + PIN + PAUSE100, tDone + 9 * W_STEP + W_DUR + W_HOLD);   // v58: 워드마크가 다 나온 뒤 0.3초 멈췄다가 창이 열림   // v51: 꽃잎 배경이 다 나타난 뒤 멈춤              // v23: 100%에서 잠깐 멈춘 뒤 시작
         const g = clamp((now - tEnd) / FADE);                        // v9: 멈춤이 끝나면 사라지기 시작
         if (lastFill >= 1) coverG.style.display = 'none';                               // v21: 100%면 네 칸이 다 사진으로 차 있어 밤색 꽃은 필요 없음 (창이 커질 때 가리지 않게)
-        line.style.opacity = 1 - g;
+        const gs = -(Math.cos(Math.PI * g) - 1) / 2;                 // v64: 사인 곡선 — 처음·끝이 부드럽게
+        line.style.opacity = 1 - gs;
         line.style.visibility = g >= 1 ? 'hidden' : '';
-        word.style.opacity = wIn * (1 - easeOut(g));
+        word.style.opacity = wIn * (1 - gs);
         pct.style.opacity = 1 - clamp((now - tEnd) / PCT_OUT);     // v11·v23: 멈춤이 끝나는 순간 100%도 곧바로 사라짐
-        rule.style.opacity = (rule.dataset.op || .7) * (1 - easeOut(g));                 // 창이 커지기 전에 가로선도 사라짐
-        const u = now - tEnd - FADE - (skipReq ? 0 : HOLD);          // v9: 다 사라지는 순간 커지기 시작
+        rule.style.opacity = (rule.dataset.op || .7) * (1 - gs);                 // 창이 커지기 전에 가로선도 사라짐
+        const u = now - tEnd - FADE * OPEN_AT - (skipReq ? 0 : HOLD);   // v64: 다 사라지기 전에 커지기 시작 (이전: 다 사라진 뒤)          // v9: 다 사라지는 순간 커지기 시작
         // 3) 꽃잎 창이 화면 전체로 (배율은 로그 보간 → 일정한 속도감)
         const o = clamp(u / OPEN);
         const s = Math.exp(Math.log(fullScale()) * ease(o));
