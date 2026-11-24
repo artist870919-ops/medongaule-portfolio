@@ -479,6 +479,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
       cvBack.style.transform='none';            // v87: 라벨은 화면 픽셀에 직접 (글자 16px 그대로)
       cvFront.style.transform=`scale(${sw})`;
       placeHead();
+      if(tab){ crossTab(); return; }   // v120: 태블릿 가로는 피그마 tablet_L 05 (1024×700) 십자 배치
       cross(s,ox,oy);
       return;
     }
@@ -545,6 +546,23 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
     P(labs.R, hx1+gR*s, hy-hR/2);
     P(labs.T, vx-wT/2, vy0-gT*s-hT);
     P(labs.B, vx-wB/2, vy1+gB*s);
+  }
+  /* v120 피그마 tablet_L 05 intro_scroll03 (300:88, 1024×700): 화면 가운데(512,350) 기준, 배율 k2 = min(폭/1024, 높이/700)
+     세로 액자 190×280 (x417 y210) / 가로선 286~756 y350 / 세로선 x512 109~591
+     KOREAN TRADITIONAL GARDEN 왼쪽 끝 119 · CONTEMPORARY GARDEN 오른쪽 끝 905 · FUTURE 세로선 위 8 · PAST 세로선 아래 8 (글자 16px 그대로) */
+  function crossTab(){
+    const W=innerWidth, H=innerHeight, k2=Math.min(W/1024,H/700), cx=W/2, cy=H/2;
+    const sc=Math.min(Math.max(vw,960)/1920,vh/900), ox=(vw-1920*sc)/2, oy=(vh-900*sc)/2;
+    R.h={x:ox+408*sc,y:oy+137*sc,w:1105*sc,h:690*sc};
+    R.v={x:cx-95*k2,y:cy-140*k2,w:190*k2,h:280*k2};
+    const hx0=cx-226*k2, hx1=cx+244*k2, vy0=cy-241*k2, vy1=cy+241*k2;
+    hairlines(hx0,hx1,cy,cx,vy0,vy1,k2);
+    const P=(l,x,y)=>{l.style.left=Math.round(x)+'px'; l.style.top=Math.round(y)+'px';};
+    const hL=labs.L.offsetHeight, hR=labs.R.offsetHeight, wR=labs.R.offsetWidth, wT=labs.T.offsetWidth, hT=labs.T.offsetHeight, wB=labs.B.offsetWidth;
+    P(labs.L, cx-393*k2, cy-hL/2);
+    P(labs.R, cx+393*k2-wR, cy-hR/2);
+    P(labs.T, cx-wT/2, vy0-8*k2-hT);
+    P(labs.B, cx-wB/2, vy1+8*k2);
   }
   function hairlines(hx0,hx1,hy,vx,vy0,vy1,s){
     const dpr=window.devicePixelRatio||1;
@@ -2551,6 +2569,8 @@ images and logos belong to their respective owners.</p>
 @media (hover:hover){.ri .pin:not(.on):hover .glint{opacity:1}}
 .ri .pin .ring{z-index:1}
 .ri .pin.on{background:var(--pill-on);color:var(--ink)}
+/* v120 태블릿 가로 (피그마 tablet_L 17, 304:288): 버튼 높이 35 · 원 25.7 · 글자 Medium 13 (화면 기준) = 데스크톱 버튼 × 1.458. 원 가운데를 기준으로 키워 자리는 그대로 */
+.tabL .ri .pin{scale:1.4583;transform-origin:22.5px 50%}
 .ri .pin.on .ring{border-color:var(--ink);box-shadow:none;background:transparent}
 .ri .pin.on .ring::after{background:var(--ink);transform:none}
 .ri .pin.on .ring::before{animation:none}
