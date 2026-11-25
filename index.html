@@ -37,8 +37,9 @@ html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-i
 .ld-spark::before{width:38px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent)}
 .ld-spark::after{width:1px;height:24px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.63),transparent)}
 /* v58 (피그마 logo_intro_11 · logo_ hover): Skip 버튼 오른쪽 아래 (1920×1000 기준 x1793 y926, 70×25) */
-.ld-skip{position:fixed;right:max(20px,calc(57 / 1920 * 100vw));bottom:max(20px,calc(49 / 1000 * 100vh));z-index:10001;width:70px;height:25px;box-sizing:border-box;padding:0;
-  border:1px solid var(--ld-ink);border-radius:50px;background:transparent;color:#fff;font:400 13px/16px 'Pretendard','Noto Sans KR',sans-serif;cursor:pointer;
+/* v126 (logo_intro_11 수정 11-25): 70×30 · 글자 14 · x1799 y913 (오른쪽 51 · 바닥 57) */
+.ld-skip{position:fixed;right:max(20px,calc(51 / 1920 * 100vw));bottom:max(20px,calc(57 / 1000 * 100vh));z-index:10001;width:70px;height:30px;box-sizing:border-box;padding:0;
+  border:1px solid var(--ld-ink);border-radius:50px;background:transparent;color:#fff;font:400 14px/17px 'Pretendard','Noto Sans KR',sans-serif;cursor:pointer;
   opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s,background-color .2s}
 .ld-skip.on{opacity:1;visibility:visible;transition:opacity .4s,visibility 0s,background-color .2s}
 .ld-skip:hover,.ld-skip:focus-visible{background:rgba(217,217,217,.35)}
@@ -48,6 +49,11 @@ html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-i
 </style>
 <script>
 /* 로딩 중에는 스크롤·휠·키보드로 페이지가 움직이지 않게 막음 (사이트의 부드러운 스크롤보다 먼저 받음) */
+/* v126b 화면 구분 (사용자 11-25): 휴대폰·태블릿 세로 구성 = 폭 1023 이하, 또는 폭 1199 이하이면서 세로로 긴 화면 (아이패드 프로 12.9 세로 1024×1366)
+   __isTP = 태블릿 세로 (폭 700 이상), __tz = 768 배치 확대 비율 (1023까지 최대 1.2배, 1024 세로는 화면 꽉 → 1.333) */
+window.__isMo=()=>{const W=innerWidth,H=innerHeight;return W<1024||(W<1200&&H>=W);};
+window.__isTP=()=>innerWidth>=700&&window.__isMo();
+window.__tz=()=>{const W=innerWidth;return W<1024?Math.min(W/768,1.2):Math.min(W/768,1.34);};
 (function(){
   document.documentElement.classList.add('ld-on','ld-pre');
   try{ history.scrollRestoration = 'manual'; }catch(e){}
@@ -68,7 +74,7 @@ html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-i
 <script>
 (function(){
   const R=document.documentElement;
-  const isTab=()=>innerWidth>=1024&&innerWidth<1440;
+  const isTab=()=>!window.__isMo()&&innerWidth<1440;
   function mark(){ R.classList.toggle('tabL',isTab()); R.style.setProperty('--tk',String(1920/innerWidth)); R.style.setProperty('--tyk',String((innerHeight/700)*(1920/innerWidth))); }   // --tyk: 태블릿 시안(1024×700)의 y값 → 1920 캔버스 단위 (높이 비율로 늘어남 = 시안 규칙 y×0.778)
   mark();
   function apply(){
@@ -150,9 +156,13 @@ html.ld-pre::after{content:'';position:fixed;inset:0;background:var(--ld-bg);z-i
 .tabL .ft-link{top:443.3px;font-size:calc(12px * var(--tk) * 1.0104);line-height:calc(14px * var(--tk) * 1.0104)}
 .tabL .ft-terms{left:1487.2px}
 .tabL .ft-privacy{left:1661.5px}
+/* v121 (사용자 '푸터는 전부 검은 글씨로'): 휴대폰·태블릿이 전화번호·주소를 파란 링크로 바꾸는 것까지 막음. 인스타그램 아이콘은 회색 그대로 (사용자) */
+#footer,#footer *,#mo-s08,#mo-s08 *{color:#000 !important}
+#footer a,#mo-s08 a{color:#000 !important;text-decoration:none}
 .tabL .ft-insta{left:1818.7px;top:557px;width:60.6px;height:60.6px}
 </style>
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
@@ -231,13 +241,13 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
 /* v87 반응형 (사용자 2026-11-19): 글자 크기는 휴대폰 전까지 줄지 않음 (JS가 확대·축소 캔버스 안 글자 크기를 거꾸로 보정)
    1024 이하: 로고 없음, 왼쪽 MENU(햄버거 없음) + 오른쪽 예약하기만 */
 .mi-menu{display:none}
-@media (max-width:1023px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .d-logo,.cv-front .mi:not(.mi-keep){display:none}
   .cv-front .mi-menu{display:grid}
 }
 /* 휴대폰 전용 머리글 (피그마에 모바일 시안 없음 → 임시) */
 .m-logo,.m-nav{display:none}
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .cv-front{display:none}
   .m-logo{display:none;position:absolute;z-index:5;left:50%;top:calc(24px + env(safe-area-inset-top,0px));transform:translateX(-50%);margin:0;line-height:0;color:var(--on-photo)}
   .m-logo a{display:block;width:180px;height:19px;background-color:currentColor;
@@ -280,7 +290,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
    - 가운데 문장: Medium 16 흰색 가운데 정렬, 화면 세로 가운데 (피그마 y292~349 = 640의 가운데). 줄째로 한꺼번에 스윽 나타남 (처음 한 번)
    - 왼쪽 아래: '세계 최대 '사유의 정원'' Medium 10 (x34) / '메덩골정원' SemiBold 25 (x33), 바닥에서 28 위 */
 .mx{display:none}
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .intro{height:100vh;height:100svh}
   .intro .stage{display:none}
   .mx{display:block;position:absolute;inset:0;overflow:hidden;background:var(--bg);letter-spacing:-.04em}
@@ -288,9 +298,9 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
   .mx-ph img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;
     opacity:0;transform:scale(1);will-change:transform,opacity}
   .mx-ph img.dio{object-position:22% 50%}
-  .mx-ph img.on{opacity:1;z-index:1;transform:scale(1.12);transition:opacity 1.2s ease,transform 7.4s cubic-bezier(.25,.1,.25,1)}
+  .mx-ph img.on{opacity:1;z-index:1;transform:scale(1.12);transition:opacity .92s ease,transform 5.7s cubic-bezier(.25,.1,.25,1)}   /* v126c 1.3배 빠르게 (1.2s · 7.4s ÷ 1.3) */
   .mx-ph img.next{opacity:1;z-index:0;transform:scale(1);transition:none}
-  .mx-ph img.off{opacity:0;z-index:2;transform:scale(1.2);transition:opacity 1.8s cubic-bezier(.4,0,.2,1),transform 1.8s cubic-bezier(.3,0,.2,1)}
+  .mx-ph img.off{opacity:0;z-index:2;transform:scale(1.2);transition:opacity 1.38s cubic-bezier(.4,0,.2,1),transform 1.38s cubic-bezier(.3,0,.2,1)}
   /* 사진 위 글자 가독성: 아주 약한 어둠 (위 8% · 아래 28%) */
   .mx-ph::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;
     background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%)}
@@ -298,7 +308,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
      가운데 문장 Medium 16 자간 -4% 흰색 가운데 정렬. 세로 자리 = 피그마 각 프레임 글상자 가운데 (00: 화면 가운데 / 01·02: 가운데 + 10)
      왼쪽 아래 글은 처음부터 그대로 있음 (사용자 11-23): '세계 최대 '사유의 정원'' Medium 11 자간 -1% x27 / '메덩골정원' SemiBold 25 x26 (11-23 16:43 사용자 수정), 바닥에서 42 */
   .mx-c{position:absolute;z-index:4;left:16px;right:16px;top:calc(50% + var(--dy,0px));margin:0;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.28);
-    text-align:center;font-size:16px;line-height:19px;font-weight:500;letter-spacing:-.04em;
+    text-align:center;font-size:16px;line-height:1.35;font-weight:500;letter-spacing:-.04em;   /* v124 피그마 intro 1·2 (사용자 11-25): 행간 135%, 글상자 가운데 = 화면 가운데(intro 1만 +5) */
     opacity:0;filter:blur(6px);transform:translateY(calc(-50% + 6px));pointer-events:none}
   .mx-c span{display:block}
   /* v100 피그마 intro_mobile02 (324:1112): 두 줄, 20px, '메덩골정원'만 Medium, 그림자 1 1 2 검정 41% */
@@ -309,12 +319,12 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
   /* 셋째 사진: 피그마처럼 구조물을 크게 (cg_stair 원본, 구조물이 화면 가운데 오도록) */
   .mx-ph img.m3{inset:auto;left:-13%;top:-3%;width:122%;height:122%;object-position:30% 50%}   /* 피그마처럼 구조물을 한 단계 더 크게 (122%) */
   .mx-c.on{opacity:1;filter:blur(0);transform:translateY(-50%);
-    transition:opacity 1.6s ease var(--d,0s),filter 1.6s cubic-bezier(.3,.5,.2,1) var(--d,0s),transform 1.6s cubic-bezier(.3,.5,.2,1) var(--d,0s)}
-  .mx-c.out{opacity:0;filter:blur(6px);transform:translateY(-50%);transition:opacity .9s ease,filter .9s ease}
+    transition:opacity 1.23s ease var(--d,0s),filter 1.23s cubic-bezier(.3,.5,.2,1) var(--d,0s),transform 1.23s cubic-bezier(.3,.5,.2,1) var(--d,0s)}
+  .mx-c.out{opacity:0;filter:blur(6px);transform:translateY(-50%);transition:opacity .69s ease,filter .69s ease}
   .mx-l{position:absolute;z-index:4;margin:0;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.28)}
-  .mx-l1{left:18px;bottom:calc(99px + env(safe-area-inset-bottom,0px));font-size:13px;line-height:13px;font-weight:400;letter-spacing:-.02em}   /* v118 피그마 intro 1 (사용자 11-24 17:13): Regular 13, y528   /* v102 피그마 intro_mobile 11-24: Regular 11 x28 y537 */
-  .mx-l2{left:17px;bottom:calc(65px + env(safe-area-inset-bottom,0px));font-size:30px;line-height:30px;font-weight:600;letter-spacing:0}   /* v118: SemiBold 30, y545~575   /* y555 */
-  .mx-ln{position:absolute;z-index:4;left:18px;right:0;bottom:calc(50px + env(safe-area-inset-bottom,0px));height:0;border-top:.7px solid #fff;pointer-events:none}   /* 흰 선 0.7, x28~오른쪽 끝, y590 */
+  .mx-l1{left:18px;bottom:calc(106px + env(safe-area-inset-bottom,0px));font-size:13px;line-height:13px;font-weight:400;letter-spacing:-.02em}   /* v124 피그마 intro 1~3 (사용자 11-25): y521 · 메덩골정원 y540 · 선 y585 (모두 위로)   v118: y528   /* v102 피그마 intro_mobile 11-24: Regular 11 x28 y537 */
+  .mx-l2{left:17px;bottom:calc(70px + env(safe-area-inset-bottom,0px));font-size:30px;line-height:30px;font-weight:600;letter-spacing:0}   /* v118: SemiBold 30, y545~575   /* y555 */
+  .mx-ln{position:absolute;z-index:4;left:18px;right:0;bottom:calc(55px + env(safe-area-inset-bottom,0px));height:0;border-top:.7px solid #fff;pointer-events:none}   /* 흰 선 0.7, x28~오른쪽 끝, y590 */
   /* v106: 사진 위 가로선(피그마 Line 30, y245 미색 36%)은 사용자 요청으로 뺌 */
 
   /* 머리글 C (피그마 intro_mobile·모든 모바일 프레임): 미색 56 바, 글자는 항상 검정 → 사진 밝기에 따른 흰색 겹·숨김은 쓰지 않음 */
@@ -339,10 +349,10 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
   html .nb .nb-book::after{content:'';position:absolute;inset:-14px -10px}
   .cg{margin-top:0}   /* 데스크톱처럼 인트로 마지막 화면과 겹치지 않음 → 인트로 다음에 그냥 이어짐 */
 }
-@media (max-width:767px) and (hover:hover){
+@media (max-width:1023px) and (hover:hover), (max-width:1199px) and (orientation:portrait) and (hover:hover){
   html .nb .nb-book:hover .ch > span,html .nb .nb-book.hov .ch > span{transform:translateY(-17px)}
 }
-@media (max-width:767px) and (prefers-reduced-motion:reduce){
+@media (max-width:1023px) and (prefers-reduced-motion:reduce), (max-width:1199px) and (orientation:portrait) and (prefers-reduced-motion:reduce){
   .mx-c,.mx-c.on,.mx-c.out{filter:none;transform:translateY(-50%);transition:none}
   .mx-ph img.on,.mx-ph img.off{transition:none;transform:none}
 }
@@ -415,14 +425,14 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
 
   <!-- v88 휴대폰 인트로 (피그마 intro_mobile). 767 이하에서만 보임 -->
   <div class="mx" id="mx">
-    <div class="mx-ph" id="mxPh">
-      <img src="img/03_maze_aerial.jpg" alt="저녁 햇살을 받은 원형 벽돌 미로를 위에서 내려다본 모습">
-      <img src="img/05_mirror_pavilion.jpg" alt="꽃밭을 비추는 거울 기둥의 콘크리트 파빌리온" loading="lazy">
-      <img class="m3" src="img/cg_stair.jpg" alt="비늘 무늬 화단 가운데 선 물방울 모양 콘크리트 구조물" loading="lazy">
+    <div class="mx-ph" id="mxPh">   <!-- v125: 사진 3장 = 피그마 intro 1~3 사진 칸 그대로 (720×1182 = 360×591의 2배) -->
+      <picture><source media="(min-width:700px)" srcset="img/tp_intro1.jpg"><img src="img/mx_intro1.jpg" alt="저녁 햇살을 받은 원형 벽돌 미로를 위에서 내려다본 모습"></picture>   <!-- v126 태블릿 세로: 피그마 410:4 사진 원본 640×860 (좌우가 잘리지 않은 구도) -->
+      <img src="img/mx_intro2.jpg" alt="꽃밭을 비추는 거울 기둥의 콘크리트 파빌리온" loading="lazy">
+      <img src="img/mx_intro3.jpg" alt="비늘 무늬 화단 가운데 선 물방울 모양 콘크리트 구조물" loading="lazy">
     </div>
-    <p class="mx-c"><span>메꽃이 만발하던 양평의 깊은 골짜기,</span><span>자연과 예술이 하나가 된</span><span>특별한 정원이 당신을 기다립니다.</span></p>
-    <p class="mx-c" style="--dy:10px"><span>아름다운 풍경이 담아낸 이야기 속에서,</span><span>내안의 변화의 씨앗이 움트는 곳</span></p>
-    <p class="mx-c mx-c3" style="--dy:36px"><span>여기는 세계 최대 인문학정원</span><span><b>메덩골정원</b>입니다.</span></p>
+    <p class="mx-c" style="--dy:5px;letter-spacing:-.02em"><span>메꽃이 만발하던 양평의 깊은 골짜기</span><span>자연과 예술이 하나가 된</span><span>특별한 정원이 당신을 기다립니다.</span></p>
+    <p class="mx-c"><span>아름다운 풍경이 담아낸 이야기 속에서,</span><span>내안의 변화의 씨앗이 움트는 곳</span></p>
+    <p class="mx-c mx-c3"><span>여기는 세계 최대 인문학정원</span><span><b>메덩골정원</b>입니다.</span></p>
     <p class="mx-l mx-l1">세계 최대 '사유의 정원'</p>
     <p class="mx-l mx-l2">메덩골정원</p>
     <span class="mx-ln" aria-hidden="true"></span>
@@ -466,7 +476,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
 
   let vw,vh,mobile,R,sw=1,midY=490;   /* v47: sw = 화면너비/1920 (머리글 배율, 메뉴바와 같음), midY = 첫 화면 메뉴 세로 위치 */
   function measure(){
-    vw=innerWidth; vh=innerHeight; mobile=vw<768;
+    vw=innerWidth; vh=innerHeight; mobile=window.__isMo();   // v126: 태블릿 세로(768~1023)도 휴대폰 구성
     const full={x:0,y:0,w:vw,h:vh};
     if(!mobile){
       /* v47 (피그마 900 기준 + 제약): 가운데 구성(액자·십자선·라벨)은 1920×900을 화면 가운데에 맞춤.
@@ -508,7 +518,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
   }
   let topY=50;
   function placeHead(){
-    tab=vw>=1024&&vw<1440;
+    tab=!window.__isMo()&&vw<1440;
     if(tab){ placeHeadTab(); return; }
     logoLeft=818; topY=50; dLogo.style.width=dLogo.style.height=dLogo.style.top='';
     items.forEach(it=>{it.a.style.fontSize=(18/sw)+'px';});
@@ -645,19 +655,19 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
 (() => {
   const mx=document.getElementById('mx'); if(!mx) return;
   const imgs=[...mx.querySelectorAll('.mx-ph img')], caps=[...mx.querySelectorAll('.mx-c')];
-  const root=document.documentElement, mq=matchMedia('(max-width:767px)');
+  const root=document.documentElement, mq=matchMedia('(max-width:1023px), (max-width:1199px) and (orientation:portrait)');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const HOLD=6000, FADE=1800;   // 한 장 6초 보임, 1.8초 동안 커지며 사라짐
+  const HOLD=4600, FADE=1380;   // v126c (사용자 '1.3배 빠르게'): 6000/1800 ÷ 1.3   // 한 장 6초 보임, 1.8초 동안 커지며 사라짐
   let k=0, timer=0, running=false;
   function show(i, first){
     const cur=imgs[k], nx=imgs[i];
     cur.style.transition='';
     nx.loading='eager';
     imgs.forEach(im=>{ if(im!==cur&&im!==nx) im.classList.remove('on','off','next'); });
-    if(first){ nx.style.transition='transform 7.4s cubic-bezier(.25,.1,.25,1)'; nx.classList.add('on');   /* v118: 꽃잎 창 사진에서 바로 이어지게 첫 사진은 투명→보임 없이 바로 */ caps[i].style.setProperty('--d','0s'); caps[i].classList.add('on'); k=i; return; }   // v90: 첫 사진과 첫 문장이 같이
+    if(first){ nx.style.transition='transform 5.7s cubic-bezier(.25,.1,.25,1)'; nx.classList.add('on');   /* v118: 꽃잎 창 사진에서 바로 이어지게 첫 사진은 투명→보임 없이 바로 */ caps[i].style.setProperty('--d','0s'); caps[i].classList.add('on'); k=i; return; }   // v90: 첫 사진과 첫 문장이 같이
     caps[k].classList.remove('on'); caps[k].classList.add('out');                                        // 문장도 사진과 같이 사라지고
-    const oc=caps[k]; setTimeout(()=>oc.classList.remove('out'),950);
-    caps[i].style.setProperty('--d','.45s'); caps[i].classList.add('on');                                // 다음 문장은 다음 사진과 같이 나타남
+    const oc=caps[k]; setTimeout(()=>oc.classList.remove('out'),730);
+    caps[i].style.setProperty('--d','.35s'); caps[i].classList.add('on');                                // 다음 문장은 다음 사진과 같이 나타남
     nx.classList.remove('off'); nx.classList.add('next');                 // 다음 사진은 아래에서 원래 크기로 기다림
     cur.classList.remove('on'); cur.classList.add('off');                  // 지금 사진은 더 커지며 스윽 사라짐
     void nx.offsetWidth;
@@ -689,7 +699,7 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
      데스크톱 섹션(현대정원~푸터)은 767 이하에서 숨김. 순서는 사이트(데스크톱)와 같이 … 건축물 → 오시는길 → 관람안내 → 푸터 -->
 <style>
 .mo,.mo-mn{display:none}
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .cg,.kg-section,.tg-section,.st-section,.ar-section,.lo-section,.rs-section,.ft-section{display:none !important}
   .mo{overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%;display:block;position:relative;zoom:var(--mz,1);background:#eeede9;color:#000;font-family:var(--font);letter-spacing:-.04em}
   .mo-mn{display:block}
@@ -817,10 +827,10 @@ body{background:#eeede9}
   .mo .mo-ph{max-width:none}
   html .to-top{width:44px;height:44px}   /* v116: 모양·색은 아래 공통 (데스크톱과 같음), 휴대폰은 44 */
 }
-@media (max-width:767px) and (prefers-reduced-motion:reduce){.mo-fold,.mo-mn,.mo-mn-a,.mo-pm::after{transition:none!important}}
+@media (max-width:1023px) and (prefers-reduced-motion:reduce), (max-width:1199px) and (orientation:portrait) and (prefers-reduced-motion:reduce){.mo-fold,.mo-mn,.mo-mn-a,.mo-pm::after{transition:none!important}}
 /* v104 layout00 (피그마 '모바일 v2' layout00 · people, 11-24 15시 사용자 기준): 머리글 49 → 34 → 영문 Light 10/20 → 13 → 한글 SemiBold 26/30 → 14 → 본문 13/20 (폭 304)
    → 17 → 사진 360×379 (화면 끝까지) → 17 → 버튼 80×30 → 24 → 선 0.5 검정 50% (화면 끝까지) = 섹션 끝. 왼쪽 18, 오른쪽도 18 */
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .mo-v2{position:relative;scroll-margin-top:49px;padding-bottom:24px;border-bottom:.5px solid rgba(0,0,0,.5)}
   .mo-v2.mo-v2-open{padding-bottom:0;border-bottom:0}   /* 현대정원·한국정원: 펼침 판까지 지난 뒤 선 */
   .mo-v2-end{padding-top:24px;border-bottom:.5px solid rgba(0,0,0,.5)}
@@ -918,6 +928,12 @@ body{background:#eeede9}
 경험은 시간이 흘러도 기억됩니다</p>
       <img src="img/logo_wordmark.png" alt="MÉDONGAULE" style="left:242px;top:2467px;width:100px;height:10.5px;max-width:none;filter:brightness(0)">
       <p class="mo-t11" style="right:18px;top:2484px;font-weight:500;letter-spacing:0">메덩골정원</p>
+      <!-- v126 태블릿 세로 전용 (피그마 410:30 '현대정원 이야기' 묶음). 휴대폰에서는 숨김 -->
+      <p class="mo-tp mo-tp-lb">현대정원 이야기</p>
+      <p class="mo-tp mo-tp-h">천 년을 지속하는<br>정원을 만들 수 있을까</p>
+      <p class="mo-tp mo-tp-b">철학적 사유와 대한민국 이야기를 담은 프랑스 감성의 정원.
+14년이 넘는 시간 동안 세계 각지의 정원을 공부하고
+수없이 도면을 지우고 다시 그리며 이 땅에 없던 것을 빚어냈습니다.</p>
     </section>
     </div></div>
     <div class="mo-v2-end" aria-hidden="true"></div>
@@ -953,7 +969,7 @@ body{background:#eeede9}
 표현하였습니다. 샤머니즘의 영적인 기운을 느끼며 산길을 올라가면
 불교를 품은 작은 암자도 만날 수 있습니다.</p></div>
       </div>
-      <div class="mo-kg-strip" tabindex="0" aria-label="세 정원 사진 6장, 옆으로 넘겨 보기"><img class="mo-ph" data-g="0" src="img/tg_seonbi_1.jpg" alt="매화와 석상 너머 한옥" style="width:270px"><img class="mo-ph" data-g="0" src="img/tg_seonbi_2.jpg" alt="연못가 한옥 정자" style="width:270px"><img loading="lazy" class="mo-ph" data-g="1" src="img/tg_minc_1.jpg" alt="단풍 사이 바위 계곡" style="width:270px"><img loading="lazy" class="mo-ph" data-g="1" src="img/tg_minc_2.jpg" alt="돌담 사이 굽은 흙길" style="width:270px"><img loading="lazy" class="mo-ph" data-g="2" src="img/tg_spirit_1.jpg" alt="유리창 너머 빈 콘크리트 마당" style="width:174px"><img loading="lazy" class="mo-ph" data-g="2" src="img/tg_spirit_2.jpg" alt="굽은 소나무 숲" style="width:270px"><span class="mo-kg-end" aria-hidden="true"></span></div>
+      <div class="mo-kg-strip" tabindex="0" aria-label="세 정원 사진 6장, 옆으로 넘겨 보기"><img class="mo-ph" data-g="0" src="img/tg_seonbi_1.jpg" alt="매화와 석상 너머 한옥" style="width:270px"><img class="mo-ph" data-g="0" src="img/tg_seonbi_2.jpg" alt="연못가 한옥 정자" style="width:270px"><img loading="lazy" class="mo-ph" data-g="1" src="img/tg_minc_1.jpg" alt="단풍 사이 바위 계곡" style="width:270px"><img loading="lazy" class="mo-ph" data-g="1" src="img/tg_minc_2.jpg" alt="돌담 사이 굽은 흙길" style="width:270px"><img loading="lazy" class="mo-ph" data-g="2" src="img/tg_spirit_1.jpg" alt="유리창 너머 빈 콘크리트 마당" style="width:270px"><img loading="lazy" class="mo-ph" data-g="2" src="img/tg_spirit_2.jpg" alt="굽은 소나무 숲" style="width:270px"><span class="mo-kg-end" aria-hidden="true"></span></div>
     </section>
     </div></div>
     <div class="mo-v2-end" aria-hidden="true"></div>
@@ -1099,13 +1115,13 @@ images and logos belong to their respective owners.</p>
 </div>
       <nav class="mo-mn" id="mo-mn" aria-label="메뉴" aria-hidden="true" inert>
           <ul class="mo-mn-ls">
-            <li><a class="mo-mn-a" href="#mo-s01" style="--i:0"><span>현대정원</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a" href="#mo-s03" style="--i:1"><span>한국정원</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a mo-ls45" href="#mo-s05" style="--i:2" aria-label="건축물"><span>건  축  물</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a" href="#mo-s09" style="--i:3"><span>함께한 사람들</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a" href="#mo-s07" style="--i:4"><span>오시는길</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a" href="#mo-s06" style="--i:5"><span>관람안내</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
-            <li><a class="mo-mn-a" href="#mo-s06" style="--i:6" data-rv aria-haspopup="dialog"><span>예약하기</span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s01" style="--i:0"><span class="mo-rl"><span>현대정원</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s03" style="--i:1"><span class="mo-rl"><span>한국정원</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a mo-ls45" href="#mo-s05" style="--i:2" aria-label="건축물"><span class="mo-rl"><span>건  축  물</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s09" style="--i:3"><span class="mo-rl"><span>함께한 사람들</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s07" style="--i:4"><span class="mo-rl"><span>오시는길</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s06" style="--i:5"><span class="mo-rl"><span>관람안내</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
+            <li><a class="mo-mn-a" href="#mo-s06" style="--i:6" data-rv aria-haspopup="dialog"><span class="mo-rl"><span>예약하기</span></span><svg viewBox="0 0 6 12" fill="none" aria-hidden="true"><path d="M.4.4 5.4 6 .4 11.6" stroke="#000" stroke-width=".9"/></svg></a></li>
           </ul>
           <div class="mo-mn-ft">
             <p style="top:13px">경기도 양평군 양동면 메덩골길 47</p>
@@ -1146,8 +1162,12 @@ images and logos belong to their respective owners.</p>
 (()=>{
   const mo=document.getElementById('mo'); if(!mo) return;
   const $=(q,r=document)=>r.querySelector(q),$$=(q,r=document)=>[...r.querySelectorAll(q)];
-  const mq=matchMedia('(max-width:767px)'), mob=()=>mq.matches;
-  const fit=()=>{ mo.style.setProperty('--mz',String(Math.min(Math.min(innerWidth,767)/360,1.2))); };   // v103b: 확대 최대 1.2배 (432px 넘으면 가운데 정렬)
+  const mq=matchMedia('(max-width:1023px), (max-width:1199px) and (orientation:portrait)'), mob=()=>mq.matches, HH=()=>window.__isTP()?64*window.__tz():49;   // v126: 머리글 높이 (태블릿 세로 64)
+  const fit=()=>{ const W=innerWidth, R=document.documentElement;
+    if(window.__isTP()){   /* v126 태블릿 세로 (피그마 '태블릿 세로 — 여백 40 수정안' 410:2, 768 기준): 768 폭 배치를 화면 폭에 맞춰 확대 (최대 1.2배, 넘으면 가운데)
+                            --tl = 머리글·인트로·메뉴판의 왼쪽(오른쪽) 여백 = 본문 여백 40과 같은 선 */
+      const z=window.__tz(); mo.style.setProperty('--mz',String(z)); R.style.setProperty('--tz',String(z)); R.style.setProperty('--tl',((W-768*z)/2+40*z)+'px');
+    } else { mo.style.setProperty('--mz',String(Math.min(Math.min(W,767)/360,1.2))); R.style.removeProperty('--tl'); R.style.removeProperty('--tz'); } };   // v103b: 확대 최대 1.2배 (432px 넘으면 가운데 정렬)
   fit(); addEventListener('resize',fit);
   { const s01=document.getElementById('mo-s01');   // v99: 현대정원 첫 화면이 화면 아래 15%까지 올라오면 한 번 재생
     if(s01){ if('IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){s01.classList.add('mo-seen');io.disconnect();}})},{rootMargin:'0px 0px -15% 0px'}); io.observe(s01);} else s01.classList.add('mo-seen'); } }
@@ -1171,7 +1191,7 @@ images and logos belong to their respective owners.</p>
   accs.forEach(b=>b.addEventListener('click',()=>{
     const on=b.getAttribute('aria-expanded')!=='true';
     accs.forEach(x=>{const o=x===b&&on;x.setAttribute('aria-expanded',o);setFold(document.getElementById(x.getAttribute('aria-controls')),o);});
-    if(on)setTimeout(()=>{const r=b.getBoundingClientRect();if(r.top<49||r.top>innerHeight*.6)scrollBy({top:r.top-49-8,behavior:'smooth'});},120);
+    if(on)setTimeout(()=>{const r=b.getBoundingClientRect();if(r.top<HH()||r.top>innerHeight*.6)scrollBy({top:r.top-HH()-8,behavior:'smooth'});},120);
   }));
   const LB=['성인','대학생/대학원생','중학생/고등학생','미취학/초등학생<br>*부모 또는 조부모 동반 시 무료','미취학/초등학생<br>*기타 보호자 동반 시','유아(24개월 미만)','경로(65세 이상)','장애인','군인/경찰관/소방관','국가유공자/보훈자','양평군민','양동면민'];
   const F={kr:[[50,50],[40,40],[25,25],[0,0],[25,25],[0,0],[40,50],[40,50],[30,50],[30,50],[40,50],[25,50]],
@@ -1183,12 +1203,12 @@ images and logos belong to their respective owners.</p>
   $$('.mo-tab',mo).forEach(t=>t.addEventListener('click',()=>{$$('.mo-tab',mo).forEach(x=>x.setAttribute('aria-selected',x===t));fill(t.dataset.k);}));
   /* 이동: 닫힌 판 안이면 먼저 엶. 머리글 49 아래에 맞춤 */
   const openFor=el=>{const f=el&&el.closest('.mo-fold');if(f&&!f.classList.contains('mo-open')){const b=$(`.mo-more[aria-controls="${f.id}"]`);if(b)b.click();}};
-  const go=id=>{const el=document.getElementById(id);if(!el)return;openFor(el);setTimeout(()=>scrollTo({top:el.getBoundingClientRect().top+scrollY-49,behavior:'smooth'}),60);};
+  const go=id=>{const el=document.getElementById(id);if(!el)return;openFor(el);setTimeout(()=>scrollTo({top:el.getBoundingClientRect().top+scrollY-HH(),behavior:'smooth'}),60);};
   const book=()=>window.__openReserve&&window.__openReserve();
   $$('a[href^="#mo-"]',mo).forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.getAttribute('href').slice(1));}));
   /* 사이트 메뉴(#con-garden 등) → 휴대폰 섹션 */
   window.__moSpot=id=>{ const MAP={'con-garden':'mo-s01','korean-garden':'mo-s03','korean-gardens':'mo-s03','structure':'mo-s05','architects':'mo-s09','location':'mo-s07','reservation':'mo-s06','footer':'mo-s08'};
-    const el=document.getElementById(MAP[id]||''); return el?el.getBoundingClientRect().top+scrollY-49:null; };
+    const el=document.getElementById(MAP[id]||''); return el?el.getBoundingClientRect().top+scrollY-HH():null; };
   /* 햄버거 → 피그마 mobile_menu 판 */
   const mn=$('#mo-mn');   // 메뉴바·맨 위로 버튼은 이 스크립트보다 뒤에 있어 누를 때 찾음
   const isOpen=()=>mn.classList.contains('mo-on');
@@ -1200,7 +1220,7 @@ images and logos belong to their respective owners.</p>
   addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
   mq.addEventListener('change',e=>{ if(!e.matches) closeMenu(); });
   $$('.mo-mn-a',mn).forEach(a=>a.addEventListener('click',e=>{e.preventDefault();a.classList.add('mo-hit');
-    setTimeout(()=>{closeMenu();if(a.hasAttribute('data-rv'))book();else go(a.getAttribute('href').slice(1));},220);}));
+    setTimeout(()=>{closeMenu();if(a.hasAttribute('data-rv'))book();else go(a.getAttribute('href').slice(1));},420);/* v126d: 글자 롤이 보이도록 0.22 → 0.42초 뒤 이동 */}));
   $$('[data-rv]',mo).forEach(a=>a.addEventListener('click',e=>{e.preventDefault();book();}));
   window.__moMenuOpen=isOpen;
 })();
@@ -1264,7 +1284,7 @@ images and logos belong to their respective owners.</p>
 .cg-veil.on{opacity:1;pointer-events:auto}
 
 /* 휴대폰 (피그마 시안 없음 → 임시: 판이 화면 전체 폭, 내용은 한 줄로 쌓기) */
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
   .cg-hcv{width:100%;height:44px;transform:none !important}
   .cg-bar{left:0;width:100%}
   .cg-word{left:16px;top:16px}
@@ -1407,7 +1427,7 @@ images and logos belong to their respective owners.</p>
 
   let vw,vh,mobile,s=1,P=0,PH=0,HS=0,HL=0,H0=0;
   function measure(){
-    vw=document.documentElement.clientWidth; vh=innerHeight; mobile=vw<768;
+    vw=document.documentElement.clientWidth; vh=innerHeight; mobile=window.__isMo();
     P=(OPEN+HOLD+1)*vh;
     if(!mobile){
       s=vw/1920;
@@ -1598,7 +1618,7 @@ images and logos belong to their respective owners.</p>
   @keyframes poseUp    { 0%, 64.9% { opacity: 0; } 65%, 100% { opacity: 1; } }
 
   /* 휴대폰 (피그마 시안 없음 → 임시 배치: 사진 위 절반, 글자 아래) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .kg-logo { left: max(16px, env(safe-area-inset-left, 0px)); top: 16px; width: 120px; }
     .kg-photo { left: 0; width: 100%; height: 52%; }
     .kg-copy { left: max(24px, env(safe-area-inset-left, 0px)); width: auto; right: 24px; top: 60%; font-size: 30px; }
@@ -1817,7 +1837,7 @@ images and logos belong to their respective owners.</p>
   .tg-copy { will-change: opacity, transform; }
   .tg-copy:not(:first-of-type) { opacity: 0; }
   /* v47 피그마 900: 라벨 x171 y189 / 제목 x169 y270 / 본문 x169 y385 */
-  @media (min-width: 768px) {
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){
     .tg-label { left: 171px !important; top: 189px !important; }
     .tg-title { left: 169px !important; top: 270px !important; }
     .tg-body  { left: 169px !important; top: 385px !important; }
@@ -1844,7 +1864,7 @@ images and logos belong to their respective owners.</p>
   .tg-section.tg-in .tg-photo { clip-path: inset(0 0 0 0); transition: clip-path 1.3s cubic-bezier(.65,0,.35,1) var(--rd, 0s); }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 글자 위, 사진 줄 아래) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .tg-cv { width: 100%; height: 100%; transform: none !important; }
     .tg-label { left: 20px !important; top: 64px !important; font-size: 13px; }
     .tg-view { left: auto; right: 20px; top: 64px; font-size: 12px; }
@@ -1932,7 +1952,7 @@ images and logos belong to their respective owners.</p>
   let mobile, s, pw, gap;
   function measure() {
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    mobile = vw < 768;
+    mobile = window.__isMo();
     if (!mobile) {
       s = vw / 1920;
       const top = document.documentElement.classList.contains('tabL') ? 0 : (vh - 900 * s) / 2;          // 세로 가운데 맞춤 (v93 태블릿: 자리를 화면 높이 비율로 직접 → 이동 없음)
@@ -2014,6 +2034,30 @@ images and logos belong to their respective owners.</p>
   // 두 번째 사진은 조금 늦게 열림
   photos.forEach((ph, i) => ph.style.setProperty('--rd', (i % 2 ? 0.12 : 0) + 's'));
   window.__tgSync = () => { readScroll(); cur = target; render(); };
+
+  /* v121 (사용자: 태블릿에서 위아래로만 끌어서는 잘 안 넘어감): 손가락으로 옆으로 밀면 한 장씩 넘김 (태블릿·터치 화면, 휴대폰 제외)
+     왼쪽으로 밀기 = 다음 사진, 오른쪽 = 이전 사진. 페이지를 그 사진이 멈춰 있는 스크롤 위치로 부드럽게 옮김 */
+  const STOPS = [0.15, ...STEPS.map(([a, b], i) => i < STEPS.length - 1 ? (b + STEPS[i + 1][0]) / 2 : 0.98)];
+  const goStop = (dir) => {
+    const now = target; let p;
+    if (dir > 0) p = STOPS.find(v => v > now + 0.02); else p = [...STOPS].reverse().find(v => v < now - 0.02);
+    if (p === undefined) return false;
+    const y = section.getBoundingClientRect().top + scrollY + p * (section.offsetHeight - innerHeight);
+    window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    return true;
+  };
+  let sx = 0, sy = 0, sw = false;
+  section.addEventListener('touchstart', e => { if (mobile || e.touches.length !== 1) { sw = false; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; sw = true; }, { passive: true });
+  section.addEventListener('touchmove', e => {
+    if (!sw) return;
+    const dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+    if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.2) e.preventDefault();   // 옆으로 미는 중에는 페이지가 위아래로 흔들리지 않게
+  }, { passive: false });
+  section.addEventListener('touchend', e => {
+    if (!sw) return; sw = false;
+    const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) goStop(dx < 0 ? 1 : -1);
+  }, { passive: true });
   measure(); readScroll(); cur = target; render(); requestAnimationFrame(tick);
 })();
 </script>
@@ -2053,10 +2097,10 @@ images and logos belong to their respective owners.</p>
   .st-slide.first .st-photo { clip-path: none; }
   /* v48 (사용자 '사진이 너무 내려간 느낌'): 캔버스를 세로 가운데로 내리지 않고 항상 맨 위에 붙임. 사진은 메뉴바 띠(120) 바로 아래에서 시작해
      창 바닥에서 60 위까지 채움(창이 높으면 사진이 그만큼 커짐). 글자는 사진 아래 끝 기준으로 같이 움직임. --sh = 창 높이(1920 기준 px) */
-  @media (min-width: 768px) { .st-title, .st-body { margin-top: calc(var(--sh, 900px) - 900px); } }
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){ .st-title, .st-body { margin-top: calc(var(--sh, 900px) - 900px); } }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진을 화면 가운데 크게, 글자는 사진 아래쪽 안에) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .st-cv { width: 100%; height: 100%; transform: none !important; }
     .st-photo { top: 16vh !important; width: 100%; height: 68vh; }
     .st-title { left: 20px !important; top: calc(84vh - 150px) !important; font-size: 24px; }
@@ -2144,7 +2188,7 @@ images and logos belong to their respective owners.</p>
 
   function measure() {
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (vw < 768) { cv.style.transform = ''; return; }
+    if (window.__isMo()) { cv.style.transform = ''; return; }
     const s = vw / 1920;
     cv.style.transform = `scale(${s})`; cv.style.setProperty('--sh', Math.max(560, vh / s) + 'px');   // 낮은 창: 맨 위에 붙임 → 사진 윗선이 항상 메뉴바 띠(120) 아래
   }
@@ -2268,7 +2312,7 @@ images and logos belong to their respective owners.</p>
   .ar-names span { position: absolute; top: 0; font-weight: 400; }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진은 크게 흐르고, 이름은 사진 아래에 줄로 쌓기) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .ar-section { height: auto !important; padding: 72px 0 80px; }
     .ar-cv { position: static; width: auto; height: auto; transform: none !important; }
     .ar-title { position: static; margin: 0 20px; font-size: 26px; letter-spacing: -1.4px; }
@@ -2338,7 +2382,7 @@ images and logos belong to their respective owners.</p>
   const stPhoto = document.querySelector('#structure .st-slide.first .st-photo');
   function measure() {
     const vw = document.documentElement.clientWidth;
-    if (vw < 768) { cv.style.transform = ''; section.style.height = ''; section.style.marginTop = ''; return; }
+    if (window.__isMo()) { cv.style.transform = ''; section.style.height = ''; section.style.marginTop = ''; return; }
     const s = vw / 1940;
     cv.style.transform = `scale(${s})`;
     section.style.height = (782 * s) + 'px';
@@ -2378,7 +2422,7 @@ images and logos belong to their respective owners.</p>
   .lo-route { position: absolute; left: 1398px; top: calc(629px + var(--lo-dy, 0px)); margin: 0; font-size: 16px; line-height: 1.3; font-weight: 400; letter-spacing: -0.64px; white-space: nowrap; color: var(--ink); }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진 → 지도 → 글자 순으로 쌓기) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .lo-section { height: auto !important; padding: 0 0 80px; }
     .lo-pin { position: static; height: auto !important; }
     .lo-cv { position: static; width: auto; height: auto; transform: none !important; }
@@ -2419,7 +2463,7 @@ images and logos belong to their respective owners.</p>
 
   function measure() {
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    if (vw < 768) { cv.style.transform = cv.style.height = ''; section.style.height = pin.style.height = pin.style.top = ''; return; }   // 휴대폰: 멈춤 없음
+    if (window.__isMo()) { cv.style.transform = cv.style.height = ''; section.style.height = pin.style.height = pin.style.top = ''; return; }   // 휴대폰: 멈춤 없음
     const s = vw / 1920, h = Math.max(vh, 900 * s);   // v57 (사용자 '오시는길 사진 확대 제약'): 창이 900 비율보다 높으면 섹션 = 창 높이
     cv.style.transform = `scale(${s})`;
     /* 피그마 제약: 사진 = 세로 Top and bottom(높이 꽉 참, 사진은 cover로 채움) / 지도·글자 = 세로 Center */
@@ -2508,7 +2552,7 @@ images and logos belong to their respective owners.</p>
   .rs-word { position: absolute; left: 1296px; top: 761px; width: 90px; height: 10px; object-fit: contain; }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 사진 위 제목·버튼, 그 아래 카드 내용 쌓기) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .rs-section { height: auto !important; }
     .rs-pin { position: relative; bottom: auto !important; }
     .rs-bg { position: relative; width: 100%; height: 72vw; }
@@ -2819,11 +2863,11 @@ images and logos belong to their respective owners.</p>
     const s = vw / 1920;
     /* v54 (사용자 '화면이 커져도 꽉 차게'): 데스크톱은 섹션 높이 = 창 높이(최소 900 비율). 사진이 화면을 꽉 덮고 버튼·상자는 사진 위 제자리를 따라감 (__riLayout)
        휴대폰은 피그마 시안 없음 → 900 비율 그대로 축소 (임시) */
-    const h = vw < 768 ? 900 * s : Math.max(vh, 900 * s);
+    const h = window.__isMo() ? 900 * s : Math.max(vh, 900 * s);
     cv.style.height = (h / s) + 'px';
     window.__riLayout && window.__riLayout(h / s);
     cv.style.transform = `scale(${s})`;
-    const f = vw < 768 ? (document.getElementById('footer').offsetHeight || 0) : (document.documentElement.classList.contains('tabL') ? 663.1 : 475) * vw / 1940, all = h + f;                         // 푸터 높이 (피그마 1940×475, 화면 너비 비율 — 푸터 스크립트와 같은 계산)
+    const f = window.__isMo() ? (document.getElementById('footer').offsetHeight || 0) : (document.documentElement.classList.contains('tabL') ? 663.1 : 475) * vw / 1940, all = h + f;                         // 푸터 높이 (피그마 1940×475, 화면 너비 비율 — 푸터 스크립트와 같은 계산)
     pin.style.height = ''; pin.style.paddingTop = h + 'px';           // 관람안내 캔버스(겹쳐 놓임) 아래에 푸터
     const top = Math.min(0, vh - h);                                   // 멈출 때 관람안내 위끝 위치
     pin.style.bottom = (vh - top - all) + 'px';
@@ -2981,7 +3025,7 @@ images and logos belong to their respective owners.</p>
   .ft-insta img { width: 100%; height: 100%; display: block; }
 
   /* 휴대폰 (피그마 시안 없음 → 임시: 로고 → 선 → 글자 쌓기) */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .ft-section { height: auto !important; padding: 56px 20px 40px; }
     .ft-cv { position: static; width: auto; height: auto; transform: none !important; display: flex; flex-direction: column; }
     .ft-logo, .ft-line, .ft-txt, .ft-link, .ft-insta { position: static; }
@@ -3003,7 +3047,7 @@ images and logos belong to their respective owners.</p>
   const cv = document.getElementById('ftCv');
   function measure() {
     const vw = document.documentElement.clientWidth;
-    if (vw < 768) { cv.style.transform = ''; section.style.height = ''; return; }
+    if (window.__isMo()) { cv.style.transform = ''; section.style.height = ''; return; }
     const s = vw / 1940;
     cv.style.transform = `scale(${s})`;
     section.style.height = ((document.documentElement.classList.contains('tabL') ? 663.1 : 475) * s) + 'px';   // v93 태블릿 푸터 350 (1024 기준)
@@ -3034,7 +3078,7 @@ images and logos belong to their respective owners.</p>
   .to-top svg.to-m { display: block; width: 30%; height: 30%; overflow: visible; }
   .to-top:hover { transform: translateY(-3px); }
   .to-top:focus-visible { outline: 1px solid #000; outline-offset: 4px; }
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .to-top { right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   }
   @media (prefers-reduced-motion: reduce) { .to-top, .to-top.on { transition: none; } .to-top:hover { transform: none; } }
@@ -3078,8 +3122,8 @@ images and logos belong to their respective owners.</p>
   // v44 (사용자 요청): 푸터가 화면에 들어오면 숨김 → 푸터 위에는 버튼이 겹치지 않음 (푸터 로고가 같은 역할)
   const footerD = document.getElementById('footer');
   function update() {
-    const end = window.innerWidth < 768 ? intro.offsetTop + intro.offsetHeight * .8 : intro.offsetTop + intro.offsetHeight - window.innerHeight;   // v88: 휴대폰은 첫 화면을 지나면
-    const footer = window.innerWidth < 768 ? document.getElementById('mo-s08') : footerD;   // v92: 휴대폰은 휴대폰 푸터
+    const end = window.__isMo() ? intro.offsetTop + intro.offsetHeight * .8 : intro.offsetTop + intro.offsetHeight - window.innerHeight;   // v88: 휴대폰은 첫 화면을 지나면
+    const footer = window.__isMo() ? document.getElementById('mo-s08') : footerD;   // v92: 휴대폰은 휴대폰 푸터
     const inFooter = (footer && footer.getBoundingClientRect().top < window.innerHeight) || (window.__moMenuOpen && window.__moMenuOpen()) || document.documentElement.classList.contains('rv-open');
     btn.classList.toggle('on', window.scrollY >= end && !inFooter);
   }
@@ -3179,7 +3223,7 @@ images and logos belong to their respective owners.</p>
   .nb-ul.on { opacity: .85; transform: none;
               transition: transform .75s cubic-bezier(.22,.61,.36,1), opacity .2s ease, color .35s ease; }
   .nb:not(.full) .nb-ul.lt { color: #fff; }
-  @media (min-width: 768px) { .nb.full #nbUlM { opacity: 0 !important; transition: opacity .15s ease; } }
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){ .nb.full #nbUlM { opacity: 0 !important; transition: opacity .15s ease; } }
 
   /* 사진이 닿는 부분만 흰색 (사용자 요청 2026-11-12)
      눈에 보이는 글자는 같은 모양의 두 겹: 검정 겹(b) + 흰 겹(w). 흰 겹은 '사진이 바 밑에 있는 영역'만 보이게 잘라내고(스크립트가 계산),
@@ -3197,7 +3241,7 @@ images and logos belong to their respective owners.</p>
   .nb a:focus-visible, .nb button:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 
   /* 휴대폰 (피그마 시안 없음 → 임시 배치): 작은 바만, MENU를 누르면 아래로 목록 */
-  @media (max-width: 767px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .nb-cv { position: relative; width: 100%; height: 49px; transform: none !important; }
     .nb-logo { left: 50%; top: 20px; width: 140px; height: 15px; transform: translateX(-50%); }
     .nb-menu { left: 16px; top: 18px; font-size: 13px; letter-spacing: -0.52px; padding-left: 20px; }
@@ -3215,7 +3259,7 @@ images and logos belong to their respective owners.</p>
     .nb-list a { display: block; padding: 10px 0; color: var(--ink); text-decoration: none; font-size: 15px; letter-spacing: -0.6px; }
     .nb.full .nb-bg { height: auto; bottom: auto; }
   }
-  @media (min-width: 768px) { .nb-list { display: none; } }
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){ .nb-list { display: none; } }
   @media (prefers-reduced-motion: reduce) { .nb, .nb-bg, .nb-z, .nb-full { transition: none !important; } }
 
   /* ── 유리 메뉴 상자 (사용자 결정 2026-11-12, 시안 A-2 '맑은 유리 + 뒤를 살짝 어둡게') ──
@@ -3237,7 +3281,7 @@ images and logos belong to their respective owners.</p>
            letter-spacing: calc(-0.96 * var(--u));
            opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(calc(-16 * var(--u)));
            transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s; }
-  @media (min-width: 768px) {
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){
     .nb-gl { display: block; }
     .nb.gl .nb-gl { opacity: 1; visibility: visible; pointer-events: auto; transform: none;
                     transition: opacity .45s ease, transform .6s cubic-bezier(.22,.61,.36,1), visibility 0s; }
@@ -3334,7 +3378,7 @@ images and logos belong to their respective owners.</p>
      ② 1024 이하: 로고 없음, 햄버거 없이 MENU(왼쪽) + 예약하기(오른쪽)
      ③ 메뉴판 글자 15px 그대로, 판 크기는 1024일 때보다 작아지지 않음 (--u 하한, 스크립트)
      ④ 인트로 MENU로 연 메뉴판: 메뉴바가 아직 안 나온 구간이면 판만 보임 (.force) */
-  @media (min-width: 768px) {
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){
     .nb-cv .nb-menu, .nb-cv .nb-a { font-size: calc(18px * var(--ik, 1)); letter-spacing: -0.04em; }
     .nb-menu { height: 1.1667em; line-height: 1.1667em; padding-left: 1.3333em; }
     .nb-menu i { height: .1111em; }
@@ -3346,10 +3390,10 @@ images and logos belong to their respective owners.</p>
     .nb-gl { font-size: 15px; letter-spacing: -0.6px; }
     .nb-gi .t.ts { letter-spacing: -0.675px; }
   }
-  @media (min-width: 768px) and (hover: hover) {
+  @media (min-width:1024px) and (orientation:landscape) and (hover:hover), (min-width:1200px) and (hover:hover){
     .nb-book:hover .ch > span, .nb-menu:hover .ch > span, .nb-book.hov .ch > span, .nb-menu.hov .ch > span { transform: translateY(-1.1667em); }
   }
-  @media (max-width: 1023px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
     .nb .nb-logo { display: none !important; }
     .nb .nb-menu i { display: none; }
     .nb .nb-menu { padding-left: 0; }
@@ -3360,8 +3404,8 @@ images and logos belong to their respective owners.</p>
   .nb.tab .nb-menu { left: 95.625px; top: 75px; }
   .nb.tab .nb-a.nb-book { top: 75px; }
   .nb.tab .nb-logo { left: calc(960px - 222.459px); top: 67.5px; width: 444.92px; height: 46.875px; }
-  @media (max-width: 767px) { .nb.full .nb-bg { height: 49px; } }   /* v87: 휴대폰 목록을 열면 위 바 띠도 미색으로 (사진 위에서 글자가 안 보이던 문제) */
-  @media (min-width: 768px) {
+  @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){ .nb.full .nb-bg { height: 49px; } }   /* v87: 휴대폰 목록을 열면 위 바 띠도 미색으로 (사진 위에서 글자가 안 보이던 문제) */
+  @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){
     .nb.force:not(.on) > .nb-cv, .nb.force:not(.on) > .nb-vl { opacity: 0 !important; visibility: hidden !important; }
   }
 </style>
@@ -3406,7 +3450,7 @@ images and logos belong to their respective owners.</p>
   const menuBtn = document.getElementById('nbMenu');
   const gl = document.getElementById('nbGl'), gx = document.getElementById('nbGx');   // 유리 메뉴 상자
   const intro = document.getElementById('intro');
-  const mobile = () => window.innerWidth < 768;
+  const mobile = () => window.__isMo();   // v126: 태블릿 세로도 휴대폰 머리글 구조
 
   let lastY = window.scrollY, upAcc = 0, full = false, shown = false, quietUntil = 0;
 
@@ -3431,9 +3475,9 @@ images and logos belong to their respective owners.</p>
     const s = window.innerWidth / 1920;
     const tf = mobile() ? '' : 'scale(' + s + ')';
     nb.querySelectorAll('.nb-cv').forEach(c => { c.style.transform = tf; });
-    nb.style.height = mobile() ? '49px' : (120 * s) + 'px';
+    nb.style.height = mobile() ? (window.__isTP() ? (64 * window.__tz()) + 'px' : '49px') : (120 * s) + 'px';
     nb.style.setProperty('--u', Math.max(s, 1024 / 1920) + 'px');   // 유리 메뉴 상자의 1920 기준 1px (v87: 1024보다 좁아도 판은 그대로)
-    const tab = window.innerWidth >= 1024 && window.innerWidth < 1440;   // v93 태블릿 가로 (피그마 tablet_L 06~18 머리글 B)
+    const tab = !window.__isMo() && window.innerWidth < 1440;   // v93 태블릿 가로 (피그마 tablet_L 06~18 머리글 B)
     nb.classList.toggle('tab', tab);
     nb.style.setProperty('--ik', String((tab ? 15 / 18 : 1) / s));     // v87: 글자 18px 유지 / v93 태블릿 15px
     /* v87: 예약하기는 오른쪽 끝(피그마 1739 + 글자 폭)을 기준으로 → 글자가 커져도 화면 오른쪽 여백 그대로 */
@@ -3842,7 +3886,7 @@ images and logos belong to their respective owners.</p>
     if (!el) return null;
     const vh = window.innerHeight;
     if (id === 'intro') return 0;
-    if (window.innerWidth < 768 && window.__moSpot) { const y = window.__moSpot(id); if (y !== null) return y; }   // v92: 휴대폰 본문
+    if (window.__isMo() && window.__moSpot) { const y = window.__moSpot(id); if (y !== null) return y; }   // v92: 휴대폰 본문
     if (id === 'con-garden') return window.__cgFull ? window.__cgFull() : el.offsetTop + vh * 1.2;
     if (id === 'korean-garden') return el.offsetTop + (el.offsetHeight - vh) * 0.3;   // 글자 3줄이 다 올라온 지점
     if (id === 'korean-gardens') return el.offsetTop + (el.offsetHeight - vh) * 0.12; // 사진이 열린 첫 장면
@@ -3969,13 +4013,13 @@ images and logos belong to their respective owners.</p>
   const PCT_OUT = 120;
   /* v58 (피그마 logo_intro_11): 로고 130px (1920 기준), 워드마크 249.66px · 로고 아래 26px (y572)
      워드마크 등장 (참고 영상 FUTURE HUMAN): 꽃이 완성되면 왼쪽 → 오른쪽 한 글자씩 흐림 → 선명. 사용자 '잔상이 더 남게' → 흐림 8px, 한 글자 1.4초 */
-  const LOGO = 130, WORD_W = 249.66, WORD_GAP = 26;
+  const LOGO = 130, WORD_W = 249.66, WORD_GAP = 15;   // v126 (사용자 logo_intro_11 수정 11-25): 워드마크 y572 → y561 (로고 아래 26 → 15)
   const W_STEP = 70, W_DUR = 1400, W_BLUR = 8, W_HOLD = 300;
   const W_CUT = [0,451,919,1409,1924,2395,2894,3378,3842,4289,4642], W_SRC = 4642, W_RATIO = 490 / 4642;
   const SKIP_IN = 1000, SPARK_OUT = 400;
   /* v76: 한글 한 줄 — 꽃 완성 뒤 TAG_AT(ms)부터 TAG_DUR 동안 흐림 8px → 선명 (워드마크 마지막 글자가 2.03초에 끝나므로 거의 끝날 때 겹침),
      다 나온 뒤 TAG_HOLD 머문 다음 선·글자와 함께 사라짐. TAG_Y = 워드마크 위 끝에서 한글 글상자 위 끝까지(1920 기준) */
-  const TAG_AT = 1450, TAG_DUR = 600, TAG_HOLD = 450, TAG_Y = 42, TAG_FS = 13;
+  const TAG_AT = 1450, TAG_DUR = 600, TAG_HOLD = 450, TAG_Y = 39, TAG_FS = 16;   // v126 (logo_intro_11 수정): 한글 13 → 16px, y614 → y600 (워드마크 위 끝에서 39)
   const SHINE = .7225;   // v69 (사용자 시안 비교 후 '15%'): .85 × .85 — 선 끝 빛 밝기 15% 더 줄임 (선 번짐도 같이)   // v59 (사용자 '반짝이는 거 15% 줄여줘'): 선 끝 빛 전체 밝기 ×0.85 (선 번짐도 ×0.85)
   const SEEN_KEY = 'mdgLoadingSeen';   // v58 (사용자 결정): 같은 방문(같은 탭) 안에서 다시 들어오면 로딩 건너뜀
   /* v18 (사용자 '전체로 보여줘'): 꽃잎 창이 커지면서 단풍 사진이 화면 가득 열림 → 잠깐 보여준 뒤 인트로 첫 화면으로 서서히 바뀜
@@ -4232,7 +4276,10 @@ images and logos belong to their respective owners.</p>
   function place(){
     const W=innerWidth, H=innerHeight;
     let s, cy;
-    if(W>=768){
+    if(!window.__isMo()&&W<1440){   /* v122 태블릿 가로 (사용자 '스크롤 버튼 너무 작아'): 1024×700에서 지름 84 (예전 51), 화면이 크면 같은 비율로 커짐 (1366×1024 → 112) */
+      s=0.875*Math.min(W/1024,H/700);
+      cy=H-(BOTTOM+OUTER*K)*s;
+    }else if(W>=768){
       s=Math.min(W/1920,H/900);
       const oy=H-1000*s;   /* v47: 900 기준, 화면 바닥에서 같은 거리(아래 기준) */
       cy=oy+(1000-BOTTOM-OUTER*K)*s;
@@ -4439,7 +4486,7 @@ html.rv-open{overflow:hidden}
 @media (hover:hover){.rv-go:not(:disabled):hover{background:#2b2626}}
 
 /* ── 휴대폰 (피그마 Mobile 390) ── */
-@media (max-width:767px){
+@media (max-width:1023px), (max-width:1199px) and (orientation:portrait){   /* v126: 태블릿 세로도 휴대폰 전체 화면 모달 (데스크톱 모달은 0.53배로 글자가 7px대) */
   .rv-bg{display:none}
   .rv-m{left:0;top:0;width:100%;height:100%;height:100dvh;border-radius:0;box-shadow:none;transform:scale(.97);filter:blur(10px)}   /* 휴대폰: 같은 '초점 맞추기' (흐림 10px, 97%) */
   .rv.show .rv-m{transform:none;filter:none}
@@ -4449,10 +4496,11 @@ html.rv-open{overflow:hidden}
   .rv-logo{width:133px;height:14px}
   .rv-desc{order:3;flex:0 0 100%;height:auto;margin-top:12px;font-size:13px;line-height:1.7;text-align:left}   /* v92: 11-23 사용자 요청, 로고 아래 왼쪽 맞춤 */
   .rv-st{padding:18px 20px 0}
-  .rv-row{padding-bottom:0;border-bottom:0}
-  .rv-step{width:20%;height:58px;padding:0 0 0 8px;border-left:1px solid var(--line)}
-  .rv-step.is-act{border-left:1px solid var(--ink)}
-  .rv-n{font-size:32px;font-weight:200;letter-spacing:0}
+  /* v123: 단계 숫자 뺌 (버튼으로 오해) → 누를 수 없는 얇은 진행 막대 5칸. 이전 단계로는 '이전' 버튼 */
+  .rv-row{padding-bottom:0;border-bottom:0;gap:4px}
+  .rv-step,.rv-step.is-act{flex:1 1 0;width:auto;height:2px;padding:0;border:0;background:var(--hair);pointer-events:none;transition:background-color .3s}
+  .rv-step.is-act,.rv-step.is-done{background:var(--ink)}
+  .rv-n{display:none}
   .rv-meta{display:none}
   .rv-sum{display:flex;gap:8px;padding:14px 0;border-bottom:1px solid var(--hair);font-size:13px;line-height:16px;white-space:nowrap;overflow:hidden}
   .rv-sum span{color:var(--sub);flex:none}
@@ -4513,9 +4561,9 @@ html.rv-open{overflow:hidden}
   const WD=['일','월','화','수','목','금','토'];
   /* 관람권 (피그마 01 그대로) */
   const TICKETS=[
+    {id:'all',name:'통합권',desc:'한국정원과 현대정원을 함께 둘러보는 통합 관람권. 넉넉한 관람 시간을 권장합니다.',wd:80000,we:90000},   /* v123: 통합권 맨 앞 (사용자 요청, 모든 화면) */
     {id:'kr',name:'한국정원',desc:'남도돌담길, 용반연과 선곡서원을 걷는 한국정원 관람권. 카페선곡 무료 음료와 도슨트 해설이 포함됩니다.',wd:50000,we:50000},
-    {id:'ct',name:'현대정원',desc:'니체의 철학에서 출발한 ‘생각의 섬’과 한국 근현대사를 담은 ‘대한민국 이야기’를 걷는 관람권.',wd:50000,we:70000},
-    {id:'all',name:'통합권',desc:'한국정원과 현대정원을 함께 둘러보는 통합 관람권. 넉넉한 관람 시간을 권장합니다.',wd:80000,we:90000}
+    {id:'ct',name:'현대정원',desc:'니체의 철학에서 출발한 ‘생각의 섬’과 한국 근현대사를 담은 ‘대한민국 이야기’를 걷는 관람권.',wd:50000,we:70000}
   ];
   const AM=['10:00','10:30','11:00','11:30'], PM=['12:00','12:30','01:00','01:30','02:00','02:30','03:00','03:30','04:00','04:30'];
   const STEPS=[['관람권','선택 전'],['방문 날짜','선택 전'],['방문 시간','선택 전'],['방문 인원','선택 전'],['예약 확인','확인 전']];
@@ -4542,11 +4590,11 @@ html.rv-open{overflow:hidden}
       const act=i===cur, done=S.step===5||i<S.step;
       const cls=act?'is-act':done?'is-done':'';
       const val=(act||done)&&v[i]?v[i]:empty;
-      const tag=done&&S.step!==5?'button type="button" data-goto="'+i+'"':'div';
+      const tag=done&&S.step!==5?'button type="button" data-goto="'+i+'"'+(matchMedia('(max-width:1023px), (max-width:1199px) and (orientation:portrait)').matches?' tabindex="-1"':''):'div';   // v123: 휴대폰 진행 막대는 누르는 대상 아님
       return `<li style="display:contents"><${tag} class="rv-step ${cls}" ${act?'aria-current="step"':''}><span class="rv-n">${String(i+1).padStart(2,'0')}</span><span class="rv-meta"><span class="rv-lb">${lb}</span><span class="rv-v">${val}</span></span></${tag.split(' ')[0]}></li>`;
     }).join('');
     const si=Math.min(S.step,4), got=v.slice(0,Math.min(si+1,4)).filter(Boolean);   // 휴대폰 요약 줄: 지금 단계까지 고른 것 (피그마 Summary line)
-    sumEl.innerHTML=`<span>${String(si+1).padStart(2,'0')} ${STEPS[si][0]}</span><b>${got.join(' · ')}</b>`;
+    sumEl.innerHTML=`<span>${STEPS[si][0]}</span><b>${got.join(' · ')}</b>`;
   }
   /* 본문 */
   const title=(h,p)=>`<div class="rv-tt"><h3>${h}</h3>${p?`<p>${p}</p>`:''}</div>`;
@@ -4711,4 +4759,192 @@ html.rv-open{overflow:hidden}
   fit(); show(0);
 })();
 </script>
+<!-- ═══ v126 태블릿 세로 700~1023 + 세로로 긴 1024~1199 (아이패드 프로 12.9 세로) (사용자 11-25 '이걸로 세로 레이아웃 다 적용해줘', v126b 범위 결정) ═══
+     v126b: 아이패드 미니(744)부터 적용, 1024 세로는 768 배치를 화면 꽉 (1.333배). 머리글·인트로·메뉴판 값은 같은 비율(--tz)로 커짐
+     기준: 피그마 Page 1 섹션 '태블릿 세로 — 여백 40 수정안' (410:2) — 01 인트로 410:3 · 02 현대정원 410:30, 메뉴판 = Page 3 325:400
+     규칙: 휴대폰 구성을 그대로 쓰고 768 폭 값으로 (좌우 여백 40, 내용 40~728). 본문(.mo)은 768 배치를 화면 폭에 맞춰 확대 (최대 1.2배)
+     피그마에 없는 섹션(한국정원·건축물·함께한 사람들·오시는길·관람안내·푸터)은 02의 규칙을 그대로 이어 씀:
+       섹션 = 사진(768×544) → 60 → 영문 11 → 25 → 제목 Medium 25 + 밑줄 0.7 (화면 끝까지) → 40 → 본문 17/25 → 33 → 버튼 140×45
+       판 안 = 라벨 12 / 소제목 Medium 26 / 본문 15/24 / 사진 설명 15, 사진은 휴대폰의 2.1배 -->
+<style>
+.mo-tp{display:none}
+@media (min-width:700px) and (max-width:1023px), (min-width:1024px) and (max-width:1199px) and (orientation:portrait){
+  /* ── 머리글 (피그마 410:3·410:30): 미색 64 · 햄버거 15×10 (선 1.5, 15·15·10) x40 y27 · MENU 15 x61 y23 · 로고 200×21 가운데 y21 · 예약하기 15 오른쪽 끝 728 ── */
+  html .nb .nb-bg{height:calc(64px * var(--tz,1) + env(safe-area-inset-top,0px)) !important}
+  html .nb.full .nb-bg{height:calc(64px * var(--tz,1))}
+  html .nb .nb-cv{height:calc(64px * var(--tz,1))}
+  html .nb .nb-logo{left:50%;top:calc(21px * var(--tz,1));width:calc(200px * var(--tz,1));height:calc(21px * var(--tz,1));transform:translateX(-50%)}
+  html .nb .nb-menu{left:var(--tl,calc(40px * var(--tz,1)));top:calc(23px * var(--tz,1));width:auto;height:calc(18px * var(--tz,1));padding:0 0 0 calc(21px * var(--tz,1));font-size:calc(15px * var(--tz,1));line-height:calc(18px * var(--tz,1));letter-spacing:-.04em}
+  html .nb .nb-menu .mt{display:inline-block}
+  html .nb .nb-menu .ch{height:calc(18px * var(--tz,1));line-height:calc(18px * var(--tz,1))}
+  html .nb .nb-menu .ch>span{text-shadow:0 calc(18px * var(--tz,1)) 0 currentColor}
+  html .nb .nb-menu i{height:calc(1.5px * var(--tz,1));border-radius:.75px}
+  html .nb .nb-menu i:nth-child(1){top:calc(4px * var(--tz,1));width:calc(15px * var(--tz,1))}
+  html .nb .nb-menu i:nth-child(2){top:calc(8.25px * var(--tz,1));width:calc(15px * var(--tz,1))}
+  html .nb .nb-menu i:nth-child(3){top:calc(12.5px * var(--tz,1));width:calc(10px * var(--tz,1))}
+  html .nb .nb-menu::after{inset:calc(-13px * var(--tz,1)) calc(-12px * var(--tz,1))}
+  html .nb .nb-a.nb-book{top:calc(23px * var(--tz,1));right:var(--tl,calc(40px * var(--tz,1)));font-size:calc(15px * var(--tz,1));letter-spacing:-.6px}
+  html .nb .nb-book .ch{height:calc(18px * var(--tz,1));line-height:calc(18px * var(--tz,1))}
+  html .nb .nb-book .ch>span{text-shadow:0 calc(18px * var(--tz,1)) 0 currentColor}
+
+  /* ── 인트로 (피그마 410:3): 사진은 머리글 아래 꽉 / 가운데 문장 SemiBold 18 행간 140% (글상자 가운데 = 화면 가운데 + 41)
+     왼쪽 아래 '세계 최대 사유의 정원' 14 · '메덩골정원' SemiBold 40 미색, 선 0.7 흰색 x40~오른쪽 끝 (바닥에서 165 · 114 · 106) ── */
+  .mx-ph{top:calc(64px * var(--tz,1) + env(safe-area-inset-top,0px))}
+  .mx-c{left:var(--tl,calc(40px * var(--tz,1)));right:var(--tl,calc(40px * var(--tz,1)));font-size:calc(18px * var(--tz,1));line-height:1.4;font-weight:600;letter-spacing:-.04em !important;--dy:calc(41px * var(--tz,1)) !important}
+  .mx-c3{font-size:calc(22px * var(--tz,1));line-height:calc(28px * var(--tz,1));font-weight:400}
+  .mx-c3 span:first-child{font-size:calc(18px * var(--tz,1));line-height:calc(24px * var(--tz,1))}
+  .mx-l1{left:var(--tl,calc(40px * var(--tz,1)));bottom:calc(165px * var(--tz,1) + env(safe-area-inset-bottom,0px));font-size:calc(14px * var(--tz,1));line-height:calc(17px * var(--tz,1));letter-spacing:0;color:#eeede9}
+  .mx-l2{left:var(--tl,calc(40px * var(--tz,1)));bottom:calc(114px * var(--tz,1) + env(safe-area-inset-bottom,0px));font-size:calc(40px * var(--tz,1));line-height:calc(48px * var(--tz,1));color:#eeede9}
+  .mx-ln{left:var(--tl,calc(40px * var(--tz,1)));bottom:calc(106px * var(--tz,1) + env(safe-area-inset-bottom,0px))}
+
+  /* ── 메뉴판 (피그마 Page 3 325:400): 머리글 아래, 첫 선 y152 · 줄 높이 60 · 글자 20 · 선 0.5 x40~728 / 아래: 선 y867 · 주소·시간 13/20 · 인스타 32 ── */
+  .mo-mn{top:calc(64px * var(--tz,1) + env(safe-area-inset-top,0px));height:calc(100vh - 64px * var(--tz,1));height:calc(100dvh - 64px * var(--tz,1) - env(safe-area-inset-top,0px))}
+  .mo-mn-ls{top:calc(88px * var(--tz,1));left:var(--tl,calc(40px * var(--tz,1)));right:var(--tl,calc(40px * var(--tz,1)));width:auto}
+  .mo-mn-a{height:calc(60px * var(--tz,1));padding:0;font-size:calc(20px * var(--tz,1));line-height:calc(24px * var(--tz,1))}
+  .mo-mn-ft{left:var(--tl,calc(40px * var(--tz,1)));right:var(--tl,calc(40px * var(--tz,1)));height:calc(93px * var(--tz,1))}
+  .mo-mn-ft p{left:0;font-size:calc(13px * var(--tz,1));line-height:calc(20px * var(--tz,1))}
+  .mo-mn-ft p:nth-of-type(1){top:calc(20px * var(--tz,1)) !important}
+  .mo-mn-ft p:nth-of-type(2){top:calc(40px * var(--tz,1)) !important}
+  .mo-mn-ft img{right:0;top:calc(56px * var(--tz,1));width:calc(32px * var(--tz,1));height:calc(32px * var(--tz,1))}
+
+  /* ── 본문 틀 ── */
+  .mo{max-width:768px}
+  .mo-blk,.mo-v2,.mo-rs{scroll-margin-top:64px}
+  .mo .mo-t10{font-size:12px;line-height:14px}
+  .mo .mo-t11,.mo .mo-t12{font-size:15px;line-height:18px}
+  .mo .mo-b12{font-size:17px;line-height:25px}   /* v126b 사용자 결정: 판 안 본문도 17/25로 통일 (피그마 생각의 섬 15 → 17). 사진 설명 15 · 라벨 12 그대로 */
+  .mo .mo-m12{font-size:15px;line-height:18px}
+  .mo .mo-m15{font-size:26px;line-height:31px}
+  .mo .mo-m17{font-size:26px;line-height:31px}
+
+  /* ── 섹션 첫 화면 (피그마 410:30 위쪽): 사진 → 60 → 영문 11 (자간 3%) → 25 → 제목 Medium 25 → 7 → 밑줄 0.7 (x40~화면 끝) → 40 → 본문 17/25 → 33 → 버튼 140×45 ──
+     섹션 사이: 버튼(또는 끝 글) → 36 → 끝 선 → 84 → 다음 섹션 사진 */
+  .mo-v2{display:flex;flex-direction:column;padding-bottom:36px}
+  .mo-v2.mo-v2-open{padding-bottom:0}
+  .mo-v2-end{padding-top:36px}
+  .mo-v2{margin-top:84px}   /* 끝 선 → 84 → 다음 섹션 (여백을 섹션 밖에 두어 메뉴로 이동하면 사진이 머리글 바로 아래) */
+  .mo-v2-ph{order:-1;width:768px;height:544px}
+  .mo-v2-tx{padding:60px 40px 0}
+  #mo-s09 .mo-v2-tx{padding-top:0}   /* 사진 없이 글로 시작하는 섹션 */
+  .mo-v2-en{font-size:11px;line-height:13px;font-weight:400;letter-spacing:.03em}
+  .mo-v2-ko{margin:25px -40px 0 -1px;padding-bottom:7px;border-bottom:.7px solid #000;font-size:25px;line-height:30px;font-weight:500;letter-spacing:0}
+  .mo-v2-body,.mo-v2-it p,.mo-v2-dir,.mo-pp-ro p{margin:40px 0 0;width:auto;font-size:17px;line-height:25px}
+  .mo-v2 .mo-more{align-self:flex-start;margin:33px 0 0 40px;min-width:140px;height:45px;padding:0 14px;gap:6px;font-size:15px;letter-spacing:-.01em}
+  .mo-more-i{width:10px;height:5.75px}
+
+  /* ── 현대정원 판 (피그마 410:30, 판 위 = 버튼 아래 y936). 피그마 이후 부분(대한민국 이야기~)은 같은 간격 규칙으로 이어 씀 ── */
+  #mo-s02{height:4886px !important}
+  #mo-s02>:nth-child(1){display:none}   /* 휴대폰의 '현대정원' 작은 제목 → 태블릿은 '현대정원 이야기' 묶음 */
+  #mo-s02>.mo-tp{display:block}
+  #mo-s02>.mo-tp-lb{left:40px;top:60px;font-size:12px;line-height:14px}
+  #mo-s02>.mo-tp-h{left:40px;top:101px;font-size:25px;line-height:31px;font-weight:500}
+  #mo-s02>.mo-tp-b{left:40px;top:203px;font-size:17px;line-height:25px;white-space:pre-line}
+  #mo-s02>:nth-child(2){left:379px !important;top:320px !important;width:231px !important;height:231px !important}
+  #mo-s02>:nth-child(3){left:187px !important;top:587px !important;width:541px !important;height:258px !important}
+  #mo-s02>:nth-child(4){left:40px !important;top:905px !important}
+  #mo-s02>:nth-child(5){left:40px !important;top:939px !important}
+  #mo-s02>:nth-child(6){left:40px !important;top:992px !important;width:688px !important}
+  #mo-s02>:nth-child(7){left:187px !important;top:1127px !important;width:461px !important;height:546px !important}
+  #mo-s02>:nth-child(8){left:187px !important;top:1684px !important}
+  #mo-s02>:nth-child(9){left:187px !important;top:1706px !important}
+  #mo-s02>:nth-child(10){left:267px !important;top:1766px !important;width:461px !important;height:546px !important}
+  #mo-s02>:nth-child(11){left:267px !important;top:2323px !important}
+  #mo-s02>:nth-child(12){left:267px !important;top:2345px !important}
+  #mo-s02>:nth-child(13){left:40px !important;top:2423px !important}
+  #mo-s02>:nth-child(14){left:40px !important;top:2457px !important}
+  #mo-s02>:nth-child(15){left:40px !important;top:2510px !important;width:688px !important}
+  #mo-s02>:nth-child(16){left:40px !important;top:2645px !important;width:688px !important;height:423px !important}
+  #mo-s02>:nth-child(17){left:40px !important;top:3079px !important}
+  #mo-s02>:nth-child(18){left:40px !important;top:3101px !important}
+  #mo-s02>:nth-child(19){left:40px !important;top:3161px !important;width:461px !important;height:579px !important}
+  #mo-s02>:nth-child(20){left:40px !important;top:3751px !important}
+  #mo-s02>:nth-child(21){left:40px !important;top:3773px !important}
+  #mo-s02>:nth-child(22){left:267px !important;top:3851px !important;width:461px !important;height:572px !important}
+  #mo-s02>:nth-child(23){left:267px !important;top:4434px !important}
+  #mo-s02>:nth-child(24){left:267px !important;top:4456px !important}
+  #mo-s02>:nth-child(25){left:40px !important;top:4574px !important;line-height:36px !important}
+  #mo-s02>:nth-child(26){left:578px !important;top:4722px !important;width:150px !important;height:15.75px !important}
+  #mo-s02>:nth-child(27){right:40px !important;top:4748px !important}
+
+  /* ── 한국정원 판 (세 정원): 라벨 12 → 20 → 제목 26 → 22 → 본문 15/24 → 60 → 사진 566 정사각 (간격 16, 오른쪽은 화면 끝까지) ── */
+  .mo-kg-txs{padding:60px 0 0}
+  .mo-kg-t>p{padding:0 40px}
+  .mo-kg-t .mo-m15{margin-top:20px}
+  .mo-kg-t .mo-kg-tx{margin-top:22px}
+  .mo-kg-strip{gap:16px;margin:60px 0 0 40px;width:728px}
+  .mo-kg-strip .mo-ph{width:566px !important;height:566px}
+  .mo-kg-end{flex:0 0 146px}
+  #mo-f04>.mo-fold-in,#mo-f05>.mo-fold-in{padding-bottom:60px}
+
+  /* ── 건축물 판: 사진 688×473 → 24 → 이름 Medium 26 → 22 → 본문 17/25 ── */
+  .mo-v2-it{padding:60px 40px 0}
+  .mo-v2-it img{width:688px;height:473px;margin-bottom:24px}
+  .mo-v2-it h3{font-size:26px;line-height:31px}
+  .mo-v2-it p{margin-top:22px}
+
+  /* ── 함께한 사람들: 사진 200×280 간격 12 (x40 ~ 화면 끝) → 28 → 역할 Medium 17 / 이름 17 ── */
+  .mo-pp-wrap{margin:60px 0 0 40px;width:728px}
+  .mo-pp-strip{width:728px;gap:12px}
+  .mo-pp-strip img{flex:0 0 200px;width:200px;height:280px}
+  .mo-pp-ro{padding:28px 40px 0}
+  .mo-pp-ro div+div{margin-top:22px}
+  .mo-pp-ro h3{font-size:17px;line-height:25px}
+  .mo-pp-ro p{margin-top:4px}
+  #mo-s07,#mo-s09{padding-bottom:72px}
+
+  /* ── 오시는길: 약도 440 정사각 → 28 → 길 안내 17/25 ── */
+  .mo-v2-map{padding:60px 40px 0}
+  .mo-v2-map img{width:440px;height:440px}   /* v126c (사용자 '약도 줄여줘, 괴이해 보여'): 688 → 440 (왼쪽 40 맞춤, 원본 820px라 레티나에서도 선명) */
+  .mo-v2-dir{margin-top:28px}
+
+  /* ── 관람안내: 줄 높이 88 · 짧은 선 40 (x40) · 번호 12 · 항목 Medium 24 (x112) · + 16 (오른쪽 40) / 펼친 글 15/24 ── */
+  .mo-acc{padding:60px 0 0}
+  .mo-acc-bt{height:88px}
+  .mo-row-ln{left:40px;width:40px}
+  .mo-acc-bt .mo-num{left:40px;top:16px;font-size:12px;line-height:14px}
+  .mo-row-it{left:112px;top:-5px;font-size:24px;line-height:29px}
+  .mo-pm{right:40px;top:2px;width:16px;height:16px}
+  .mo-pm::before{top:7.5px;width:16px}
+  .mo-pm::after{left:7.5px;height:16px}
+  .mo-acc-bd{padding:4px 40px 48px 112px;font-size:15px;line-height:24px}
+  .mo-acc-bd h3{margin-bottom:8px;font-size:15px;line-height:24px}
+  .mo-acc-bd .mo-g{margin-bottom:30px}
+  .mo-acc-bd p{margin-bottom:8px}
+  .mo-acc-bd .mo-note{font-size:12px;line-height:18px}
+  .mo-acc-bd table{font-size:13px;line-height:19px}
+  .mo-acc-bd th,.mo-acc-bd td{padding:9px 6px}
+  .mo-tabs{gap:24px;margin-bottom:8px}
+  .mo-tab{padding:8px 0;font-size:14px;line-height:18px}
+
+  /* ── 푸터: 로고 91×109 (태블릿 가로와 같은 크기) 가운데 → 48 → 선 x40~728 → 링크·정보 12 ── */
+  #mo-s08{height:534px !important}
+  #mo-s08>:nth-child(1){left:338.5px !important;top:64px !important;width:91px !important;height:109px !important}
+  #mo-s08>:nth-child(2){left:40px !important;top:221px !important;width:688px !important}
+  #mo-s08>:nth-child(3){left:40px !important;top:245px !important}
+  #mo-s08>:nth-child(4){left:134px !important;top:245px !important}
+  #mo-s08>:nth-child(5){left:704px !important;top:240px !important;width:24px !important;height:24px !important}
+  #mo-s08>:nth-child(6){left:40px !important;top:285px !important;line-height:19px !important}
+  #mo-s08>:nth-child(7){left:40px !important;top:413px !important;line-height:19px !important}
+}
+@media (min-width:700px) and (max-width:1023px) and (hover:hover), (min-width:1024px) and (max-width:1199px) and (orientation:portrait) and (hover:hover){
+  html .nb .nb-book:hover .ch > span,html .nb .nb-book.hov .ch > span{transform:translateY(calc(-18px * var(--tz,1)))}
+}
+
+/* v126d (사용자 '모든 메뉴 글자 메뉴바 글자처럼'): 휴대폰·태블릿 세로 메뉴판 글자도 메뉴바(MENU·예약하기·데스크톱 메뉴판)와 같은 롤
+   — 글자가 위로 밀려 올라가고 같은 글자가 아래에서 올라옴 0.55초. 마우스가 있으면 올렸을 때, 손가락은 누를 때(.mo-hit) */
+.mo-mn-a .mo-rl{display:block;overflow:hidden;height:1.2222em;line-height:1.2222em}
+.mo-mn-a .mo-rl>span{display:block;text-shadow:0 1.2222em 0 currentColor;transition:transform .55s cubic-bezier(.65,0,.35,1)}
+.mo-mn-a.mo-hit .mo-rl>span{transform:translateY(-1.2222em)}
+@media (hover:hover){.mo-mn-a:hover .mo-rl>span{transform:translateY(-1.2222em)}}
+.mo-mn-a:focus-visible .mo-rl>span{transform:translateY(-1.2222em)}
+@media (min-width:700px) and (max-width:1023px), (min-width:1024px) and (max-width:1199px) and (orientation:portrait){
+  .mo-mn-a .mo-rl{height:1.2em;line-height:1.2em}
+  .mo-mn-a .mo-rl>span{text-shadow:0 1.2em 0 currentColor}
+  .mo-mn-a.mo-hit .mo-rl>span,.mo-mn-a:focus-visible .mo-rl>span{transform:translateY(-1.2em)}
+}
+@media (hover:hover) and (min-width:700px) and (max-width:1023px), (hover:hover) and (min-width:1024px) and (max-width:1199px) and (orientation:portrait){
+  .mo-mn-a:hover .mo-rl>span{transform:translateY(-1.2em)}
+}
+@media (prefers-reduced-motion:reduce){.mo-mn-a .mo-rl>span{transition:none}}
+</style>
 </body></html>
