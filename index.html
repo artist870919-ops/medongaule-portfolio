@@ -4669,8 +4669,8 @@ html.rv-open{overflow:hidden}
   const MAX=10, MONTHS_AHEAD=2;
   let S, lastFocus=null;
   function fresh(){ const t=new Date(); t.setHours(0,0,0,0);
-    return {step:0, ticket:null, date:null, time:null, adult:1, child:0, agree:false, code:'', view:new Date(t.getFullYear(),t.getMonth(),1), today:t}; }
-  S=fresh();
+    return {step:0, ticket:'all', date:null, time:null, adult:1, child:0, agree:false, code:'', view:new Date(t.getFullYear(),t.getMonth(),1), today:t}; }
+  S=fresh();   /* v148 (11-26 사용자 결정, 피그마 Page 4 Mobile 01): 통합권을 처음부터 선택해 둠. 최종 결제금액은 그대로 인원 단계 전까지 0원 */
 
   const tk=()=>TICKETS.find(t=>t.id===S.ticket);
   const weekend=d=>d&&(d.getDay()===0||d.getDay()===6);
