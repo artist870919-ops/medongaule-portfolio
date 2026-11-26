@@ -3376,6 +3376,7 @@ images and logos belong to their respective owners.</p>
                     transition: opacity .45s ease, transform .6s cubic-bezier(.22,.61,.36,1), visibility 0s; }
     /* (사용자 확인 11-13: 의도) 피그마처럼 닫힌 상태의 햄버거+MENU가 판 뒤로 비쳐 보임 → 눈에 보이는 겹은 그대로 두고, 진짜 단추(클릭·키보드용)만 숨김 */
     .nb.gl > .nb-cv .nb-menu { opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }
+    .nb.gl .nb-vl .nb-menu { opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility 0s linear .25s; }   /* v146: 글자색 겹(검정·흰색) 안의 MENU 사본도 숨김 — 메뉴판 유리 뒤로 MENU가 비쳐 보이던 것 */
   }
   /* 상자 뒤가 거의 다 밝을 때(미색 배경·눈 사진): 흰 글자가 안 보이므로 검정 글자 + 밝은 유리로 (스크립트 glTone이 판단) */
   .nb-gl.dk { color: var(--ink); text-shadow: none; background: rgba(255,255,255,.30);
@@ -5082,6 +5083,24 @@ html.rv-open{overflow:hidden}
 .nb-gf-ad p { margin: 0; font-size: max(calc(12 * var(--u)), 9px); line-height: max(calc(16 * var(--u)), 12px); letter-spacing: 0; white-space: nowrap; }
 .nb-gf-ad p + p { margin-top: calc(3 * var(--u)); padding-left: calc(1 * var(--u)); }
 .nb-gf img { position: absolute; left: calc(199 * var(--u)); top: calc(14 * var(--u)); width: calc(36 * var(--u)); height: calc(36 * var(--u)); max-width: none; }
+/* v147 태블릿 가로 메뉴판 = 피그마 'tablit menu' (Page 4, 470:2454, 사용자 11-26) — 1024 기준 값 × 화면폭/1024 (--T)
+   판 150 × 화면 높이, 모서리 직각, #17100C 84% (+ 기존 배경 흐림 · 안쪽 그림자) / X 18×18 x114 y45 (그림자 없음)
+   가로선 7줄 y82부터 48 간격, 1px 미색 35% / 항목 Regular 15 자간 +1% (건축물 -3%), 가운데 정렬, 글자 위 98 · 146 … 338
+   아래: 인스타그램 위 줄 · 주소 · 시간 아래 줄 (사용자 선택, 판 폭이 좁아서) */
+.tabL .nb-gl { --T: calc(100vw / 1024); width: calc(150 * var(--T)); border-radius: 0; font-size: 15px; letter-spacing: .01em; }
+.tabL .nb-gl .nb-gx { left: calc(114 * var(--T)); top: calc(45 * var(--T)); width: calc(18 * var(--T)); height: calc(18 * var(--T)); }
+.tabL .nb-gl::before { top: calc(82 * var(--T)); height: calc(288 * var(--T) + 1px);
+  background: repeating-linear-gradient(to bottom, rgba(238,237,233,.35) 0 1px, transparent 1px calc(48 * var(--T))); }
+.tabL .nb-gl .nb-gi { top: calc(var(--y) * var(--T)); width: calc(150 * var(--T)); }
+.tabL .nb-gl .nb-gi .t.ts { letter-spacing: -.03em; }
+.tabL .nb-gl .nb-gi::after { inset: calc(-16 * var(--T)) 0 calc(-14 * var(--T)) 0; }   /* 누르는 영역 = 가로선 사이 한 칸 48 */
+.tabL .nb-gl .nb-gi::before { left: calc(50% - 25 * var(--T)); width: calc(50 * var(--T)); top: calc(27 * var(--T)); }
+.tabL .nb-gf { height: calc(88 * var(--T)); }
+.tabL .nb-gf::before { background: rgba(238,237,233,.35); }
+.tabL .nb-gf img { left: calc(12 * var(--T)); top: calc(14 * var(--T)); width: calc(20 * var(--T)); height: calc(20 * var(--T)); }
+.tabL .nb-gf-ad { left: calc(12 * var(--T)); top: calc(44 * var(--T)); }
+.tabL .nb-gf-ad p { font-size: max(9px, calc(9.5 * var(--T))); line-height: calc(13 * var(--T)); }
+.tabL .nb-gf-ad p + p { margin-top: calc(2 * var(--T)); padding-left: 0; }
 @media (min-width:1024px) and (orientation:landscape), (min-width:1200px){
   .nb-gl { font-size: 17px; letter-spacing: 0.17px; }
   .nb-gl .nb-gi .t.ts { letter-spacing: -0.51px; }
