@@ -340,15 +340,17 @@ button.mi{padding:0;border:0;background:none;font-family:inherit;cursor:pointer;
   html .nb.bar-off:not(.full) .nb-menu,html .nb.bar-off:not(.full) .nb-logo,html .nb.bar-off:not(.full) .nb-book,
   html .nb.no-logo:not(.full) .nb-logo,html .nb.lo-move:not(.full) .nb-logo{opacity:1 !important;visibility:visible !important}
   html .nb > .nb-cv .nb-menu,html .nb > .nb-cv .nb-book,html .nb.bar-off:not(.full) > .nb-cv .nb-menu,html .nb.bar-off:not(.full) > .nb-cv .nb-book{pointer-events:auto !important}
-  html .nb .nb-logo{display:block !important;left:50%;top:15.8px;width:151.9px;height:16px;transform:translateX(-50%)}   /* v102 모바일 v2: 로고 151.9×16 */
-  html .nb .nb-menu{left:18px;top:19.5px;width:14px;height:11px;padding:0}   /* v104 layout00: 왼쪽 18, 가는 선 1px 14·14·10 (y20·25·30) */
+  /* v140 피그마 M/헤더 (428:38, 11-26 B2): 햄버거 24×12 선 2px 둥근 끝, x18, 선 y20·26·32, 길이 24·24·17 (둥근 끝이 양쪽 1px씩 → 보이는 폭 26·26·19, x17부터)
+     누르는 영역 44×44 (x8 y4). 로고 y15.8 → 14.8, 예약하기 y16.5 → 17.5 (세 요소 세로 가운데 = 머리글 49 가운데) */
+  html .nb .nb-logo{display:block !important;left:50%;top:14.8px;width:151.9px;height:16px;transform:translateX(-50%)}   /* v102 모바일 v2: 로고 151.9×16 */
+  html .nb .nb-menu{left:17px;top:19px;width:26px;height:14px;padding:0}
   html .nb .nb-menu .mt{display:none}
-  html .nb .nb-menu i{display:block;height:1px}
-  html .nb .nb-menu i:nth-child(1){top:0;width:14px}
-  html .nb .nb-menu i:nth-child(2){top:5px;width:14px}
-  html .nb .nb-menu i:nth-child(3){top:10px;width:10px}
-  html .nb .nb-menu::after{inset:-17px -15px}   /* 누르는 영역 44×44 */
-  html .nb .nb-a.nb-book{top:16.5px;right:18px;font-size:14px;letter-spacing:-0.56px}   /* v104: 오른쪽 여백 = 왼쪽 18 */
+  html .nb .nb-menu i{display:block;height:2px;border-radius:1px}
+  html .nb .nb-menu i:nth-child(1){top:0;width:26px}
+  html .nb .nb-menu i:nth-child(2){top:6px;width:26px}
+  html .nb .nb-menu i:nth-child(3){top:12px;width:19px}
+  html .nb .nb-menu::after{inset:-15px -9px}   /* 누르는 영역 44×44 (x8~52, y4~48) */
+  html .nb .nb-a.nb-book{top:17.5px;right:18px;font-size:14px;letter-spacing:-0.56px}   /* v104: 오른쪽 여백 = 왼쪽 18 */
   html .nb .nb-book .ch{height:17px;line-height:17px}
   html .nb .nb-book .ch > span{text-shadow:0 17px 0 currentColor}
   html .nb .nb-book::after{content:'';position:absolute;inset:-14px -10px}
@@ -387,7 +389,8 @@ html.ld-on .slc{visibility:hidden}
 .slc .g0{text-shadow:1px 1px 2px rgba(0,0,0,.6)}                    /* intro_1000: Regular 20, 그림자 1 1 2 검정 60% */
 .slc .g1{font-weight:500;text-shadow:1px 1px 2px rgba(0,0,0,.65)}   /* intro_scroll00: Medium 20, 그림자 65% */
 .slc .g2{text-shadow:1px 1px 2px rgba(0,0,0,.4)}                    /* intro_scroll01: Regular 20, 그림자 40% */
-.slc .g3{font-weight:300}                                            /* intro_scroll02: Light 20, 그림자 없음 */
+.slc .g3{font-weight:300;text-shadow:1px 1px 1px rgba(0,0,0,.35)}   /* intro_scroll02: Light 20, v138 그림자 1 1 1 검정 35% (사용자 피그마) */
+/* v138: 3·4번 문장 = 가로 액자 사진 왼쪽 끝(x408) + 70 = x478, 세로는 1·2번과 같은 y699 (피그마 698 → 1px 맞춤) */
 .slc .g4{--fs:18px;font-weight:300;line-height:1.32}                 /* intro_scroll03: Light 18 · 행간 132% (두 줄 47.5) */
 .slc .g4 .l:nth-child(2){font-weight:600;letter-spacing:0}          /* 둘째 줄 '메덩골정원' SemiBold, 자간 0 */
 .slc .l{display:block}
@@ -417,8 +420,8 @@ html.ld-on .slc{visibility:hidden}
     <div class="slc" id="slc" aria-hidden="true">
       <p class="g g0" data-l="0" style="left:218px;top:699px"><span class="l">콘크리트 숲 속에서 지친 현대인들에게 필요한 것은 자연의 치유력입니다.</span></p>
       <p class="g g1" data-l="1" style="left:218px;top:699px"><span class="l">우리는 다시 자연과 연결되어야 합니다.</span></p>
-      <p class="g g2" data-l="2" style="left:549px;top:698px"><span class="l">건조한 일상에서 벗어나 삶을 빛나게 할 영감을 되찾을 시간이 필요합니다.</span></p>
-      <p class="g g3" data-l="3" style="left:549px;top:698px"><span class="l">경기도 양평, 한때 메꽃이 흐드러지게 피었던 골짜기에 메덩골정원의 이야기가 펼쳐집니다.</span></p>
+      <p class="g g2" data-l="2" style="left:478px;top:699px"><span class="l">건조한 일상에서 벗어나 삶을 빛나게 할 영감을 되찾을 시간이 필요합니다.</span></p>
+      <p class="g g3" data-l="3" style="left:478px;top:699px"><span class="l">경기도 양평, 한때 메꽃이 흐드러지게 피었던 골짜기에 메덩골정원의 이야기가 펼쳐집니다.</span></p>
       <p class="g g4" data-l="4" style="left:803px;top:639px"><span class="l">발길마다 이야기가 흐르는 곳</span><span class="l">메덩골정원</span></p>
     </div>
 
@@ -605,8 +608,8 @@ html.ld-on .slc{visibility:hidden}
     const W=innerWidth, H=innerHeight, k2=Math.min(W/1024,H/700), cx=W/2, cy=H/2;
     const sc=Math.min(Math.max(vw,960)/1920,vh/900), ox=(vw-1920*sc)/2, oy=(vh-900*sc)/2;
     R.h={x:ox+408*sc,y:oy+137*sc,w:1105*sc,h:690*sc};
-    R.v={x:cx-95*k2,y:cy-140*k2,w:190*k2,h:280*k2};
-    const hx0=cx-226*k2, hx1=cx+244*k2, vy0=cy-241*k2, vy1=cy+241*k2;
+    R.v={x:cx-70*k2,y:cy-140*k2,w:140*k2,h:280*k2};   // v141 피그마 Page 4 tablet_L 05 (437:455): 세로 액자 190×280 (x417) → 140×280 (x442)
+    const hx0=cx-218*k2, hx1=cx+236*k2, vy0=cy-241*k2, vy1=cy+241*k2;   // v141: 가로선 286~756 → 294~748
     hairlines(hx0,hx1,cy,cx,vy0,vy1,k2);
     const P=(l,x,y)=>{l.style.left=Math.round(x)+'px'; l.style.top=Math.round(y)+'px';};
     const hL=labs.L.offsetHeight, hR=labs.R.offsetHeight, wR=labs.R.offsetWidth, wT=labs.T.offsetWidth, hT=labs.T.offsetHeight, wB=labs.B.offsetWidth;
@@ -1960,7 +1963,7 @@ images and logos belong to their respective owners.</p>
 <section class="tg-section" id="korean-gardens" aria-label="한국정원 세 정원">
   <div class="tg-stage">
     <div class="tg-cv" id="tgCv">
-      <p class="tg-view">FULL VIEW</p>
+      <!-- v139 (사용자 11-26): FULL VIEW 글자 삭제 (데스크톱·태블릿 모두 없음) -->
 
       <!-- 2000 선비들의 풍류 -->
       <div class="tg-copy" data-slide="0">
