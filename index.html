@@ -219,6 +219,10 @@ body{margin:0;font-family:var(--font);-webkit-font-smoothing:antialiased;overflo
 .label-r{left:1576px;top:431px;text-align:right}
 .label-t{left:932px;top:65px}
 .label-b{left:942px;top:816px}
+/* v143 태블릿 가로: 라벨 16 → 13, 자간 -4% → +6%, 행간 1.35, 선 쪽으로 정렬 (자리는 crossTab에서) */
+.tabL .label{font-size:13px;letter-spacing:.06em;line-height:1.35}
+.tabL .label-l{text-align:right}
+.tabL .label-r{text-align:left}
 
 /* 로고: intro x816 → scroll1 x818, y46, 284.75×30. 투명 PNG를 마스크로 써서 글자색으로 칠함 */
 .d-logo{position:absolute;left:818px;top:46px;width:284.75px;height:30px;display:block;
@@ -609,14 +613,18 @@ html.ld-on .slc{visibility:hidden}
     const sc=Math.min(Math.max(vw,960)/1920,vh/900), ox=(vw-1920*sc)/2, oy=(vh-900*sc)/2;
     R.h={x:ox+408*sc,y:oy+137*sc,w:1105*sc,h:690*sc};
     R.v={x:cx-70*k2,y:cy-140*k2,w:140*k2,h:280*k2};   // v141 피그마 Page 4 tablet_L 05 (437:455): 세로 액자 190×280 (x417) → 140×280 (x442)
-    const hx0=cx-218*k2, hx1=cx+236*k2, vy0=cy-241*k2, vy1=cy+241*k2;   // v141: 가로선 286~756 → 294~748
+    /* v143 (사용자 '가운데 중심·글자와 선 간격, 스타일리쉬하게'): 화면 가운데(512,350) 기준 완전 대칭 십자
+       네 팔 길이 모두 240 (가로 272~752 · 세로 110~590), 선 끝 ↔ 라벨 간격 네 방향 모두 14
+       라벨은 선 쪽으로 붙임 (왼쪽 라벨 오른쪽 정렬 · 오른쪽 라벨 왼쪽 정렬), 글자 13 · 자간 +6% (CSS .tabL .label) */
+    const ARMH=280*k2, ARMV=240*k2, GAP=14*k2;   // v145: 가로 한쪽 300 → 280 (232~792, v144 '더더 길게'에서 조금 줄임), 세로 240 그대로. 선 두께 LINE 0.7 × k2
+    const hx0=cx-ARMH, hx1=cx+ARMH, vy0=cy-ARMV, vy1=cy+ARMV;
     hairlines(hx0,hx1,cy,cx,vy0,vy1,k2);
     const P=(l,x,y)=>{l.style.left=Math.round(x)+'px'; l.style.top=Math.round(y)+'px';};
-    const hL=labs.L.offsetHeight, hR=labs.R.offsetHeight, wR=labs.R.offsetWidth, wT=labs.T.offsetWidth, hT=labs.T.offsetHeight, wB=labs.B.offsetWidth;
-    P(labs.L, cx-393*k2, cy-hL/2);
-    P(labs.R, cx+393*k2-wR, cy-hR/2);
-    P(labs.T, cx-wT/2, vy0-8*k2-hT);
-    P(labs.B, cx-wB/2, vy1+8*k2);
+    const hL=labs.L.offsetHeight, wL=labs.L.offsetWidth, hR=labs.R.offsetHeight, wT=labs.T.offsetWidth, hT=labs.T.offsetHeight, wB=labs.B.offsetWidth;
+    P(labs.L, hx0-GAP-wL, cy-hL/2);
+    P(labs.R, hx1+GAP, cy-hR/2);
+    P(labs.T, cx-wT/2, vy0-GAP-hT);
+    P(labs.B, cx-wB/2, vy1+GAP);
   }
   function hairlines(hx0,hx1,hy,vx,vy0,vy1,s){
     const dpr=window.devicePixelRatio||1;
@@ -889,9 +897,9 @@ body{background:#eeede9}
 /* v104 layout00 (피그마 '모바일 v2' layout00 · people, 11-24 15시 사용자 기준): 머리글 49 → 34 → 영문 Light 10/20 → 13 → 한글 SemiBold 26/30 → 14 → 본문 13/20 (폭 304)
    → 17 → 사진 360×379 (화면 끝까지) → 17 → 버튼 80×30 → 24 → 선 0.5 검정 50% (화면 끝까지) = 섹션 끝. 왼쪽 18, 오른쪽도 18 */
 @media (max-width:1023px), (max-width:1199px) and (orientation:portrait){
-  .mo-v2{position:relative;scroll-margin-top:49px;padding-bottom:24px;border-bottom:.5px solid rgba(0,0,0,.5)}
+  .mo-v2{position:relative;scroll-margin-top:49px;padding-bottom:24px;border-bottom:.5px solid rgba(0,0,0,.3)}   /* v145 피그마 M/끝 선 11-26: 검정 50% → 30% */
   .mo-v2.mo-v2-open{padding-bottom:0;border-bottom:0}   /* 현대정원·한국정원: 펼침 판까지 지난 뒤 선 */
-  .mo-v2-end{padding-top:24px;border-bottom:.5px solid rgba(0,0,0,.5)}
+  .mo-v2-end{padding-top:24px;border-bottom:.5px solid rgba(0,0,0,.3)}   /* v145: 50% → 30% */
   #mo-s07,#mo-s09{padding-bottom:48px}
   #mo-s09,#mo-s07{background:linear-gradient(180deg,#eeede9 0,#eeede9 max(0px,calc(100% - 600px)),#faf9f6 100%)}   /* v112 함께한 사람들도 끝 선에서 연한 미색으로 (더보기 판과 같은 그라데이션) */   /* v107: 글로 끝나는 섹션은 글 → 선 48 (버튼 상자로 끝나는 섹션과 눈으로 같은 간격) */
   .mo-dots{padding-bottom:0}
